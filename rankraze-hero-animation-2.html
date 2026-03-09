@@ -132,26 +132,65 @@
       }
     }
 
-    /* Orbiting ring */
-    .s1 .orbit-ring {
+    /* AI mini-stats in top-right corner */
+    .s1 .ai-stats-box {
       position: absolute;
-      top: 50%;
-      right: 28px;
-      transform: translateY(-50%);
-      width: 130px;
-      height: 130px;
+      top: 108px;
+      right: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      z-index: 2;
     }
 
-    .s1 .orbit-ring svg {
-      width: 100%;
-      height: 100%;
-      animation: spinOrbit 12s linear infinite;
+    .s1 .ai-stat {
+      background: rgba(27, 200, 160, 0.1);
+      border: 1px solid rgba(27, 200, 160, 0.22);
+      border-radius: 12px;
+      padding: 9px 13px;
+      text-align: right;
+      animation: statFadeIn 0.5s ease both;
+      backdrop-filter: blur(4px);
     }
 
-    @keyframes spinOrbit {
-      to {
-        transform: rotate(360deg);
+    .s1 .ai-stat:nth-child(1) {
+      animation-delay: 0.15s;
+    }
+
+    .s1 .ai-stat:nth-child(2) {
+      animation-delay: 0.28s;
+    }
+
+    .s1 .ai-stat:nth-child(3) {
+      animation-delay: 0.41s;
+    }
+
+    @keyframes statFadeIn {
+      from {
+        opacity: 0;
+        transform: translateX(12px);
       }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .s1 .ai-stat-val {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--teal);
+      line-height: 1;
+    }
+
+    .s1 .ai-stat-lbl {
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.45);
+      font-weight: 500;
+      margin-top: 2px;
+      white-space: nowrap;
     }
 
     .s1 .top-row {
@@ -206,7 +245,7 @@
       color: #fff;
       line-height: 1.22;
       margin-bottom: 6px;
-      max-width: 280px;
+      max-width: 255px;
     }
 
     .s1 h2 .accent {
@@ -217,7 +256,8 @@
       font-size: 13px;
       color: rgba(255, 255, 255, 0.45);
       margin-bottom: 22px;
-      max-width: 260px;
+      max-width: 255px;
+      line-height: 1.55;
     }
 
     /* AI Feature pills grid */
@@ -389,105 +429,65 @@
       font-weight: 800;
       color: var(--text-dark);
       line-height: 1.28;
-      margin-bottom: 20px;
+      margin-bottom: 22px;
     }
 
     .s2 h2 .accent {
       color: var(--teal-dark);
     }
 
-    /* Animated area chart */
-    .chart-area {
-      position: relative;
-      height: 120px;
-      margin-bottom: 16px;
-      background: linear-gradient(to bottom, var(--teal-light) 0%, transparent 100%);
-      border-radius: 14px;
-      overflow: hidden;
+    /* Animated bar chart */
+    .chart-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 7px;
+      height: 140px;
+      margin-bottom: 6px;
+      padding: 0 2px;
     }
 
-    .chart-area svg {
-      position: absolute;
-      inset: 0;
-      width: 100%;
+    .bar-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
       height: 100%;
+      justify-content: flex-end;
     }
 
-    .chart-line {
-      fill: none;
-      stroke: var(--teal);
-      stroke-width: 2.5;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      stroke-dasharray: 600;
-      stroke-dashoffset: 600;
-      animation: drawLine 1.8s cubic-bezier(0.4, 0, 0.2, 1) forwards 0.2s;
+    .bar {
+      width: 100%;
+      border-radius: 7px 7px 0 0;
+      background: linear-gradient(to top, var(--teal-dark), var(--teal));
+      transform-origin: bottom;
+      transform: scaleY(0);
+      animation: growBar 1.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
     }
 
-    .chart-fill {
-      fill: url(#areaGrad);
-      opacity: 0;
-      animation: fillIn 0.6s ease forwards 1.8s;
+    .bar.highlight {
+      background: linear-gradient(to top, #0fa870, #2dffc0);
+      box-shadow: 0 -4px 16px rgba(27, 200, 160, 0.4);
     }
 
-    @keyframes drawLine {
-      to {
-        stroke-dashoffset: 0;
-      }
-    }
-
-    @keyframes fillIn {
-      to {
-        opacity: 1;
-      }
-    }
-
-    /* Chart dots */
-    .chart-dot {
-      fill: var(--teal);
-      stroke: #fff;
-      stroke-width: 2;
-      opacity: 0;
-      animation: dotPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-    }
-
-    .chart-dot:nth-child(1) {
-      animation-delay: 0.4s;
-    }
-
-    .chart-dot:nth-child(2) {
-      animation-delay: 0.7s;
-    }
-
-    .chart-dot:nth-child(3) {
-      animation-delay: 1.0s;
-    }
-
-    .chart-dot:nth-child(4) {
-      animation-delay: 1.3s;
-    }
-
-    .chart-dot:nth-child(5) {
-      animation-delay: 1.6s;
-    }
-
-    @keyframes dotPop {
-      from {
-        opacity: 0;
-        r: 0;
-      }
-
-      to {
-        opacity: 1;
-        r: 5;
-      }
-    }
-
-    /* Labels on chart */
-    .chart-label-svg {
+    .bar-lbl {
       font-size: 10px;
-      fill: var(--text-muted);
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--text-muted);
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    @keyframes growBar {
+      to {
+        transform: scaleY(1);
+      }
+    }
+
+    .s2 .chart-wrap {
+      background: var(--teal-light);
+      border-radius: 16px;
+      padding: 16px 14px 12px;
+      margin-bottom: 18px;
     }
 
     /* Metric cards */
@@ -501,7 +501,7 @@
       background: var(--teal-light);
       border: 1.5px solid var(--teal-mid);
       border-radius: 16px;
-      padding: 14px 12px;
+      padding: 16px 12px;
       text-align: center;
       animation: metricPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
     }
@@ -532,21 +532,27 @@
 
     .s2 .metric .num {
       font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: 26px;
+      font-size: 28px;
       font-weight: 800;
       color: var(--text-dark);
       line-height: 1;
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 0px;
     }
 
-    .s2 .metric .num sup {
-      font-size: 14px;
+    .s2 .metric .num .suffix {
+      font-size: 26px;
+      font-weight: 800;
       color: var(--teal-dark);
+      line-height: 1;
     }
 
     .s2 .metric .lbl {
       font-size: 11px;
       color: var(--text-muted);
-      margin-top: 4px;
+      margin-top: 6px;
       font-weight: 500;
     }
 
@@ -805,31 +811,30 @@
           <div class="mesh"></div>
           <div class="mesh2"></div>
 
-          <!-- Orbiting SVG ring -->
-          <div class="orbit-ring">
-            <svg viewBox="0 0 130 130" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="65" cy="65" r="55" fill="none" stroke="rgba(27,200,160,0.15)" stroke-width="1" />
-              <circle cx="65" cy="65" r="42" fill="none" stroke="rgba(27,200,160,0.1)" stroke-width="1"
-                stroke-dasharray="4 8" />
-              <circle cx="65" cy="10" r="5" fill="#1bc8a0" opacity="0.9" />
-              <circle cx="120" cy="65" r="4" fill="#1bc8a0" opacity="0.6" />
-              <circle cx="65" cy="120" r="3.5" fill="#1bc8a0" opacity="0.4" />
-              <circle cx="10" cy="65" r="3" fill="#1bc8a0" opacity="0.3" />
-              <!-- Center AI icon area -->
-              <circle cx="65" cy="65" r="26" fill="rgba(27,200,160,0.12)" stroke="rgba(27,200,160,0.25)"
-                stroke-width="1" />
-              <text x="65" y="72" text-anchor="middle" font-size="22" font-family="sans-serif">🤖</text>
-            </svg>
+          <!-- Top-right AI Stats Widget -->
+          <div class="ai-stats-box">
+            <div class="ai-stat">
+              <div class="ai-stat-val">340%</div>
+              <div class="ai-stat-lbl">Avg. ROI Boost</div>
+            </div>
+            <div class="ai-stat">
+              <div class="ai-stat-val">2K+</div>
+              <div class="ai-stat-lbl">Brands Powered</div>
+            </div>
+            <div class="ai-stat">
+              <div class="ai-stat-val">24/7</div>
+              <div class="ai-stat-lbl">AI Active</div>
+            </div>
           </div>
 
           <div class="top-row">
             <div class="chip">
-              <div class="chip-dot"></div>AI-Powered Platform
+              <div class="chip-dot"></div>AI-Powered Agency
             </div>
           </div>
 
           <h2>Smarter Marketing<br>Driven by <span class="accent">AI Intelligence</span></h2>
-          <p class="sub">Automate, optimize & scale — all with real-time AI insights</p>
+          <p class="sub">AI precision meets creative strategy — growing your brand digitally.</p>
 
           <div class="features">
             <div class="feat">
@@ -866,10 +871,12 @@
             <div class="ticker-dot"></div>
             <div class="ticker-text">
               <span class="ticker-scroll">
-                🚀 Campaign ROI up 340% &nbsp;&nbsp;•&nbsp;&nbsp; ✅ 2,000+ brands powered &nbsp;&nbsp;•&nbsp;&nbsp; 🎯
-                Ad spend optimized by AI &nbsp;&nbsp;•&nbsp;&nbsp; 📈 Organic traffic +280% &nbsp;&nbsp;•&nbsp;&nbsp;
-                🚀 Campaign ROI up 340% &nbsp;&nbsp;•&nbsp;&nbsp; ✅ 2,000+ brands powered &nbsp;&nbsp;•&nbsp;&nbsp; 🎯
-                Ad spend optimized by AI &nbsp;&nbsp;•&nbsp;&nbsp; 📈 Organic traffic +280% &nbsp;&nbsp;•&nbsp;&nbsp;
+                🚀 Campaign ROI up 340% &nbsp;•&nbsp; ✅ 2,000+ Brands Powered &nbsp;•&nbsp; 🎯 Ad Spend Optimised by AI
+                &nbsp;•&nbsp; 📈 Organic Traffic +280% &nbsp;•&nbsp; 🏆 #1 Digital Marketing Agency Chennai
+                &nbsp;•&nbsp;
+                🚀 Campaign ROI up 340% &nbsp;•&nbsp; ✅ 2,000+ Brands Powered &nbsp;•&nbsp; 🎯 Ad Spend Optimised by AI
+                &nbsp;•&nbsp; 📈 Organic Traffic +280% &nbsp;•&nbsp; 🏆 #1 Digital Marketing Agency Chennai
+                &nbsp;•&nbsp;
               </span>
             </div>
           </div>
@@ -885,59 +892,59 @@
         <div class="card">
           <div class="card-top">
             <div class="tag">🚀 Brand Growth</div>
-            <div class="live-badge"><span
-                style="width:6px;height:6px;background:#fff;border-radius:50%;display:inline-block;animation:blink 1s infinite"></span>&nbsp;LIVE
-            </div>
           </div>
 
           <h2>Grow Your Business<br><span class="accent">Digitally & Powerfully</span></h2>
 
-          <!-- Animated SVG area chart -->
-          <div class="chart-area">
-            <svg viewBox="0 0 460 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-              <defs>
-                <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#1bc8a0" stop-opacity="0.3" />
-                  <stop offset="100%" stop-color="#1bc8a0" stop-opacity="0.02" />
-                </linearGradient>
-              </defs>
-              <!-- Grid lines -->
-              <line x1="0" y1="30" x2="460" y2="30" stroke="#e0faf3" stroke-width="1" />
-              <line x1="0" y1="60" x2="460" y2="60" stroke="#e0faf3" stroke-width="1" />
-              <line x1="0" y1="90" x2="460" y2="90" stroke="#e0faf3" stroke-width="1" />
-
-              <!-- Filled area -->
-              <path class="chart-fill"
-                d="M0,100 C60,90 100,80 140,70 C180,60 200,55 240,42 C280,30 310,28 350,18 C390,10 430,8 460,6 L460,120 L0,120 Z" />
-              <!-- Line -->
-              <path class="chart-line"
-                d="M0,100 C60,90 100,80 140,70 C180,60 200,55 240,42 C280,30 310,28 350,18 C390,10 430,8 460,6" />
-              <!-- Dots -->
-              <circle class="chart-dot" cx="0" cy="100" r="5" />
-              <circle class="chart-dot" cx="140" cy="70" r="5" />
-              <circle class="chart-dot" cx="240" cy="42" r="5" />
-              <circle class="chart-dot" cx="350" cy="18" r="5" />
-              <circle class="chart-dot" cx="460" cy="6" r="5" />
-              <!-- Month labels -->
-              <text class="chart-label-svg" x="4" y="116">Jan</text>
-              <text class="chart-label-svg" x="130" y="116">Mar</text>
-              <text class="chart-label-svg" x="226" y="116">May</text>
-              <text class="chart-label-svg" x="336" y="116">Jul</text>
-              <text class="chart-label-svg" x="440" y="116">Sep</text>
-            </svg>
+          <!-- Animated Bar Chart -->
+          <div class="chart-wrap">
+            <div class="chart-bars">
+              <div class="bar-col">
+                <div class="bar" style="height:38%;animation-delay:0.0s"></div>
+                <div class="bar-lbl">Jan</div>
+              </div>
+              <div class="bar-col">
+                <div class="bar" style="height:48%;animation-delay:0.18s"></div>
+                <div class="bar-lbl">Feb</div>
+              </div>
+              <div class="bar-col">
+                <div class="bar" style="height:43%;animation-delay:0.36s"></div>
+                <div class="bar-lbl">Mar</div>
+              </div>
+              <div class="bar-col">
+                <div class="bar" style="height:56%;animation-delay:0.54s"></div>
+                <div class="bar-lbl">Apr</div>
+              </div>
+              <div class="bar-col">
+                <div class="bar" style="height:62%;animation-delay:0.72s"></div>
+                <div class="bar-lbl">May</div>
+              </div>
+              <div class="bar-col">
+                <div class="bar" style="height:70%;animation-delay:0.90s"></div>
+                <div class="bar-lbl">Jun</div>
+              </div>
+              <div class="bar-col">
+                <div class="bar" style="height:76%;animation-delay:1.08s"></div>
+                <div class="bar-lbl">Jul</div>
+              </div>
+              <div class="bar-col">
+                <div class="bar highlight" style="height:95%;animation-delay:1.26s"></div>
+                <div class="bar-lbl">Aug</div>
+              </div>
+            </div>
           </div>
 
           <div class="metrics">
             <div class="metric">
-              <div class="num">3<sup>×</sup></div>
+              <div class="num">3<span class="suffix">×</span></div>
               <div class="lbl">Revenue Growth</div>
             </div>
             <div class="metric">
-              <div class="num">480<sup>%</sup></div>
+              <div class="num">+480<span class="suffix">%</span></div>
               <div class="lbl">Brand Reach</div>
             </div>
             <div class="metric">
-              <div class="num">2K<sup>+</sup></div>
+              <div class="num" style="font-size:22px;">2000<span class="suffix" style="font-size:20px;">+</span></div>
               <div class="lbl">Happy Brands</div>
             </div>
           </div>
@@ -1018,8 +1025,7 @@
     let pbStart;
 
     function resetAnimations(slideEl) {
-      // Re-trigger CSS animations for elements inside the active slide
-      slideEl.querySelectorAll('[class*="feat"], .kw-row, .metric, .chart-dot, .chart-line, .chart-fill').forEach(el => {
+      slideEl.querySelectorAll('[class*="feat"], .kw-row, .metric, .chart-dot, .chart-line, .chart-fill, .bar').forEach(el => {
         el.style.animation = 'none';
         void el.offsetHeight;
         el.style.animation = '';
