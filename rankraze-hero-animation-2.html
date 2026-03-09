@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rankraze Hero Animation</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Bricolage+Grotesque:wght@700;800&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --teal: #1bc8a0;
+      --teal-dark: #13a882;
+      --teal-light: #e0faf3;
+      --teal-mid: #a8f0dc;
+      --navy: #0b1a2e;
+      --navy-mid: #122640;
+      --white: #ffffff;
+      --text-dark: #0f1f35;
+      --text-muted: #6b8299;
+      --card-bg: #ffffff;
+      --shadow: 0 24px 80px rgba(27, 200, 160, 0.18), 0 8px 32px rgba(11, 26, 46, 0.10);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: transparent;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    /* ─── WRAPPER ─── */
+    .hero-wrap {
+      width: 520px;
+      height: 560px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ─── SLIDES ─── */
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: translateY(32px) scale(0.96);
+      transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1), transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+      pointer-events: none;
+    }
+
+    .slide.active {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+
+    .slide.exit {
+      opacity: 0;
+      transform: translateY(-28px) scale(0.96);
+      transition: opacity 0.45s ease, transform 0.45s ease;
+    }
+
+    /* ─── BASE CARD ─── */
+    .card {
+      width: 480px;
+      border-radius: 28px;
+      padding: 36px 38px 32px;
+      background: var(--card-bg);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* ============================================================
+   SLIDE 1 — AI-Powered Marketing (COMPLETELY REDESIGNED)
+   ============================================================ */
+    .s1 .card {
+      background: linear-gradient(145deg, var(--navy) 0%, #0e2540 50%, #0a1e35 100%);
+      border: 1px solid rgba(27, 200, 160, 0.2);
+      padding: 34px 36px 30px;
+    }
+
+    /* Animated mesh glow */
+    .s1 .mesh {
+      position: absolute;
+      top: -80px;
+      right: -80px;
+      width: 320px;
+      height: 320px;
+      background: radial-gradient(circle at 60% 40%, rgba(27, 200, 160, 0.28) 0%, rgba(27, 200, 160, 0.05) 50%, transparent 70%);
+      border-radius: 50%;
+      animation: meshPulse 4s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .s1 .mesh2 {
+      position: absolute;
+      bottom: -60px;
+      left: -40px;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(27, 200, 160, 0.12) 0%, transparent 70%);
+      border-radius: 50%;
+      animation: meshPulse 5s ease-in-out infinite reverse;
+      pointer-events: none;
+    }
+
+    @keyframes meshPulse {
+
+      0%,
+      100% {
+        opacity: 0.7;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 1;
+        transform: scale(1.08);
+      }
+    }
+
+    /* Orbiting ring */
+    .s1 .orbit-ring {
+      position: absolute;
+      top: 50%;
+      right: 28px;
+      transform: translateY(-50%);
+      width: 130px;
+      height: 130px;
+    }
+
+    .s1 .orbit-ring svg {
+      width: 100%;
+      height: 100%;
+      animation: spinOrbit 12s linear infinite;
+    }
+
+    @keyframes spinOrbit {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .s1 .top-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .s1 .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(27, 200, 160, 0.15);
+      border: 1px solid rgba(27, 200, 160, 0.35);
+      border-radius: 50px;
+      padding: 5px 14px 5px 9px;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--teal);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .s1 .chip-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--teal);
+      border-radius: 50%;
+      animation: blink 1.4s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+
+    @keyframes blink {
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1)
+      }
+
+      50% {
+        opacity: 0.4;
+        transform: scale(0.6)
+      }
+    }
+
+    .s1 h2 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 30px;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.22;
+      margin-bottom: 6px;
+      max-width: 280px;
+    }
+
+    .s1 h2 .accent {
+      color: var(--teal);
+    }
+
+    .s1 .sub {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.45);
+      margin-bottom: 22px;
+      max-width: 260px;
+    }
+
+    /* AI Feature pills grid */
+    .s1 .features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    .s1 .feat {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 13px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.3s, border-color 0.3s;
+      animation: featReveal 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+
+    .s1 .feat:nth-child(1) {
+      animation-delay: 0.1s;
+    }
+
+    .s1 .feat:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .s1 .feat:nth-child(3) {
+      animation-delay: 0.3s;
+    }
+
+    .s1 .feat:nth-child(4) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes featReveal {
+      from {
+        opacity: 0;
+        transform: translateY(14px) scale(0.94);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .s1 .feat:hover {
+      background: rgba(27, 200, 160, 0.1);
+      border-color: rgba(27, 200, 160, 0.3);
+    }
+
+    .s1 .feat-icon {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--teal) 0%, var(--teal-dark) 100%);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .s1 .feat-text .feat-title {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .s1 .feat-text .feat-val {
+      font-size: 11px;
+      color: var(--teal);
+      font-weight: 600;
+    }
+
+    /* Live activity ticker */
+    .s1 .ticker {
+      background: rgba(27, 200, 160, 0.1);
+      border: 1px solid rgba(27, 200, 160, 0.2);
+      border-radius: 12px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      overflow: hidden;
+    }
+
+    .s1 .ticker-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--teal);
+      border-radius: 50%;
+      flex-shrink: 0;
+      animation: blink 1s ease-in-out infinite;
+    }
+
+    .s1 .ticker-text {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.75);
+      font-weight: 500;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .s1 .ticker-scroll {
+      display: inline-block;
+      animation: tickerAnim 12s linear infinite;
+    }
+
+    @keyframes tickerAnim {
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+
+
+    /* ============================================================
+   SLIDE 2 — Grow Your Brand
+   ============================================================ */
+    .s2 .card {
+      background: var(--white);
+      border: 1.5px solid var(--teal-light);
+    }
+
+    .s2 .card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+
+    .s2 .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--teal-light);
+      color: var(--teal-dark);
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 5px 13px;
+      border-radius: 50px;
+    }
+
+    .s2 .live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #fff;
+      background: var(--teal);
+      padding: 4px 11px;
+      border-radius: 50px;
+    }
+
+    .s2 h2 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 27px;
+      font-weight: 800;
+      color: var(--text-dark);
+      line-height: 1.28;
+      margin-bottom: 20px;
+    }
+
+    .s2 h2 .accent {
+      color: var(--teal-dark);
+    }
+
+    /* Animated area chart */
+    .chart-area {
+      position: relative;
+      height: 120px;
+      margin-bottom: 16px;
+      background: linear-gradient(to bottom, var(--teal-light) 0%, transparent 100%);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .chart-area svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .chart-line {
+      fill: none;
+      stroke: var(--teal);
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 600;
+      stroke-dashoffset: 600;
+      animation: drawLine 1.8s cubic-bezier(0.4, 0, 0.2, 1) forwards 0.2s;
+    }
+
+    .chart-fill {
+      fill: url(#areaGrad);
+      opacity: 0;
+      animation: fillIn 0.6s ease forwards 1.8s;
+    }
+
+    @keyframes drawLine {
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+
+    @keyframes fillIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    /* Chart dots */
+    .chart-dot {
+      fill: var(--teal);
+      stroke: #fff;
+      stroke-width: 2;
+      opacity: 0;
+      animation: dotPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+
+    .chart-dot:nth-child(1) {
+      animation-delay: 0.4s;
+    }
+
+    .chart-dot:nth-child(2) {
+      animation-delay: 0.7s;
+    }
+
+    .chart-dot:nth-child(3) {
+      animation-delay: 1.0s;
+    }
+
+    .chart-dot:nth-child(4) {
+      animation-delay: 1.3s;
+    }
+
+    .chart-dot:nth-child(5) {
+      animation-delay: 1.6s;
+    }
+
+    @keyframes dotPop {
+      from {
+        opacity: 0;
+        r: 0;
+      }
+
+      to {
+        opacity: 1;
+        r: 5;
+      }
+    }
+
+    /* Labels on chart */
+    .chart-label-svg {
+      font-size: 10px;
+      fill: var(--text-muted);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    /* Metric cards */
+    .s2 .metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .s2 .metric {
+      background: var(--teal-light);
+      border: 1.5px solid var(--teal-mid);
+      border-radius: 16px;
+      padding: 14px 12px;
+      text-align: center;
+      animation: metricPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+
+    .s2 .metric:nth-child(1) {
+      animation-delay: 0.1s;
+    }
+
+    .s2 .metric:nth-child(2) {
+      animation-delay: 0.22s;
+    }
+
+    .s2 .metric:nth-child(3) {
+      animation-delay: 0.34s;
+    }
+
+    @keyframes metricPop {
+      from {
+        opacity: 0;
+        transform: scale(0.85);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .s2 .metric .num {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--text-dark);
+      line-height: 1;
+    }
+
+    .s2 .metric .num sup {
+      font-size: 14px;
+      color: var(--teal-dark);
+    }
+
+    .s2 .metric .lbl {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 4px;
+      font-weight: 500;
+    }
+
+    /* ============================================================
+   SLIDE 3 — Google Rankings
+   ============================================================ */
+    .s3 .card {
+      background: var(--white);
+      border: 1.5px solid #f0f0f0;
+    }
+
+    .s3 .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .s3 .g-logo {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    .g-B {
+      color: #4285F4;
+    }
+
+    .g-R {
+      color: #EA4335;
+    }
+
+    .g-Y {
+      color: #FBBC05;
+    }
+
+    .g-G {
+      color: #34A853;
+    }
+
+    .s3 .serp-box {
+      background: #f8f9fa;
+      border: 1px solid #e3e8ed;
+      border-radius: 12px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+      font-size: 13px;
+      color: #444;
+    }
+
+    .s3 .serp-box .search-icon {
+      color: #888;
+      font-size: 14px;
+    }
+
+    .s3 .serp-box .kw-text {
+      font-weight: 600;
+      color: #222;
+    }
+
+    .s3 .serp-box .kw-after {
+      margin-left: auto;
+      background: var(--teal);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 50px;
+    }
+
+    .s3 h2 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 16px;
+      line-height: 1.3;
+    }
+
+    .s3 h2 .accent {
+      color: #4285F4;
+    }
+
+    /* Keyword rows */
+    .kw-list {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    .kw-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 13px;
+      background: #fafafa;
+      border: 1px solid #eeeeee;
+      border-radius: 12px;
+      animation: rowSlide 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .kw-row:hover {
+      transform: translateX(4px);
+      box-shadow: -3px 0 0 var(--teal);
+    }
+
+    .kw-row:nth-child(1) {
+      animation-delay: 0.05s;
+    }
+
+    .kw-row:nth-child(2) {
+      animation-delay: 0.15s;
+    }
+
+    .kw-row:nth-child(3) {
+      animation-delay: 0.25s;
+    }
+
+    .kw-row:nth-child(4) {
+      animation-delay: 0.35s;
+    }
+
+    @keyframes rowSlide {
+      from {
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .rank-badge {
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 13px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .rank-1 {
+      background: #FFF3CD;
+      color: #d97706;
+    }
+
+    .rank-2 {
+      background: #EEF3FE;
+      color: #4285F4;
+    }
+
+    .rank-3 {
+      background: #E6F4EA;
+      color: #34A853;
+    }
+
+    .rank-4 {
+      background: var(--teal-light);
+      color: var(--teal-dark);
+    }
+
+    .kw-name {
+      flex: 1;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #1a1a1a;
+    }
+
+    .kw-vol {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .kw-up {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #34A853;
+      background: #E6F4EA;
+      padding: 3px 9px;
+      border-radius: 50px;
+    }
+
+    /* ─── PROGRESS BAR ─── */
+    .progress-bar-wrap {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: rgba(0, 0, 0, 0.06);
+      border-radius: 0 0 28px 28px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--teal), var(--teal-dark));
+      width: 0%;
+      border-radius: 0 0 28px 28px;
+      transition: width linear;
+    }
+
+    /* ─── DOTS ─── */
+    .dots {
+      position: absolute;
+      bottom: -38px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(11, 26, 46, 0.18);
+      cursor: pointer;
+      transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      border: none;
+      outline: none;
+    }
+
+    .dot.active {
+      width: 28px;
+      border-radius: 4px;
+      background: var(--teal);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="hero-wrap">
+    <div class="slides-container" style="position:relative;width:480px;height:510px;">
+
+      <!-- ══ SLIDE 1: AI-Powered ══ -->
+      <div class="slide s1 active" id="s1">
+        <div class="card">
+          <div class="mesh"></div>
+          <div class="mesh2"></div>
+
+          <!-- Orbiting SVG ring -->
+          <div class="orbit-ring">
+            <svg viewBox="0 0 130 130" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="65" cy="65" r="55" fill="none" stroke="rgba(27,200,160,0.15)" stroke-width="1" />
+              <circle cx="65" cy="65" r="42" fill="none" stroke="rgba(27,200,160,0.1)" stroke-width="1"
+                stroke-dasharray="4 8" />
+              <circle cx="65" cy="10" r="5" fill="#1bc8a0" opacity="0.9" />
+              <circle cx="120" cy="65" r="4" fill="#1bc8a0" opacity="0.6" />
+              <circle cx="65" cy="120" r="3.5" fill="#1bc8a0" opacity="0.4" />
+              <circle cx="10" cy="65" r="3" fill="#1bc8a0" opacity="0.3" />
+              <!-- Center AI icon area -->
+              <circle cx="65" cy="65" r="26" fill="rgba(27,200,160,0.12)" stroke="rgba(27,200,160,0.25)"
+                stroke-width="1" />
+              <text x="65" y="72" text-anchor="middle" font-size="22" font-family="sans-serif">🤖</text>
+            </svg>
+          </div>
+
+          <div class="top-row">
+            <div class="chip">
+              <div class="chip-dot"></div>AI-Powered Platform
+            </div>
+          </div>
+
+          <h2>Smarter Marketing<br>Driven by <span class="accent">AI Intelligence</span></h2>
+          <p class="sub">Automate, optimize & scale — all with real-time AI insights</p>
+
+          <div class="features">
+            <div class="feat">
+              <div class="feat-icon">⚡</div>
+              <div class="feat-text">
+                <div class="feat-title">Smart Campaigns</div>
+                <div class="feat-val">10× faster setup</div>
+              </div>
+            </div>
+            <div class="feat">
+              <div class="feat-icon">🎯</div>
+              <div class="feat-text">
+                <div class="feat-title">Precision Targeting</div>
+                <div class="feat-val">98% accuracy</div>
+              </div>
+            </div>
+            <div class="feat">
+              <div class="feat-icon">📊</div>
+              <div class="feat-text">
+                <div class="feat-title">Live Analytics</div>
+                <div class="feat-val">Real-time data</div>
+              </div>
+            </div>
+            <div class="feat">
+              <div class="feat-icon">🔄</div>
+              <div class="feat-text">
+                <div class="feat-title">Auto Optimize</div>
+                <div class="feat-val">24/7 active</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ticker">
+            <div class="ticker-dot"></div>
+            <div class="ticker-text">
+              <span class="ticker-scroll">
+                🚀 Campaign ROI up 340% &nbsp;&nbsp;•&nbsp;&nbsp; ✅ 2,000+ brands powered &nbsp;&nbsp;•&nbsp;&nbsp; 🎯
+                Ad spend optimized by AI &nbsp;&nbsp;•&nbsp;&nbsp; 📈 Organic traffic +280% &nbsp;&nbsp;•&nbsp;&nbsp;
+                🚀 Campaign ROI up 340% &nbsp;&nbsp;•&nbsp;&nbsp; ✅ 2,000+ brands powered &nbsp;&nbsp;•&nbsp;&nbsp; 🎯
+                Ad spend optimized by AI &nbsp;&nbsp;•&nbsp;&nbsp; 📈 Organic traffic +280% &nbsp;&nbsp;•&nbsp;&nbsp;
+              </span>
+            </div>
+          </div>
+
+          <div class="progress-bar-wrap">
+            <div class="progress-bar" id="pb1"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ SLIDE 2: Grow Brand ══ -->
+      <div class="slide s2" id="s2">
+        <div class="card">
+          <div class="card-top">
+            <div class="tag">🚀 Brand Growth</div>
+            <div class="live-badge"><span
+                style="width:6px;height:6px;background:#fff;border-radius:50%;display:inline-block;animation:blink 1s infinite"></span>&nbsp;LIVE
+            </div>
+          </div>
+
+          <h2>Grow Your Business<br><span class="accent">Digitally & Powerfully</span></h2>
+
+          <!-- Animated SVG area chart -->
+          <div class="chart-area">
+            <svg viewBox="0 0 460 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#1bc8a0" stop-opacity="0.3" />
+                  <stop offset="100%" stop-color="#1bc8a0" stop-opacity="0.02" />
+                </linearGradient>
+              </defs>
+              <!-- Grid lines -->
+              <line x1="0" y1="30" x2="460" y2="30" stroke="#e0faf3" stroke-width="1" />
+              <line x1="0" y1="60" x2="460" y2="60" stroke="#e0faf3" stroke-width="1" />
+              <line x1="0" y1="90" x2="460" y2="90" stroke="#e0faf3" stroke-width="1" />
+
+              <!-- Filled area -->
+              <path class="chart-fill"
+                d="M0,100 C60,90 100,80 140,70 C180,60 200,55 240,42 C280,30 310,28 350,18 C390,10 430,8 460,6 L460,120 L0,120 Z" />
+              <!-- Line -->
+              <path class="chart-line"
+                d="M0,100 C60,90 100,80 140,70 C180,60 200,55 240,42 C280,30 310,28 350,18 C390,10 430,8 460,6" />
+              <!-- Dots -->
+              <circle class="chart-dot" cx="0" cy="100" r="5" />
+              <circle class="chart-dot" cx="140" cy="70" r="5" />
+              <circle class="chart-dot" cx="240" cy="42" r="5" />
+              <circle class="chart-dot" cx="350" cy="18" r="5" />
+              <circle class="chart-dot" cx="460" cy="6" r="5" />
+              <!-- Month labels -->
+              <text class="chart-label-svg" x="4" y="116">Jan</text>
+              <text class="chart-label-svg" x="130" y="116">Mar</text>
+              <text class="chart-label-svg" x="226" y="116">May</text>
+              <text class="chart-label-svg" x="336" y="116">Jul</text>
+              <text class="chart-label-svg" x="440" y="116">Sep</text>
+            </svg>
+          </div>
+
+          <div class="metrics">
+            <div class="metric">
+              <div class="num">3<sup>×</sup></div>
+              <div class="lbl">Revenue Growth</div>
+            </div>
+            <div class="metric">
+              <div class="num">480<sup>%</sup></div>
+              <div class="lbl">Brand Reach</div>
+            </div>
+            <div class="metric">
+              <div class="num">2K<sup>+</sup></div>
+              <div class="lbl">Happy Brands</div>
+            </div>
+          </div>
+
+          <div class="progress-bar-wrap">
+            <div class="progress-bar" id="pb2"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ SLIDE 3: Google Rankings ══ -->
+      <div class="slide s3" id="s3">
+        <div class="card">
+          <div class="header">
+            <div class="g-logo">
+              <span class="g-B">G</span><span class="g-R">o</span><span class="g-Y">o</span><span
+                class="g-B">g</span><span class="g-G">l</span><span class="g-R">e</span>
+            </div>
+            <div
+              style="font-size:12px;font-weight:700;color:var(--teal-dark);background:var(--teal-light);padding:5px 13px;border-radius:50px;">
+              🏆 Page #1 Rankings</div>
+          </div>
+
+          <div class="serp-box">
+            <span class="search-icon">🔍</span>
+            <span class="kw-text">digital marketing agency chennai</span>
+            <span class="kw-after">Ranked #1</span>
+          </div>
+
+          <h2>Rank Your Keywords<br>on <span class="accent">Google Page #1</span></h2>
+
+          <div class="kw-list">
+            <div class="kw-row">
+              <div class="rank-badge rank-1">#1</div>
+              <div class="kw-name">Digital Marketing Agency Chennai</div>
+              <div class="kw-up">↑ +47</div>
+            </div>
+            <div class="kw-row">
+              <div class="rank-badge rank-2">#2</div>
+              <div class="kw-name">SEO Company Tamil Nadu</div>
+              <div class="kw-up">↑ +33</div>
+            </div>
+            <div class="kw-row">
+              <div class="rank-badge rank-3">#3</div>
+              <div class="kw-name">Social Media Marketing India</div>
+              <div class="kw-up">↑ +29</div>
+            </div>
+            <div class="kw-row">
+              <div class="rank-badge rank-4">#4</div>
+              <div class="kw-name">Best PPC Advertising Agency</div>
+              <div class="kw-up">↑ +18</div>
+            </div>
+          </div>
+
+          <div class="progress-bar-wrap">
+            <div class="progress-bar" id="pb3"></div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /.slides-container -->
+
+    <!-- Dots -->
+    <div class="dots">
+      <button class="dot active" onclick="goTo(0)" aria-label="Slide 1"></button>
+      <button class="dot" onclick="goTo(1)" aria-label="Slide 2"></button>
+      <button class="dot" onclick="goTo(2)" aria-label="Slide 3"></button>
+    </div>
+  </div>
+
+  <script>
+    const DURATION = 5000;
+    const slides = [document.getElementById('s1'), document.getElementById('s2'), document.getElementById('s3')];
+    const pbs = [document.getElementById('pb1'), document.getElementById('pb2'), document.getElementById('pb3')];
+    const dots = document.querySelectorAll('.dot');
+    let current = 0;
+    let timer, pbTimer;
+    let pbStart;
+
+    function resetAnimations(slideEl) {
+      // Re-trigger CSS animations for elements inside the active slide
+      slideEl.querySelectorAll('[class*="feat"], .kw-row, .metric, .chart-dot, .chart-line, .chart-fill').forEach(el => {
+        el.style.animation = 'none';
+        void el.offsetHeight;
+        el.style.animation = '';
+      });
+    }
+
+    function startProgress(pbEl) {
+      pbEl.style.transition = 'none';
+      pbEl.style.width = '0%';
+      void pbEl.offsetHeight;
+      pbEl.style.transition = `width ${DURATION}ms linear`;
+      pbEl.style.width = '100%';
+    }
+
+    function stopProgress(pbEl) {
+      pbEl.style.transition = 'none';
+      pbEl.style.width = '0%';
+    }
+
+    function goTo(idx) {
+      if (idx === current) return;
+      // Exit
+      slides[current].classList.add('exit');
+      slides[current].classList.remove('active');
+      dots[current].classList.remove('active');
+      stopProgress(pbs[current]);
+
+      const prev = current;
+      setTimeout(() => slides[prev].classList.remove('exit'), 450);
+
+      current = idx;
+      slides[current].classList.add('active');
+      dots[current].classList.add('active');
+      resetAnimations(slides[current]);
+      startProgress(pbs[current]);
+
+      clearInterval(timer);
+      timer = setInterval(() => goTo((current + 1) % 3), DURATION);
+    }
+
+    // Init
+    startProgress(pbs[0]);
+    timer = setInterval(() => goTo((current + 1) % 3), DURATION);
+  </script>
+</body>
+
+</html>
