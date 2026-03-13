@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rankraze — SEO Service Block</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=DM+Sans:wght@400;500&display=swap"
+        rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            background: #f0f4f2;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        /* ── Copy bar ── */
+        .copy-bar {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            background: #fff;
+            border-bottom: 1px solid #dde8e4;
+        }
+
+        .copy-label {
+            font-size: 12px;
+            color: #7ab8ac;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .btn-copy {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: #3cba99;
+            color: #fff;
+            border: none;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            padding: 8px 18px;
+            border-radius: 7px;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+
+        .btn-copy:hover {
+            background: #2ea882;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: #1a7a60;
+            color: #fff;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px;
+            padding: 10px 18px;
+            border-radius: 8px;
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity 0.25s, transform 0.25s;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ════════════════════════════════════
+   SEO SECTION
+════════════════════════════════════ */
+        .rr-section {
+            background: #edf9f6;
+            padding: 80px 48px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .rr-section::before {
+            content: '';
+            position: absolute;
+            top: -120px;
+            right: -120px;
+            width: 420px;
+            height: 420px;
+            background: radial-gradient(circle, rgba(60, 186, 153, 0.12) 0%, transparent 65%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .rr-section::after {
+            content: '';
+            position: absolute;
+            bottom: -80px;
+            left: -80px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(60, 186, 153, 0.07) 0%, transparent 65%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .rr-grid {
+            display: grid;
+            grid-template-columns: 1.05fr 0.95fr;
+            gap: 60px;
+            align-items: center;
+            max-width: 1160px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ── Scroll reveal ── */
+        .rr-visual {
+            opacity: 0;
+            transform: translateX(-36px);
+            transition: opacity 0.7s cubic-bezier(0.22, 0.61, 0.36, 1),
+                transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+        }
+
+        .rr-visual.rr-in {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .rr-content {
+            opacity: 0;
+            transform: translateY(22px);
+            transition: opacity 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) 0.18s,
+                transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) 0.18s;
+        }
+
+        .rr-content.rr-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── Label ── */
+        .rr-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: #fff;
+            border: 1.5px solid #3cba99;
+            color: #0f6e56;
+            font-family: 'Sora', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            padding: 5px 14px;
+            border-radius: 100px;
+            margin-bottom: 20px;
+        }
+
+        .rr-label-dot {
+            width: 7px;
+            height: 7px;
+            background: #3cba99;
+            border-radius: 50%;
+            animation: rrPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes rrPulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.4);
+                opacity: 0.55;
+            }
+        }
+
+        /* ── Heading ── */
+        .rr-heading {
+            font-family: 'Sora', sans-serif;
+            font-size: 31px;
+            font-weight: 700;
+            color: #0a2218;
+            line-height: 1.28;
+            letter-spacing: -0.025em;
+            margin-bottom: 18px;
+        }
+
+        .rr-heading em {
+            font-style: normal;
+            color: #3cba99;
+        }
+
+        /* ── Body ── */
+        .rr-body {
+            font-size: 15px;
+            color: #3a5550;
+            line-height: 1.78;
+            margin-bottom: 26px;
+        }
+
+        /* ── Benefits ── */
+        .rr-benefits {
+            list-style: none;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 11px 18px;
+            margin-bottom: 26px;
+        }
+
+        .rr-benefits li {
+            display: flex;
+            align-items: flex-start;
+            gap: 9px;
+            font-size: 13.5px;
+            color: #1c3d34;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
+        .rr-chk {
+            width: 19px;
+            height: 19px;
+            min-width: 19px;
+            background: #3cba99;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 1px;
+        }
+
+        /* ── Pills ── */
+        .rr-icon-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 30px;
+        }
+
+        .rr-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #fff;
+            border: 1px solid rgba(60, 186, 153, 0.35);
+            border-radius: 100px;
+            padding: 7px 15px;
+            font-size: 12.5px;
+            font-weight: 500;
+            color: #0f6e56;
+            cursor: default;
+            user-select: none;
+            transition: background 0.2s, color 0.2s, border-color 0.2s;
+        }
+
+        .rr-pill:hover {
+            background: #3cba99;
+            color: #fff;
+            border-color: #3cba99;
+        }
+
+        .rr-pill:hover .pi {
+            stroke: #fff;
+        }
+
+        .pi {
+            stroke: #0f6e56;
+            transition: stroke 0.2s;
+        }
+
+        /* ── CTA ── */
+        .rr-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            background: #3cba99;
+            color: #fff;
+            font-family: 'Sora', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 14px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+        }
+
+        .rr-cta:hover {
+            background: #2ea882;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(60, 186, 153, 0.3);
+        }
+
+        .rr-arrow {
+            display: inline-block;
+            transition: transform 0.2s;
+        }
+
+        .rr-cta:hover .rr-arrow {
+            transform: translateX(4px);
+        }
+
+        /* ── SVG wrap ── */
+        .rr-svg-wrap {
+            width: 100%;
+        }
+
+        .rr-svg-wrap svg {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Rank badge */
+        @keyframes rrBadge {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.07);
+            }
+        }
+
+        .rr-badge {
+            animation: rrBadge 2.8s ease-in-out infinite;
+            transform-origin: 24px 21px;
+        }
+
+        /* Float card */
+        @keyframes rrFloat {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .rr-fc {
+            animation: rrFloat 4s ease-in-out 1.5s infinite;
+        }
+
+        /* Trend line draw */
+        @keyframes rrDraw {
+            from {
+                stroke-dashoffset: 260;
+            }
+
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        .rr-tl {
+            stroke-dasharray: 260;
+            stroke-dashoffset: 260;
+        }
+
+        .rr-tl.go {
+            animation: rrDraw 1.1s cubic-bezier(0.22, 0.61, 0.36, 1) 1.0s forwards;
+        }
+
+        /* Trend dot */
+        @keyframes rrDot {
+            from {
+                transform: scale(0);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .rr-td {
+            opacity: 0;
+            transform-origin: 126px 36px;
+        }
+
+        .rr-td.go {
+            animation: rrDot 0.3s ease-out 2.15s forwards;
+        }
+
+        /*
+  BAR ANIMATION
+  Each bar wrapped in <g translate(x, BASELINE)>
+  Rect inside: y = -(height), height = height  →  sits ON baseline
+  scaleY(0→1) with transform-origin at local (0,0) = baseline = grows UP correctly
+*/
+        @keyframes rrBar {
+            from {
+                transform: scaleY(0);
+            }
+
+            to {
+                transform: scaleY(1);
+            }
+        }
+
+        .rr-bg {
+            transform-origin: 0 0;
+            transform: scaleY(0);
+        }
+
+        .rr-bg.go {
+            animation: rrBar 0.55s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+        }
+
+        .rr-bg.go:nth-child(1) {
+            animation-delay: 0.50s;
+        }
+
+        .rr-bg.go:nth-child(2) {
+            animation-delay: 0.63s;
+        }
+
+        .rr-bg.go:nth-child(3) {
+            animation-delay: 0.76s;
+        }
+
+        .rr-bg.go:nth-child(4) {
+            animation-delay: 0.89s;
+        }
+
+        .rr-bg.go:nth-child(5) {
+            animation-delay: 1.02s;
+        }
+
+        /* Stats row animation */
+        @keyframes rrStatIn {
+            from {
+                opacity: 0;
+                transform: translateY(6px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .rr-stat {
+            opacity: 0;
+        }
+
+        .rr-stat.go {
+            animation: rrStatIn 0.4s ease-out both;
+        }
+
+        .rr-stat.go:nth-child(1) {
+            animation-delay: 1.6s;
+        }
+
+        .rr-stat.go:nth-child(2) {
+            animation-delay: 1.75s;
+        }
+
+        .rr-stat.go:nth-child(3) {
+            animation-delay: 1.9s;
+        }
+
+        /* Responsive */
+        @media (max-width: 960px) {
+            .rr-grid {
+                grid-template-columns: 1fr;
+                gap: 44px;
+            }
+
+            .rr-section {
+                padding: 56px 24px;
+            }
+
+            .rr-heading {
+                font-size: 25px;
+            }
+        }
+
+        @media (max-width: 540px) {
+            .rr-benefits {
+                grid-template-columns: 1fr;
+            }
+
+            .rr-heading {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- copy bar -->
+    <div class="copy-bar">
+        <span class="copy-label">rankraze-seo-block.html — developer-ready</span>
+        <button class="btn-copy" onclick="copyCode()">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                <rect x="5" y="5" width="9" height="9" rx="2" stroke="white" stroke-width="1.4" />
+                <path d="M11 5V3a2 2 0 0 0-2-2H3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2" stroke="white" stroke-width="1.4"
+                    stroke-linecap="round" />
+            </svg>
+            Copy Code
+        </button>
+    </div>
+
+    <!-- ══════════ SEO SECTION ══════════ -->
+    <section class="rr-section" id="rr-section">
+        <div class="rr-grid">
+
+            <!-- ═══ LEFT — Illustration ═══ -->
+            <div class="rr-visual" id="rr-visual">
+                <div class="rr-svg-wrap">
+                    <!--
+          LAYOUT MAP  (viewBox 0 0 560 520)
+          ─────────────────────────────────
+          Main browser card:      x=0  y=0   w=560 h=520  rx=20
+          Browser chrome bar:     y=0  h=52
+          URL bar:                inside chrome
+
+          BLOCK A — Organic Traffic card (top-left, clean, no overlap)
+            Position: x=20 y=62   w=200 h=148
+            Baseline for bars: y=62+148-28 = 182  → inside card: y=120
+            Bar area: y=38..120 (82px tall)
+            Bars: 5 bars, width=22, gap=10 → total=(5*22)+(4*10)=150, start x=20
+              Bar1 cx=20  h=44  → g translate(20,120)
+              Bar2 cx=42  h=60  → g translate(42,120) — wait, spacing:
+              barX: 20,52,84,116,148   (step=32 = 22bar+10gap)
+
+          BLOCK B — Google results (right of card, y=62)
+            Position: x=236 y=62  w=304 h=148
+            3 result rows inside
+
+          BLOCK C — Stats strip (full width below)
+            Position: x=20 y=226 w=520 h=60  rx=12
+
+          BLOCK D — Keyword rankings card (bottom-left)
+            Position: x=20 y=302  w=248 h=88
+
+          BLOCK E — Mini score card (bottom-right)
+            Position: x=284 y=302  w=256 h=88
+        -->
+                    <svg viewBox="0 0 560 410" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true">
+
+                        <!-- ── Outer shell ── -->
+                        <rect x="0" y="0" width="560" height="410" rx="20" fill="#ffffff" />
+                        <rect x="0" y="0" width="560" height="410" rx="20" stroke="#c8ede4" stroke-width="1.5" />
+
+                        <!-- ── Browser chrome ── -->
+                        <rect x="0" y="0" width="560" height="48" rx="20" fill="#f4fcf9" />
+                        <rect x="0" y="32" width="560" height="16" fill="#f4fcf9" />
+                        <!-- traffic light dots -->
+                        <circle cx="28" cy="24" r="5.5" fill="#f5c2b4" />
+                        <circle cx="44" cy="24" r="5.5" fill="#f5e0a0" />
+                        <circle cx="60" cy="24" r="5.5" fill="#a8e8d4" />
+                        <!-- URL bar -->
+                        <rect x="80" y="15" width="320" height="18" rx="9" fill="#e4f5ef" />
+                        <text x="240" y="28" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9"
+                            fill="#3cba99" font-weight="500">google.com/search?q=seo+services+chennai</text>
+
+                        <!-- ══════════════════════════════════
+               BLOCK A — ORGANIC TRAFFIC CARD
+               x=16 y=58  w=200 h=150
+               bar baseline (local) = y=110
+               bars sit on y=110, grow upward
+          ══════════════════════════════════ -->
+                        <g class="rr-fc">
+                            <rect x="16" y="58" width="200" height="150" rx="12" fill="#ffffff" stroke="#c8ede4"
+                                stroke-width="1.5" />
+                            <!-- title -->
+                            <text x="28" y="78" font-family="Sora,sans-serif" font-size="10" font-weight="700"
+                                fill="#0a2218">Organic Traffic</text>
+                            <!-- growth badge -->
+                            <rect x="138" y="66" width="64" height="20" rx="10" fill="#edf9f6" />
+                            <text x="170" y="80" text-anchor="middle" font-family="Sora,sans-serif" font-size="9.5"
+                                font-weight="700" fill="#3cba99">↑ 214%</text>
+
+                            <!-- Baseline axis: y=58+110=168 in outer coords (local y=110) -->
+                            <line x1="20" y1="168" x2="212" y2="168" stroke="#e0f0ea" stroke-width="1" />
+
+                            <!--
+              Bars: 5 bars, barW=22, gap=8, startX=24 (local)
+              barX locals: 24, 54, 84, 114, 144
+              Heights (px from baseline upward): 32, 48, 40, 62, 76
+
+              Each bar-g: translate(localX, 110)  — baseline at local y=110
+              Rect: y=-(height), height=height  → renders above baseline
+              transform-origin:0 0 on the <g> = bottom of bar = correct scale pivot
+            -->
+                            <g id="rr-bars">
+                                <!-- bar 1: x=24 h=32 -->
+                                <g class="rr-bg" transform="translate(40,168)">
+                                    <rect x="0" y="-32" width="22" height="32" rx="3" fill="#c5f0e4" />
+                                </g>
+                                <!-- bar 2: x=54 h=48 -->
+                                <g class="rr-bg" transform="translate(70,168)">
+                                    <rect x="0" y="-48" width="22" height="48" rx="3" fill="#9ae3cc" />
+                                </g>
+                                <!-- bar 3: x=84 h=40 -->
+                                <g class="rr-bg" transform="translate(100,168)">
+                                    <rect x="0" y="-40" width="22" height="40" rx="3" fill="#6dd4b5" />
+                                </g>
+                                <!-- bar 4: x=114 h=62 -->
+                                <g class="rr-bg" transform="translate(130,168)">
+                                    <rect x="0" y="-62" width="22" height="62" rx="3" fill="#3cba99" />
+                                </g>
+                                <!-- bar 5: x=144 h=76 -->
+                                <g class="rr-bg" transform="translate(160,168)">
+                                    <rect x="0" y="-76" width="22" height="76" rx="3" fill="#2ea882" />
+                                </g>
+                            </g>
+
+                            <!--
+              Trend line: connects center-top of each bar
+              bar center = barX + 11
+              bar top in outer coords = 168 - height
+              Points (outer SVG coords):
+                Bar1: 40+11=51,  168-32=136
+                Bar2: 70+11=81,  168-48=120
+                Bar3: 100+11=111,168-40=128
+                Bar4: 130+11=141,168-62=106
+                Bar5: 160+11=171,168-76=92
+            -->
+                            <polyline class="rr-tl" points="51,136 81,120 111,128 141,106 171,92" stroke="#0f6e56"
+                                stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+                            <circle class="rr-td" cx="171" cy="92" r="4" fill="#0f6e56" />
+
+                            <!-- Month labels (y=58+135=193 outer → local y=135 → outer absolute) -->
+                            <text x="40" y="182" font-family="DM Sans,sans-serif" font-size="7.5" fill="#7ab8ac"
+                                text-anchor="middle">Jan</text>
+                            <text x="70" y="182" font-family="DM Sans,sans-serif" font-size="7.5" fill="#7ab8ac"
+                                text-anchor="middle">Feb</text>
+                            <text x="100" y="182" font-family="DM Sans,sans-serif" font-size="7.5" fill="#7ab8ac"
+                                text-anchor="middle">Mar</text>
+                            <text x="130" y="182" font-family="DM Sans,sans-serif" font-size="7.5" fill="#7ab8ac"
+                                text-anchor="middle">Apr</text>
+                            <text x="160" y="182" font-family="DM Sans,sans-serif" font-size="7.5" fill="#3cba99"
+                                font-weight="700" text-anchor="middle">May</text>
+                        </g>
+
+                        <!-- ══════════════════════════════════
+               BLOCK B — GOOGLE RESULTS
+               x=232 y=58  w=312 h=150
+          ══════════════════════════════════ -->
+                        <g transform="translate(232,58)">
+                            <!-- #1 Rankraze -->
+                            <rect x="0" y="0" width="312" height="62" rx="10" fill="#edf9f6" stroke="#3cba99"
+                                stroke-width="1.5" />
+                            <g class="rr-badge">
+                                <rect x="8" y="10" width="32" height="21" rx="10.5" fill="#3cba99" />
+                                <text x="24" y="25" text-anchor="middle" font-family="Sora,sans-serif" font-size="10"
+                                    font-weight="700" fill="#ffffff">#1</text>
+                            </g>
+                            <text x="50" y="22" font-family="Sora,sans-serif" font-size="11" font-weight="700"
+                                fill="#0a2218">rankraze.com › seo-company-chennai</text>
+                            <text x="50" y="37" font-family="DM Sans,sans-serif" font-size="10" fill="#1c3d34">SEO
+                                Services Chennai – Data-Driven Ranking Strategies</text>
+                            <text x="50" y="52" font-family="DM Sans,sans-serif" font-size="8.5" fill="#5fa898">Improve
+                                visibility · Attract traffic · Generate leads</text>
+                            <text x="272" y="21" font-family="DM Sans,sans-serif" font-size="10"
+                                fill="#f59a23">★★★★★</text>
+
+                            <!-- #2 -->
+                            <rect x="0" y="70" width="312" height="36" rx="8" fill="#fafafa" stroke="#e8eeec"
+                                stroke-width="1" />
+                            <rect x="8" y="78" width="26" height="16" rx="8" fill="#edf0fc" />
+                            <text x="21" y="90" text-anchor="middle" font-family="Sora,sans-serif" font-size="9"
+                                font-weight="600" fill="#534ab7">#2</text>
+                            <text x="42" y="89" font-family="DM Sans,sans-serif" font-size="9.5"
+                                fill="#6e8a85">competitor1.com › digital-marketing</text>
+                            <text x="42" y="101" font-family="DM Sans,sans-serif" font-size="8.5" fill="#b0c8c4">SEO
+                                Agency in Chennai | Organic Growth</text>
+
+                            <!-- #3 -->
+                            <rect x="0" y="114" width="312" height="36" rx="8" fill="#fafafa" stroke="#e8eeec"
+                                stroke-width="1" />
+                            <rect x="8" y="122" width="26" height="16" rx="8" fill="#f1f4f0" />
+                            <text x="21" y="134" text-anchor="middle" font-family="Sora,sans-serif" font-size="9"
+                                font-weight="600" fill="#3b6d11">#3</text>
+                            <text x="42" y="133" font-family="DM Sans,sans-serif" font-size="9.5"
+                                fill="#6e8a85">agency2.in › seo-services</text>
+                            <text x="42" y="145" font-family="DM Sans,sans-serif" font-size="8.5" fill="#b0c8c4">Top SEO
+                                Company Chennai – Affordable Plans</text>
+                        </g>
+
+                        <!-- ══════════════════════════════════
+               BLOCK C — STATS STRIP
+               x=16 y=224  w=528 h=54
+          ══════════════════════════════════ -->
+                        <g transform="translate(16,224)">
+                            <rect x="0" y="0" width="528" height="54" rx="12" fill="#ffffff" stroke="#c8ede4"
+                                stroke-width="1" />
+
+                            <!-- 3 stats evenly spaced -->
+                            <!-- dividers -->
+                            <line x1="176" y1="12" x2="176" y2="42" stroke="#e4f5ef" stroke-width="1" />
+                            <line x1="352" y1="12" x2="352" y2="42" stroke="#e4f5ef" stroke-width="1" />
+
+                            <g class="rr-stat" id="stat1">
+                                <text x="88" y="26" text-anchor="middle" font-family="Sora,sans-serif" font-size="15"
+                                    font-weight="700" fill="#3cba99">233K+</text>
+                                <text x="88" y="42" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9"
+                                    fill="#7ab8ac">Leads Delivered</text>
+                            </g>
+                            <g class="rr-stat" id="stat2">
+                                <text x="264" y="26" text-anchor="middle" font-family="Sora,sans-serif" font-size="15"
+                                    font-weight="700" fill="#3cba99">2,000+</text>
+                                <text x="264" y="42" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9"
+                                    fill="#7ab8ac">Trusted Brands</text>
+                            </g>
+                            <g class="rr-stat" id="stat3">
+                                <text x="440" y="26" text-anchor="middle" font-family="Sora,sans-serif" font-size="15"
+                                    font-weight="700" fill="#3cba99">15+ Yrs</text>
+                                <text x="440" y="42" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9"
+                                    fill="#7ab8ac">SEO Expertise</text>
+                            </g>
+                        </g>
+
+                        <!-- ══════════════════════════════════
+               BLOCK D — KEYWORD RANKINGS
+               x=16 y=294  w=256 h=100
+          ══════════════════════════════════ -->
+                        <g transform="translate(16,294)">
+                            <rect x="0" y="0" width="256" height="100" rx="12" fill="#ffffff" stroke="#c8ede4"
+                                stroke-width="1.5" />
+                            <text x="16" y="22" font-family="Sora,sans-serif" font-size="10" font-weight="700"
+                                fill="#0a2218">Keyword Rankings</text>
+
+                            <!-- row 1 -->
+                            <rect x="16" y="30" width="74" height="17" rx="8.5" fill="#edf9f6" />
+                            <text x="53" y="42.5" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="8.5"
+                                fill="#0f6e56" font-weight="500">seo chennai</text>
+                            <text x="100" y="42.5" font-family="DM Sans,sans-serif" font-size="8.5"
+                                fill="#9ab8b4">position</text>
+                            <text x="210" y="43" font-family="Sora,sans-serif" font-size="14" font-weight="700"
+                                fill="#3cba99">#1</text>
+
+                            <!-- divider -->
+                            <line x1="16" y1="56" x2="240" y2="56" stroke="#edf9f6" stroke-width="1" />
+
+                            <!-- row 2 -->
+                            <rect x="16" y="64" width="98" height="17" rx="8.5" fill="#f1f4f0" />
+                            <text x="65" y="76.5" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="8.5"
+                                fill="#3b6d11" font-weight="500">digital mktg agency</text>
+                            <text x="124" y="76.5" font-family="DM Sans,sans-serif" font-size="8.5"
+                                fill="#9ab8b4">position</text>
+                            <text x="210" y="77" font-family="Sora,sans-serif" font-size="14" font-weight="700"
+                                fill="#3cba99">#3</text>
+
+                            <!-- row 3 -->
+                            <line x1="16" y1="90" x2="240" y2="90" stroke="#edf9f6" stroke-width="1" />
+                            <rect x="16" y="30" width="0" height="0" rx="0" fill="none" /><!-- spacer -->
+                        </g>
+
+                        <!-- ══════════════════════════════════
+               BLOCK E — SEO SCORE CARD
+               x=288 y=294  w=256 h=100
+          ══════════════════════════════════ -->
+                        <g transform="translate(288,294)">
+                            <rect x="0" y="0" width="256" height="100" rx="12" fill="#edf9f6" stroke="#c8ede4"
+                                stroke-width="1.5" />
+                            <text x="16" y="22" font-family="Sora,sans-serif" font-size="10" font-weight="700"
+                                fill="#0a2218">SEO Health Score</text>
+
+                            <!-- Score ring visual (simplified arc) -->
+                            <circle cx="48" cy="64" r="28" stroke="#e0f0ea" stroke-width="6" fill="none" />
+                            <!-- arc: 92% of 2πr ≈ stroke-dasharray = circumference * 0.92 -->
+                            <circle cx="48" cy="64" r="28" stroke="#3cba99" stroke-width="6" fill="none"
+                                stroke-dasharray="161.7 175.9" stroke-dashoffset="44" stroke-linecap="round"
+                                transform="rotate(-90 48 64)" />
+                            <text x="48" y="61" text-anchor="middle" font-family="Sora,sans-serif" font-size="13"
+                                font-weight="700" fill="#0a2218">92</text>
+                            <text x="48" y="73" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="7.5"
+                                fill="#7ab8ac">/ 100</text>
+
+                            <!-- Side metrics -->
+                            <g transform="translate(88,30)">
+                                <rect x="0" y="0" width="76" height="28" rx="8" fill="#ffffff" />
+                                <text x="38" y="13" text-anchor="middle" font-family="Sora,sans-serif" font-size="10"
+                                    font-weight="700" fill="#3cba99">97%</text>
+                                <text x="38" y="24" text-anchor="middle" font-family="DM Sans,sans-serif"
+                                    font-size="7.5" fill="#7ab8ac">On-Page</text>
+                            </g>
+                            <g transform="translate(172,30)">
+                                <rect x="0" y="0" width="68" height="28" rx="8" fill="#ffffff" />
+                                <text x="34" y="13" text-anchor="middle" font-family="Sora,sans-serif" font-size="10"
+                                    font-weight="700" fill="#3cba99">88%</text>
+                                <text x="34" y="24" text-anchor="middle" font-family="DM Sans,sans-serif"
+                                    font-size="7.5" fill="#7ab8ac">Technical</text>
+                            </g>
+                            <g transform="translate(88,66)">
+                                <rect x="0" y="0" width="76" height="28" rx="8" fill="#ffffff" />
+                                <text x="38" y="13" text-anchor="middle" font-family="Sora,sans-serif" font-size="10"
+                                    font-weight="700" fill="#3cba99">94%</text>
+                                <text x="38" y="24" text-anchor="middle" font-family="DM Sans,sans-serif"
+                                    font-size="7.5" fill="#7ab8ac">Backlinks</text>
+                            </g>
+                            <g transform="translate(172,66)">
+                                <rect x="0" y="0" width="68" height="28" rx="8" fill="#ffffff" />
+                                <text x="34" y="13" text-anchor="middle" font-family="Sora,sans-serif" font-size="10"
+                                    font-weight="700" fill="#3cba99">91%</text>
+                                <text x="34" y="24" text-anchor="middle" font-family="DM Sans,sans-serif"
+                                    font-size="7.5" fill="#7ab8ac">Content</text>
+                            </g>
+                        </g>
+
+                    </svg>
+                </div>
+            </div>
+
+            <!-- ═══ RIGHT — Content ═══ -->
+            <div class="rr-content" id="rr-content">
+                <div class="rr-label">
+                    <span class="rr-label-dot"></span>
+                    SEO Services
+                </div>
+
+                <h2 class="rr-heading">
+                    SEO Services That Help Chennai Businesses <em>Rank on Google</em>
+                </h2>
+
+                <p class="rr-body">
+                    If your customers are searching online and your business isn't appearing on the first page, you're
+                    losing valuable opportunities. At Rankraze, we provide data-driven SEO services in Chennai designed
+                    to improve your website's visibility, attract qualified traffic, and generate consistent leads. Our
+                    SEO specialists combine technical optimization, strategic keyword research, and high-quality content
+                    strategies to help businesses grow organically and stay ahead of competitors in search results.
+                </p>
+
+                <ul class="rr-benefits">
+                    <li>
+                        <span class="rr-chk"><svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+                                <polyline points="1,4 3.5,6.5 9,1" stroke="#fff" stroke-width="1.7"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg></span>
+                        Strategic keyword research and competitor analysis
+                    </li>
+                    <li>
+                        <span class="rr-chk"><svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+                                <polyline points="1,4 3.5,6.5 9,1" stroke="#fff" stroke-width="1.7"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg></span>
+                        On-page and technical SEO optimization
+                    </li>
+                    <li>
+                        <span class="rr-chk"><svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+                                <polyline points="1,4 3.5,6.5 9,1" stroke="#fff" stroke-width="1.7"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg></span>
+                        High-quality content and authority building
+                    </li>
+                    <li>
+                        <span class="rr-chk"><svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+                                <polyline points="1,4 3.5,6.5 9,1" stroke="#fff" stroke-width="1.7"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg></span>
+                        Sustainable organic traffic growth
+                    </li>
+                </ul>
+
+                <div class="rr-icon-row">
+                    <span class="rr-pill">
+                        <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
+                            <circle cx="6.5" cy="6.5" r="4.5" class="pi" stroke-width="1.5" />
+                            <line x1="10.2" y1="10.2" x2="14" y2="14" class="pi" stroke-width="1.5"
+                                stroke-linecap="round" />
+                        </svg>
+                        Keyword Research
+                    </span>
+                    <span class="rr-pill">
+                        <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
+                            <rect x="2" y="2" width="12" height="12" rx="2" class="pi" stroke-width="1.5" />
+                            <line x1="5" y1="5.5" x2="11" y2="5.5" class="pi" stroke-width="1.4"
+                                stroke-linecap="round" />
+                            <line x1="5" y1="8" x2="11" y2="8" class="pi" stroke-width="1.4" stroke-linecap="round" />
+                            <line x1="5" y1="10.5" x2="8.5" y2="10.5" class="pi" stroke-width="1.4"
+                                stroke-linecap="round" />
+                        </svg>
+                        Technical SEO
+                    </span>
+                    <span class="rr-pill">
+                        <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
+                            <polyline points="2,13 6,8 9,11 14,4" class="pi" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <polyline points="11,4 14,4 14,7" class="pi" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                        Ranking Growth
+                    </span>
+                    <span class="rr-pill">
+                        <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
+                            <path d="M8 2C10.5 3.5 13 4 14 8C13 12 10.5 13.5 8 14C5.5 13.5 3 12 2 8C3 4 5.5 3.5 8 2Z"
+                                class="pi" stroke-width="1.5" />
+                            <circle cx="8" cy="8" r="2.2" class="pi" stroke-width="1.5" />
+                        </svg>
+                        Authority Building
+                    </span>
+                </div>
+
+                <a class="rr-cta" href="https://rankraze.com/seo-company-chennai">
+                    Learn More <span class="rr-arrow">→</span> SEO Services in Chennai
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="toast" id="toast">✓ Code copied to clipboard!</div>
+
+    <script>
+        (function () {
+            var section = document.getElementById('rr-section');
+            var visual = document.getElementById('rr-visual');
+            var content = document.getElementById('rr-content');
+            var bars = document.querySelectorAll('.rr-bg');
+            var trendL = document.querySelector('.rr-tl');
+            var trendD = document.querySelector('.rr-td');
+            var stats = document.querySelectorAll('.rr-stat');
+            var fired = false;
+
+            function trigger() {
+                if (fired) return; fired = true;
+                if (visual) visual.classList.add('rr-in');
+                if (content) content.classList.add('rr-in');
+                bars.forEach(function (b) { b.classList.add('go'); });
+                if (trendL) trendL.classList.add('go');
+                if (trendD) trendD.classList.add('go');
+                stats.forEach(function (s) { s.classList.add('go'); });
+            }
+
+            if ('IntersectionObserver' in window) {
+                var io = new IntersectionObserver(function (e) {
+                    if (e[0].isIntersecting) { trigger(); io.disconnect(); }
+                }, { threshold: 0.1 });
+                io.observe(section);
+            } else { trigger(); }
+        })();
+
+        function copyCode() {
+            var styles = document.querySelector('style').textContent;
+            var fonts = '<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet"/>\n';
+            var html = document.getElementById('rr-section').outerHTML;
+            var js = document.querySelector('script:not([src])').textContent;
+            var full = '<!-- ═══ Rankraze SEO Section Block ═══ -->\n' + fonts +
+                '<style>\n' + styles + '\n</style>\n\n' + html +
+                '\n\n<script>\n' + js + '\n<\/script>';
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(full).then(showToast);
+            } else {
+                var ta = document.createElement('textarea');
+                ta.value = full; ta.style.cssText = 'position:fixed;opacity:0';
+                document.body.appendChild(ta); ta.select();
+                document.execCommand('copy'); document.body.removeChild(ta);
+                showToast();
+            }
+        }
+        function showToast() {
+            var t = document.getElementById('toast');
+            t.classList.add('show');
+            setTimeout(function () { t.classList.remove('show'); }, 2500);
+        }
+    </script>
+</body>
+
+</html>
