@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rankraze — Why Choose Us</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;1,400&display=swap"
+        rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: #ffffff;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* ════════════════════════════════════════════
+   SECTION SHELL
+   Pure white — distinct from the tinted service
+   sections. Centred layout, NOT a two-column split.
+════════════════════════════════════════════ */
+        .wc-sec {
+            background: #ffffff;
+            padding: 108px 48px 80px;
+            position: relative;
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Diagonal background accent — grid of faint dots */
+        .wc-sec::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(circle, rgba(60, 186, 153, .14) 1.5px, transparent 1.5px);
+            background-size: 36px 36px;
+            opacity: .35;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Large tinted arc in the top-right */
+        .wc-sec::after {
+            content: '';
+            position: absolute;
+            top: -200px;
+            right: -200px;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(60, 186, 153, .07) 0%, transparent 65%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .wc-inner {
+            max-width: 1120px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ════════════════════════════════════════════
+   HEADER — centred, pill + H2 + body paragraph
+════════════════════════════════════════════ */
+        .wc-header {
+            text-align: center;
+            max-width: 780px;
+            margin: 0 auto 64px;
+        }
+
+        .wc-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #fff;
+            border: 1.5px solid #3cba99;
+            color: #0f6e56;
+            font-family: 'Sora', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .09em;
+            text-transform: uppercase;
+            padding: 6px 18px;
+            border-radius: 100px;
+            margin-bottom: 24px;
+            box-shadow: 0 0 0 5px rgba(60, 186, 153, .07);
+        }
+
+        .wc-dot {
+            width: 7px;
+            height: 7px;
+            background: #3cba99;
+            border-radius: 50%;
+            flex-shrink: 0;
+            animation: wcDot 2.2s ease-in-out infinite;
+        }
+
+        @keyframes wcDot {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 1
+            }
+
+            50% {
+                transform: scale(1.5);
+                opacity: .5
+            }
+        }
+
+        .wc-h2 {
+            font-family: 'Sora', sans-serif;
+            font-size: 40px;
+            font-weight: 800;
+            color: #0a2218;
+            line-height: 1.16;
+            letter-spacing: -.032em;
+            margin-bottom: 20px;
+        }
+
+        .wc-h2 em {
+            font-style: normal;
+            color: #3cba99;
+        }
+
+        .wc-sub {
+            font-size: 15.5px;
+            color: #3a5550;
+            line-height: 1.82;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* ════════════════════════════════════════════
+   STATS ROW — 4 key numbers above the cards
+════════════════════════════════════════════ */
+        .wc-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+            border: 1.5px solid #c8ede4;
+            border-radius: 16px;
+            background: #ffffff;
+            margin-bottom: 52px;
+            overflow: hidden;
+            box-shadow: 0 4px 24px rgba(60, 186, 153, .08);
+        }
+
+        .wc-stat {
+            padding: 28px 24px;
+            text-align: center;
+            position: relative;
+        }
+
+        .wc-stat+.wc-stat::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 20%;
+            bottom: 20%;
+            width: 1px;
+            background: #ddf0ea;
+        }
+
+        .wc-stat-num {
+            font-family: 'Sora', sans-serif;
+            font-size: 36px;
+            font-weight: 800;
+            color: #3cba99;
+            line-height: 1;
+            margin-bottom: 8px;
+            /* count-up: managed via JS */
+        }
+
+        .wc-stat-label {
+            font-size: 13px;
+            color: #7ab8ac;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        /* ════════════════════════════════════════════
+   CARDS GRID — 2 × 2
+════════════════════════════════════════════ */
+        .wc-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin-bottom: 56px;
+        }
+
+        .wc-card {
+            background: #ffffff;
+            border: 1.5px solid #c8ede4;
+            border-radius: 20px;
+            padding: 36px 36px 32px;
+            position: relative;
+            overflow: hidden;
+            transition: transform .28s cubic-bezier(.22, .61, .36, 1),
+                box-shadow .28s cubic-bezier(.22, .61, .36, 1),
+                border-color .28s;
+            cursor: default;
+            /* reveal state */
+            opacity: 0;
+            transform: translateY(24px);
+        }
+
+        .wc-card.wc-in {
+            animation: wcCardIn .6s cubic-bezier(.22, .61, .36, 1) both;
+        }
+
+        .wc-card.wc-in:nth-child(1) {
+            animation-delay: .05s;
+        }
+
+        .wc-card.wc-in:nth-child(2) {
+            animation-delay: .18s;
+        }
+
+        .wc-card.wc-in:nth-child(3) {
+            animation-delay: .31s;
+        }
+
+        .wc-card.wc-in:nth-child(4) {
+            animation-delay: .44s;
+        }
+
+        @keyframes wcCardIn {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Top accent bar — hidden until hover */
+        .wc-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #3cba99, #9ae3cc, #3cba99);
+            background-size: 200% 100%;
+            animation: shimmerBar 3s linear infinite;
+            opacity: 0;
+            transition: opacity .28s;
+        }
+
+        @keyframes shimmerBar {
+            0% {
+                background-position: 100% 0
+            }
+
+            100% {
+                background-position: -100% 0
+            }
+        }
+
+        .wc-card:hover::before {
+            opacity: 1;
+        }
+
+        /* Background glow on hover */
+        .wc-card::after {
+            content: '';
+            position: absolute;
+            bottom: -60px;
+            right: -60px;
+            width: 180px;
+            height: 180px;
+            background: radial-gradient(circle, rgba(60, 186, 153, .09) 0%, transparent 70%);
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity .28s;
+            pointer-events: none;
+        }
+
+        .wc-card:hover {
+            border-color: #3cba99;
+            transform: translateY(-6px);
+            box-shadow: 0 20px 48px rgba(60, 186, 153, .16);
+        }
+
+        .wc-card:hover::after {
+            opacity: 1;
+        }
+
+        /* Number badge */
+        .wc-num {
+            position: absolute;
+            top: 28px;
+            right: 32px;
+            font-family: 'Sora', sans-serif;
+            font-size: 52px;
+            font-weight: 800;
+            color: rgba(60, 186, 153, .08);
+            line-height: 1;
+            letter-spacing: -.04em;
+            user-select: none;
+            pointer-events: none;
+            transition: color .28s;
+        }
+
+        .wc-card:hover .wc-num {
+            color: rgba(60, 186, 153, .14);
+        }
+
+        /* Icon box */
+        .wc-icon {
+            width: 52px;
+            height: 52px;
+            background: #edf9f6;
+            border: 1.5px solid #c8ede4;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+            transition: background .25s, border-color .25s, transform .25s;
+            position: relative;
+            z-index: 1;
+        }
+
+        .wc-card:hover .wc-icon {
+            background: #3cba99;
+            border-color: #3cba99;
+            transform: scale(1.1) rotate(-4deg);
+        }
+
+        /* Card title */
+        .wc-ctitle {
+            font-family: 'Sora', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: #0a2218;
+            line-height: 1.28;
+            margin-bottom: 12px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Card body */
+        .wc-cbody {
+            font-size: 14.5px;
+            color: #3a5550;
+            line-height: 1.78;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Keyword tags inside card */
+        .wc-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+            margin-top: 18px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .wc-tag {
+            font-size: 11.5px;
+            font-weight: 600;
+            color: #0f6e56;
+            background: #edf9f6;
+            border: 1px solid rgba(60, 186, 153, .28);
+            border-radius: 100px;
+            padding: 4px 12px;
+            transition: background .18s, color .18s;
+        }
+
+        .wc-card:hover .wc-tag {
+            background: rgba(60, 186, 153, .12);
+            border-color: rgba(60, 186, 153, .4);
+        }
+
+        /* ════════════════════════════════════════════
+   MISSION STATEMENT BANNER
+════════════════════════════════════════════ */
+        .wc-mission {
+            text-align: center;
+            background: #edf9f6;
+            border: 1.5px solid #c8ede4;
+            border-radius: 16px;
+            padding: 36px 48px;
+            margin-bottom: 48px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wc-mission::before {
+            content: '“';
+            position: absolute;
+            top: -20px;
+            left: 32px;
+            font-family: 'Sora', sans-serif;
+            font-size: 120px;
+            font-weight: 800;
+            color: rgba(60, 186, 153, .12);
+            line-height: 1;
+            pointer-events: none;
+        }
+
+        .wc-mission-text {
+            font-family: 'Sora', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: #0a2218;
+            line-height: 1.45;
+            letter-spacing: -.018em;
+            max-width: 740px;
+            margin: 0 auto;
+        }
+
+        .wc-mission-text em {
+            font-style: normal;
+            color: #3cba99;
+        }
+
+        /* ════════════════════════════════════════════
+   TRUST BADGES STRIP
+════════════════════════════════════════════ */
+        .wc-trust {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        .wc-badge {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: #ffffff;
+            border: 1.5px solid #c8ede4;
+            border-radius: 14px;
+            padding: 18px 20px;
+            transition: border-color .22s, box-shadow .22s, transform .22s;
+            opacity: 0;
+            transform: translateY(16px);
+        }
+
+        .wc-badge.wc-in {
+            animation: wcCardIn .5s cubic-bezier(.22, .61, .36, 1) both;
+        }
+
+        .wc-badge.wc-in:nth-child(1) {
+            animation-delay: .6s;
+        }
+
+        .wc-badge.wc-in:nth-child(2) {
+            animation-delay: .72s;
+        }
+
+        .wc-badge.wc-in:nth-child(3) {
+            animation-delay: .84s;
+        }
+
+        .wc-badge.wc-in:nth-child(4) {
+            animation-delay: .96s;
+        }
+
+        .wc-badge:hover {
+            border-color: #3cba99;
+            box-shadow: 0 8px 24px rgba(60, 186, 153, .12);
+            transform: translateY(-3px);
+        }
+
+        .wc-badge-icon {
+            width: 44px;
+            height: 44px;
+            min-width: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+
+        .bi-gold {
+            background: #fff8e8;
+            border: 1.5px solid #f5e0a0;
+        }
+
+        .bi-award {
+            background: #edf9f6;
+            border: 1.5px solid #c8ede4;
+        }
+
+        .bi-globe {
+            background: #e8f0f8;
+            border: 1.5px solid #b5d4f4;
+        }
+
+        .bi-ai {
+            background: #eeedfe;
+            border: 1.5px solid #cecbf6;
+        }
+
+        .wc-badge-text {}
+
+        .wc-badge-title {
+            font-family: 'Sora', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            color: #0a2218;
+            line-height: 1.25;
+            margin-bottom: 3px;
+        }
+
+        .wc-badge-sub {
+            font-size: 12px;
+            color: #7ab8ac;
+            line-height: 1.3;
+        }
+
+        /* ════════════════════════════════════════════
+   SCROLL REVEAL
+════════════════════════════════════════════ */
+        .rv-up {
+            opacity: 0;
+            transform: translateY(28px);
+            will-change: opacity, transform;
+            transition: opacity .82s cubic-bezier(.22, .61, .36, 1),
+                transform .82s cubic-bezier(.22, .61, .36, 1);
+        }
+
+        .rv-up.in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* COUNT-UP */
+        .wc-stat-num[data-target] {
+            opacity: 0;
+            transition: opacity .4s ease;
+        }
+
+        .wc-stat-num[data-target].visible {
+            opacity: 1;
+        }
+
+        /* COPY BTN */
+        .rr-copy-btn {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            z-index: 999;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #0a2218;
+            color: #fff;
+            border: none;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            padding: 11px 20px;
+            border-radius: 100px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(10, 34, 24, .22);
+            transition: background .18s, transform .15s;
+        }
+
+        .rr-copy-btn:hover {
+            background: #3cba99;
+            transform: translateY(-2px);
+        }
+
+        .rr-toast {
+            position: fixed;
+            bottom: 80px;
+            right: 28px;
+            z-index: 1000;
+            background: #0f6e56;
+            color: #fff;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            padding: 10px 18px;
+            border-radius: 10px;
+            opacity: 0;
+            transform: translateY(6px);
+            transition: opacity .22s, transform .22s;
+            pointer-events: none;
+        }
+
+        .rr-toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* RESPONSIVE */
+        @media(max-width:980px) {
+            .wc-sec {
+                padding: 80px 24px 64px;
+            }
+
+            .wc-h2 {
+                font-size: 30px;
+            }
+
+            .wc-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .wc-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .wc-trust {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media(max-width:560px) {
+            .wc-h2 {
+                font-size: 24px;
+            }
+
+            .wc-stats {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .wc-trust {
+                grid-template-columns: 1fr;
+            }
+
+            .wc-mission {
+                padding: 28px 24px;
+            }
+
+            .wc-mission-text {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <section class="wc-sec" id="wc-sec">
+        <div class="wc-inner">
+
+            <!-- ══ HEADER ══ -->
+            <div class="wc-header rv-up" id="wc-hdr">
+                <div class="wc-pill">
+                    <span class="wc-dot"></span>Why Choose Rankraze
+                </div>
+                <h2 class="wc-h2">
+                    Why Businesses Choose <em>Rankraze</em><br>for Digital Growth
+                </h2>
+                <p class="wc-sub">
+                    At Rankraze, we combine strategy, technology, and performance-driven marketing to help businesses
+                    build a strong and scalable online presence. As a leading digital marketing agency in Chennai, our
+                    team focuses on understanding your business model, target audience, and competitive landscape before
+                    developing a growth strategy.
+                </p>
+            </div>
+
+            <!-- ══ STATS ROW ══ -->
+            <div class="wc-stats rv-up" id="wc-stats" style="transition-delay:.1s">
+                <div class="wc-stat">
+                    <div class="wc-stat-num" data-target="233" data-suffix="K+">0</div>
+                    <div class="wc-stat-label">Leads Delivered</div>
+                </div>
+                <div class="wc-stat">
+                    <div class="wc-stat-num" data-target="2000" data-suffix="+">0</div>
+                    <div class="wc-stat-label">Trusted Brands</div>
+                </div>
+                <div class="wc-stat">
+                    <div class="wc-stat-num" data-target="15" data-suffix="+ Yrs">0</div>
+                    <div class="wc-stat-label">Industry Expertise</div>
+                </div>
+                <div class="wc-stat">
+                    <div class="wc-stat-num" data-target="98" data-suffix="%">0</div>
+                    <div class="wc-stat-label">Client Retention Rate</div>
+                </div>
+            </div>
+
+            <!-- ══ CARDS ══ -->
+            <div class="wc-cards" id="wc-cards">
+
+                <div class="wc-card">
+                    <span class="wc-num">01</span>
+                    <div class="wc-icon">&#x1F4CA;</div>
+                    <h3 class="wc-ctitle">Data-Driven Marketing Strategy</h3>
+                    <p class="wc-cbody">We believe successful digital marketing starts with data. By analyzing user
+                        behavior, search trends, and competitive insights, we build marketing strategies that maximize
+                        visibility, improve engagement, and deliver measurable ROI.</p>
+                    <div class="wc-tags">
+                        <span class="wc-tag">Data-Driven Strategy</span>
+                        <span class="wc-tag">Analytics</span>
+                        <span class="wc-tag">ROI Focused</span>
+                    </div>
+                </div>
+
+                <div class="wc-card">
+                    <span class="wc-num">02</span>
+                    <div class="wc-icon">&#x1F3AF;</div>
+                    <h3 class="wc-ctitle">Customized Digital Growth Solutions</h3>
+                    <p class="wc-cbody">Every business is unique, and so are its growth challenges. Our team develops
+                        tailored digital marketing strategies that align with your business goals, ensuring your brand
+                        reaches the right audience at the right time.</p>
+                    <div class="wc-tags">
+                        <span class="wc-tag">Custom Strategy</span>
+                        <span class="wc-tag">Digital Growth</span>
+                        <span class="wc-tag">Audience Targeting</span>
+                    </div>
+                </div>
+
+                <div class="wc-card">
+                    <span class="wc-num">03</span>
+                    <div class="wc-icon">&#x1F4A1;</div>
+                    <h3 class="wc-ctitle">Industry Expertise &amp; Innovation</h3>
+                    <p class="wc-cbody">Our digital marketing experts stay ahead of industry trends, search engine
+                        updates, and emerging technologies. This allows us to implement innovative strategies that keep
+                        your brand competitive in an ever-evolving digital landscape.</p>
+                    <div class="wc-tags">
+                        <span class="wc-tag">SEO Experts</span>
+                        <span class="wc-tag">Innovation</span>
+                        <span class="wc-tag">Industry Leaders</span>
+                    </div>
+                </div>
+
+                <div class="wc-card">
+                    <span class="wc-num">04</span>
+                    <div class="wc-icon">&#x1F680;</div>
+                    <h3 class="wc-ctitle">Results-Driven Execution</h3>
+                    <p class="wc-cbody">At Rankraze, we focus on outcomes that matter. From increasing organic traffic
+                        and improving search rankings to generating qualified leads, every campaign we run is designed
+                        to drive real business growth.</p>
+                    <div class="wc-tags">
+                        <span class="wc-tag">Performance Marketing</span>
+                        <span class="wc-tag">Lead Generation</span>
+                        <span class="wc-tag">Growth</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ══ MISSION BANNER ══ -->
+            <div class="wc-mission rv-up" id="wc-mission" style="transition-delay:.18s">
+                <p class="wc-mission-text">
+                    Our mission is simple &mdash; help brands grow <em>faster, smarter,</em> and more sustainably in the
+                    digital ecosystem.
+                </p>
+            </div>
+
+            <!-- ══ TRUST BADGES ══ -->
+            <div class="wc-trust" id="wc-trust">
+
+                <div class="wc-badge">
+                    <div class="wc-badge-icon bi-gold">&#x2B50;</div>
+                    <div class="wc-badge-text">
+                        <div class="wc-badge-title">Google Partner</div>
+                        <div class="wc-badge-sub">Certified by Google</div>
+                    </div>
+                </div>
+
+                <div class="wc-badge">
+                    <div class="wc-badge-icon bi-award">&#x1F3C6;</div>
+                    <div class="wc-badge-text">
+                        <div class="wc-badge-title">Best Digital Marketing Agency</div>
+                        <div class="wc-badge-sub">Hindustan Times Award</div>
+                    </div>
+                </div>
+
+                <div class="wc-badge">
+                    <div class="wc-badge-icon bi-globe">&#x1F30D;</div>
+                    <div class="wc-badge-text">
+                        <div class="wc-badge-title">Global Presence</div>
+                        <div class="wc-badge-sub">USA &middot; UK &middot; UAE &amp; more</div>
+                    </div>
+                </div>
+
+                <div class="wc-badge">
+                    <div class="wc-badge-icon bi-ai">&#x1F4F1;</div>
+                    <div class="wc-badge-text">
+                        <div class="wc-badge-title">AI-Powered RankAnalytics</div>
+                        <div class="wc-badge-sub">Proprietary AI Platform</div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <button class="rr-copy-btn" onclick="wcCopy()">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+            <rect x="5" y="5" width="9" height="9" rx="2" stroke="currentColor" stroke-width="1.4" />
+            <path d="M11 5V3a2 2 0 0 0-2-2H3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2" stroke="currentColor" stroke-width="1.4"
+                stroke-linecap="round" />
+        </svg>
+        Copy Block
+    </button>
+    <div class="rr-toast" id="rr-toast">&#x2713; Why Choose Us block copied!</div>
+
+    <script>
+        (function () {
+            var sec = document.getElementById('wc-sec');
+            var hdr = document.getElementById('wc-hdr');
+            var stats = document.getElementById('wc-stats');
+            var cards = document.querySelectorAll('.wc-card');
+            var mission = document.getElementById('wc-mission');
+            var badges = document.querySelectorAll('.wc-badge');
+            var counters = document.querySelectorAll('.wc-stat-num[data-target]');
+            var fired = false;
+
+            /* ── Count-up animation ── */
+            function animateCount(el) {
+                el.classList.add('visible');
+                var target = parseInt(el.dataset.target, 10);
+                var suffix = el.dataset.suffix || '';
+                var duration = 1600;
+                var step = 16;
+                var steps = duration / step;
+                var inc = target / steps;
+                var current = 0;
+                var interval = setInterval(function () {
+                    current += inc;
+                    if (current >= target) {
+                        current = target;
+                        clearInterval(interval);
+                    }
+                    var display = Math.round(current);
+                    /* Format thousands */
+                    if (target >= 1000) display = (Math.round(current / 10) * 10).toLocaleString();
+                    el.textContent = display + suffix;
+                }, step);
+            }
+
+            function trigger() {
+                if (fired) return; fired = true;
+
+                /* Header */
+                if (hdr) hdr.classList.add('in');
+
+                /* Stats row + count-up */
+                if (stats) {
+                    stats.classList.add('in');
+                    setTimeout(function () {
+                        counters.forEach(function (c) { animateCount(c); });
+                    }, 400);
+                }
+
+                /* Cards stagger */
+                cards.forEach(function (c, i) {
+                    setTimeout(function () { c.classList.add('wc-in'); }, 200 + i * 130);
+                });
+
+                /* Mission */
+                setTimeout(function () { if (mission) mission.classList.add('in'); }, 700);
+
+                /* Trust badges stagger */
+                badges.forEach(function (b, i) {
+                    setTimeout(function () { b.classList.add('wc-in'); }, 800 + i * 120);
+                });
+            }
+
+            if ('IntersectionObserver' in window) {
+                var io = new IntersectionObserver(function (e) {
+                    if (e[0].isIntersecting) { trigger(); io.disconnect(); }
+                }, { threshold: 0.06 });
+                io.observe(sec);
+            } else { trigger(); }
+        })();
+
+        function wcCopy() {
+            var fonts = '<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>\n\n';
+            var styles = '<style>\n' + document.querySelector('style').textContent + '\n</style>\n\n';
+            var html = document.getElementById('wc-sec').outerHTML;
+            var js = '\n\n<script>\n' + document.querySelector('script').textContent + '\n<\/script>';
+            var full = '<!-- Rankraze — Why Choose Us Section -->\n' + fonts + styles + html + js;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(full).then(showToast);
+            } else {
+                var ta = document.createElement('textarea'); ta.value = full;
+                ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0;pointer-events:none';
+                document.body.appendChild(ta); ta.focus(); ta.select();
+                document.execCommand('copy'); document.body.removeChild(ta); showToast();
+            }
+        }
+        function showToast() {
+            var t = document.getElementById('rr-toast'); t.classList.add('show');
+            setTimeout(function () { t.classList.remove('show'); }, 2800);
+        }
+    </script>
+</body>
+
+</html>
