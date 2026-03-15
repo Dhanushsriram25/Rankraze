@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rankraze — Our Process</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:wght@400;500&display=swap"
+        rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: #fff;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* ── SECTION ── */
+        .ps {
+            background: #fff;
+            padding: 100px 48px 96px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ps::before {
+            content: '';
+            position: absolute;
+            top: -180px;
+            right: -180px;
+            width: 560px;
+            height: 560px;
+            background: radial-gradient(circle, rgba(60, 186, 153, .08) 0%, transparent 62%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .ps::after {
+            content: '';
+            position: absolute;
+            bottom: -120px;
+            left: -120px;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(60, 186, 153, .06) 0%, transparent 62%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .ps-in {
+            max-width: 1080px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ── HEADER ── */
+        .ps-hdr {
+            text-align: center;
+            max-width: 660px;
+            margin: 0 auto 80px;
+        }
+
+        .ps-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #fff;
+            border: 1.5px solid #3cba99;
+            color: #0f6e56;
+            font-family: 'Sora', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            padding: 6px 18px;
+            border-radius: 100px;
+            margin-bottom: 22px;
+            box-shadow: 0 0 0 4px rgba(60, 186, 153, .07);
+        }
+
+        .ps-dot {
+            width: 7px;
+            height: 7px;
+            background: #3cba99;
+            border-radius: 50%;
+            animation: psDot 2.2s ease-in-out infinite;
+        }
+
+        @keyframes psDot {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 1
+            }
+
+            50% {
+                transform: scale(1.5);
+                opacity: .5
+            }
+        }
+
+        .ps-h2 {
+            font-family: 'Sora', sans-serif;
+            font-size: 38px;
+            font-weight: 800;
+            color: #0a2218;
+            line-height: 1.18;
+            letter-spacing: -.03em;
+            margin-bottom: 16px;
+        }
+
+        .ps-h2 em {
+            font-style: normal;
+            color: #3cba99;
+        }
+
+        .ps-sub {
+            font-size: 15px;
+            color: #3a5550;
+            line-height: 1.75;
+        }
+
+        /* ── TIMELINE WRAPPER ── */
+        .ps-tl {
+            position: relative;
+            padding: 0 0 8px;
+        }
+
+        /* The vertical spine — static track */
+        .ps-tl::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            transform: translateX(-50%);
+            width: 2px;
+            background: linear-gradient(180deg, #ddf0ea 0%, #3cba99 40%, #3cba99 90%, #ddf0ea 100%);
+            border-radius: 2px;
+        }
+
+        /* Animated fill overlay on the spine */
+        .ps-spine-fill {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            transform: translateX(-50%);
+            width: 2px;
+            background: #3cba99;
+            border-radius: 2px;
+            height: 0;
+            transition: height 1.8s cubic-bezier(.22, .61, .36, 1) .3s;
+            z-index: 1;
+        }
+
+        .ps-spine-fill.go {
+            height: 100%;
+        }
+
+        /* ── STEP ROW ── */
+        .ps-step {
+            display: grid;
+            grid-template-columns: 1fr 64px 1fr;
+            gap: 0;
+            align-items: start;
+            margin-bottom: 0;
+            position: relative;
+            padding-bottom: 48px;
+        }
+
+        .ps-step:last-child {
+            padding-bottom: 0;
+        }
+
+        /* Card sits LEFT for even steps, RIGHT for odd */
+        .ps-step:nth-child(odd) .ps-card {
+            grid-column: 1;
+            grid-row: 1;
+            justify-self: end;
+        }
+
+        .ps-step:nth-child(odd) .ps-node {
+            grid-column: 2;
+            grid-row: 1;
+        }
+
+        .ps-step:nth-child(odd) .ps-spacer {
+            grid-column: 3;
+            grid-row: 1;
+        }
+
+        .ps-step:nth-child(even) .ps-spacer {
+            grid-column: 1;
+            grid-row: 1;
+        }
+
+        .ps-step:nth-child(even) .ps-node {
+            grid-column: 2;
+            grid-row: 1;
+        }
+
+        .ps-step:nth-child(even) .ps-card {
+            grid-column: 3;
+            grid-row: 1;
+            justify-self: start;
+        }
+
+        /* ── NODE (circle on spine) ── */
+        .ps-node {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+            position: relative;
+            z-index: 2;
+            padding-top: 20px;
+        }
+
+        .ps-circle {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: #fff;
+            border: 2.5px solid #3cba99;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Sora', sans-serif;
+            font-size: 15px;
+            font-weight: 800;
+            color: #3cba99;
+            box-shadow: 0 0 0 6px rgba(60, 186, 153, .1);
+            position: relative;
+            z-index: 2;
+            transition: background .25s, color .25s, box-shadow .25s, transform .25s;
+            /* start state */
+            transform: scale(0);
+            opacity: 0;
+        }
+
+        .ps-circle.go {
+            animation: nodeIn .45s cubic-bezier(.34, 1.56, .64, 1) both;
+        }
+
+        .ps-circle.go:nth-child(1) {
+            animation-delay: var(--nd);
+        }
+
+        @keyframes nodeIn {
+            from {
+                transform: scale(0);
+                opacity: 0
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1
+            }
+        }
+
+        /* Node pulse ring on hover */
+        .ps-step:hover .ps-circle {
+            background: #3cba99;
+            color: #fff;
+            box-shadow: 0 0 0 10px rgba(60, 186, 153, .12);
+            transform: scale(1.08);
+        }
+
+        /* Icon below circle */
+        .ps-node-icon {
+            font-size: 18px;
+            margin-top: 10px;
+            opacity: .7;
+            transition: opacity .22s, transform .22s;
+        }
+
+        .ps-step:hover .ps-node-icon {
+            opacity: 1;
+            transform: scale(1.15);
+        }
+
+        /* ── CARD ── */
+        .ps-card {
+            background: #fff;
+            border: 1.5px solid #c8ede4;
+            border-radius: 18px;
+            padding: 28px 28px 24px;
+            width: calc(100% - 24px);
+            max-width: 460px;
+            position: relative;
+            overflow: hidden;
+            transition: transform .28s cubic-bezier(.22, .61, .36, 1),
+                box-shadow .28s, border-color .28s;
+            /* reveal */
+            opacity: 0;
+            transform: translateX(var(--tx, 0)) translateY(8px);
+        }
+
+        .ps-step:nth-child(odd) .ps-card {
+            --tx: -28px;
+        }
+
+        .ps-step:nth-child(even) .ps-card {
+            --tx: 28px;
+        }
+
+        .ps-card.go {
+            animation: cardIn .58s cubic-bezier(.22, .61, .36, 1) var(--cd, .1s) both;
+        }
+
+        @keyframes cardIn {
+            from {
+                opacity: 0;
+                transform: translateX(var(--tx, 0)) translateY(8px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0) translateY(0)
+            }
+        }
+
+        /* Top accent bar */
+        .ps-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #3cba99, #9ae3cc);
+            border-radius: 18px 18px 0 0;
+            opacity: 0;
+            transition: opacity .25s;
+        }
+
+        /* Hover glow */
+        .ps-step:hover .ps-card {
+            border-color: #3cba99;
+            transform: translateY(-5px);
+            box-shadow: 0 16px 40px rgba(60, 186, 153, .15);
+        }
+
+        .ps-step:hover .ps-card::before {
+            opacity: 1;
+        }
+
+        /* Card heading row: tag + title */
+        .ps-ctag {
+            display: inline-block;
+            font-family: 'Sora', sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .09em;
+            text-transform: uppercase;
+            color: #0f6e56;
+            background: #edf9f6;
+            border: 1px solid rgba(60, 186, 153, .25);
+            border-radius: 100px;
+            padding: 3px 11px;
+            margin-bottom: 10px;
+        }
+
+        .ps-ctitle {
+            font-family: 'Sora', sans-serif;
+            font-size: 16.5px;
+            font-weight: 700;
+            color: #0a2218;
+            line-height: 1.28;
+            margin-bottom: 9px;
+        }
+
+        .ps-cbody {
+            font-size: 13.5px;
+            color: #3a5550;
+            line-height: 1.72;
+        }
+
+        /* Connector arm — horizontal line from card to node */
+        /* Already handled by grid gap; visual depth via card shadow */
+
+        /* ── CTA ── */
+        .ps-cta {
+            text-align: center;
+            margin-top: 76px;
+            padding: 52px 40px 48px;
+            background: #edf9f6;
+            border: 1.5px solid #c8ede4;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ps-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 12%;
+            right: 12%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #3cba99 30%, #3cba99 70%, transparent);
+        }
+
+        .ps-cta::after {
+            content: '';
+            position: absolute;
+            bottom: -60px;
+            right: -60px;
+            width: 220px;
+            height: 220px;
+            background: radial-gradient(circle, rgba(60, 186, 153, .1) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .ps-cta-q {
+            font-family: 'Sora', sans-serif;
+            font-size: 26px;
+            font-weight: 800;
+            color: #0a2218;
+            line-height: 1.22;
+            letter-spacing: -.022em;
+            margin-bottom: 10px;
+        }
+
+        .ps-cta-q em {
+            font-style: normal;
+            color: #3cba99;
+        }
+
+        .ps-cta-s {
+            font-size: 14.5px;
+            color: #7ab8ac;
+            margin-bottom: 30px;
+        }
+
+        .ps-cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #3cba99;
+            color: #fff;
+            font-family: 'Sora', sans-serif;
+            font-size: 14.5px;
+            font-weight: 700;
+            padding: 16px 34px;
+            border-radius: 10px;
+            text-decoration: none;
+            position: relative;
+            z-index: 1;
+            transition: background .18s, transform .15s, box-shadow .18s;
+        }
+
+        .ps-cta-btn:hover {
+            background: #2ea882;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(60, 186, 153, .28);
+        }
+
+        .ps-arr {
+            display: inline-block;
+            transition: transform .18s;
+        }
+
+        .ps-cta-btn:hover .ps-arr {
+            transform: translateX(5px);
+        }
+
+        /* ── SCROLL REVEAL base ── */
+        .rv {
+            opacity: 0;
+            transform: translateY(24px);
+            will-change: opacity, transform;
+            transition: opacity .8s cubic-bezier(.22, .61, .36, 1), transform .8s cubic-bezier(.22, .61, .36, 1);
+        }
+
+        .rv.in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── COPY BTN ── */
+        .cp-btn {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            z-index: 999;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #0a2218;
+            color: #fff;
+            border: none;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            padding: 11px 20px;
+            border-radius: 100px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(10, 34, 24, .22);
+            transition: background .18s, transform .15s;
+        }
+
+        .cp-btn:hover {
+            background: #3cba99;
+            transform: translateY(-2px);
+        }
+
+        .cp-toast {
+            position: fixed;
+            bottom: 80px;
+            right: 28px;
+            z-index: 1000;
+            background: #0f6e56;
+            color: #fff;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            padding: 10px 18px;
+            border-radius: 10px;
+            opacity: 0;
+            transform: translateY(6px);
+            transition: opacity .22s, transform .22s;
+            pointer-events: none;
+        }
+
+        .cp-toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── RESPONSIVE ── */
+        @media(max-width:860px) {
+            .ps {
+                padding: 80px 24px 72px;
+            }
+
+            .ps-h2 {
+                font-size: 28px;
+            }
+
+            .ps-tl::before,
+            .ps-spine-fill {
+                left: 28px;
+            }
+
+            .ps-step {
+                grid-template-columns: 56px 1fr;
+                gap: 0 16px;
+            }
+
+            .ps-step:nth-child(odd) .ps-card,
+            .ps-step:nth-child(even) .ps-card {
+                grid-column: 2;
+                grid-row: 1;
+                justify-self: stretch;
+                max-width: 100%;
+                width: 100%;
+                --tx: 16px;
+            }
+
+            .ps-step:nth-child(odd) .ps-node,
+            .ps-step:nth-child(even) .ps-node {
+                grid-column: 1;
+                grid-row: 1;
+            }
+
+            .ps-step:nth-child(odd) .ps-spacer,
+            .ps-step:nth-child(even) .ps-spacer {
+                display: none;
+            }
+        }
+
+        @media(max-width:520px) {
+            .ps-h2 {
+                font-size: 24px;
+            }
+
+            .ps-cta-q {
+                font-size: 20px;
+            }
+
+            .ps-cta {
+                padding: 36px 24px 32px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <section class="ps" id="ps-sec">
+        <div class="ps-in">
+
+            <!-- HEADER -->
+            <div class="ps-hdr rv" id="ps-hdr">
+                <div class="ps-pill"><span class="ps-dot"></span>Our Process</div>
+                <h2 class="ps-h2">Our Proven <em>Digital Marketing</em> Process</h2>
+                <p class="ps-sub">A strategic 6-step framework built to help Chennai businesses grow smarter — with
+                    data, clarity, and results at every stage.</p>
+            </div>
+
+            <!-- TIMELINE -->
+            <div class="ps-tl" id="ps-tl">
+                <div class="ps-spine-fill" id="ps-spine"></div>
+
+                <!-- STEP 1 -->
+                <div class="ps-step">
+                    <div class="ps-card" style="--tx:-28px;--cd:.15s">
+                        <div class="ps-ctag">Step 01</div>
+                        <h3 class="ps-ctitle">Business &amp; Market Research</h3>
+                        <p class="ps-cbody">We study your business model, target audience, and competitors to map
+                            demand, uncover gaps, and build a data-backed marketing foundation.</p>
+                    </div>
+                    <div class="ps-node">
+                        <div class="ps-circle" style="--nd:.2s">01</div>
+                        <div class="ps-node-icon">&#x1F50D;</div>
+                    </div>
+                    <div class="ps-spacer"></div>
+                </div>
+
+                <!-- STEP 2 -->
+                <div class="ps-step">
+                    <div class="ps-spacer"></div>
+                    <div class="ps-node">
+                        <div class="ps-circle" style="--nd:.42s">02</div>
+                        <div class="ps-node-icon">&#x1F9E0;</div>
+                    </div>
+                    <div class="ps-card" style="--tx:28px;--cd:.45s">
+                        <div class="ps-ctag">Step 02</div>
+                        <h3 class="ps-ctitle">Strategy &amp; Campaign Planning</h3>
+                        <p class="ps-cbody">We design a customised digital growth strategy — selecting the right
+                            channels (SEO, PPC, social, content) and setting clear, measurable goals.</p>
+                    </div>
+                </div>
+
+                <!-- STEP 3 -->
+                <div class="ps-step">
+                    <div class="ps-card" style="--tx:-28px;--cd:.7s">
+                        <div class="ps-ctag">Step 03</div>
+                        <h3 class="ps-ctitle">Website &amp; Funnel Optimisation</h3>
+                        <p class="ps-cbody">Before any campaign launches, we audit and optimise your site for speed, UX,
+                            and conversion — so every visitor has a clear path to becoming a lead.</p>
+                    </div>
+                    <div class="ps-node">
+                        <div class="ps-circle" style="--nd:.65s">03</div>
+                        <div class="ps-node-icon">&#x1F4BB;</div>
+                    </div>
+                    <div class="ps-spacer"></div>
+                </div>
+
+                <!-- STEP 4 -->
+                <div class="ps-step">
+                    <div class="ps-spacer"></div>
+                    <div class="ps-node">
+                        <div class="ps-circle" style="--nd:.88s">04</div>
+                        <div class="ps-node-icon">&#x1F680;</div>
+                    </div>
+                    <div class="ps-card" style="--tx:28px;--cd:.92s">
+                        <div class="ps-ctag">Step 04</div>
+                        <h3 class="ps-ctitle">Campaign Execution</h3>
+                        <p class="ps-cbody">Our specialists deploy campaigns across search engines, social platforms,
+                            and ad networks — driving targeted, high-intent traffic to your business.</p>
+                    </div>
+                </div>
+
+                <!-- STEP 5 -->
+                <div class="ps-step">
+                    <div class="ps-card" style="--tx:-28px;--cd:1.1s">
+                        <div class="ps-ctag">Step 05</div>
+                        <h3 class="ps-ctitle">Tracking &amp; Performance Analysis</h3>
+                        <p class="ps-cbody">We continuously monitor traffic, user behaviour, conversions, and ROI using
+                            advanced analytics — giving you full visibility into what's working.</p>
+                    </div>
+                    <div class="ps-node">
+                        <div class="ps-circle" style="--nd:1.05s">05</div>
+                        <div class="ps-node-icon">&#x1F4CA;</div>
+                    </div>
+                    <div class="ps-spacer"></div>
+                </div>
+
+                <!-- STEP 6 -->
+                <div class="ps-step">
+                    <div class="ps-spacer"></div>
+                    <div class="ps-node">
+                        <div class="ps-circle" style="--nd:1.28s">06</div>
+                        <div class="ps-node-icon">&#x1F4C8;</div>
+                    </div>
+                    <div class="ps-card" style="--tx:28px;--cd:1.32s">
+                        <div class="ps-ctag">Step 06</div>
+                        <h3 class="ps-ctitle">Optimisation &amp; Growth Scaling</h3>
+                        <p class="ps-cbody">Real-time insights drive ongoing optimisation. We double down on what works
+                            and scale campaigns to deliver consistent, compounding business growth.</p>
+                    </div>
+                </div>
+
+            </div><!-- /ps-tl -->
+
+            <!-- CTA -->
+            <div class="ps-cta rv" id="ps-cta" style="transition-delay:.2s">
+                <p class="ps-cta-q">Ready to start your <em>growth journey?</em></p>
+                <p class="ps-cta-s">Join 2,000+ brands who trust Rankraze to build and execute their digital strategy.
+                </p>
+                <a class="ps-cta-btn" href="https://rankraze.com/contact">
+                    Get Your Free Marketing Strategy <span class="ps-arr">&#8594;</span>
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <button class="cp-btn" onclick="psCopy()">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+            <rect x="5" y="5" width="9" height="9" rx="2" stroke="currentColor" stroke-width="1.4" />
+            <path d="M11 5V3a2 2 0 0 0-2-2H3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2" stroke="currentColor" stroke-width="1.4"
+                stroke-linecap="round" />
+        </svg>Copy Block
+    </button>
+    <div class="cp-toast" id="cp-toast">&#x2713; Process section copied!</div>
+
+    <script>
+        (function () {
+            var sec = document.getElementById('ps-sec');
+            var hdr = document.getElementById('ps-hdr');
+            var spine = document.getElementById('ps-spine');
+            var cards = document.querySelectorAll('.ps-card');
+            var nodes = document.querySelectorAll('.ps-circle');
+            var cta = document.getElementById('ps-cta');
+            var fired = false;
+
+            function trigger() {
+                if (fired) return; fired = true;
+                if (hdr) hdr.classList.add('in');
+                /* Spine draws down */
+                setTimeout(function () { if (spine) spine.classList.add('go'); }, 200);
+                /* Each card slides in on its own delay (set via CSS --cd) */
+                cards.forEach(function (c) { c.classList.add('go'); });
+                /* Each node circle pops in on its own delay (set via CSS --nd) */
+                nodes.forEach(function (n) { n.classList.add('go'); });
+                /* CTA last */
+                setTimeout(function () { if (cta) cta.classList.add('in'); }, 1600);
+            }
+
+            if ('IntersectionObserver' in window) {
+                var io = new IntersectionObserver(function (e) {
+                    if (e[0].isIntersecting) { trigger(); io.disconnect(); }
+                }, { threshold: 0.04 });
+                io.observe(sec);
+            } else { trigger(); }
+        })();
+
+        function psCopy() {
+            var fonts = '<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet"/>\n\n';
+            var styles = '<style>\n' + document.querySelector('style').textContent + '\n</style>\n\n';
+            var html = document.getElementById('ps-sec').outerHTML;
+            var js = '\n\n<script>\n' + document.querySelector('script').textContent + '\n<\/script>';
+            var full = '<!-- Rankraze — Process Section -->\n' + fonts + styles + html + js;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(full).then(showToast);
+            } else {
+                var ta = document.createElement('textarea'); ta.value = full;
+                ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0;pointer-events:none';
+                document.body.appendChild(ta); ta.focus(); ta.select();
+                document.execCommand('copy'); document.body.removeChild(ta); showToast();
+            }
+        }
+        function showToast() {
+            var t = document.getElementById('cp-toast'); t.classList.add('show');
+            setTimeout(function () { t.classList.remove('show'); }, 2600);
+        }
+    </script>
+</body>
+
+</html>
