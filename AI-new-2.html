@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rankraze — AI-Powered Marketing</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;1,400&display=swap"
+        rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: #edf9f6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        :root {
+            --green: #3cba99;
+            --green-dk: #0f6e56;
+            --green-dp: #0a2218;
+            --green-bg: #edf9f6;
+            --body: #3a5550;
+            --muted: #7ab8ac;
+            --border: #c8ede4;
+        }
+
+        /* ══ SECTION ══ */
+        .ai {
+            background: var(--green-bg);
+            padding: 108px 48px 100px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ai::before {
+            content: '';
+            position: absolute;
+            top: -160px;
+            left: -160px;
+            width: 540px;
+            height: 540px;
+            background: radial-gradient(circle, rgba(60, 186, 153, .12) 0%, transparent 62%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .ai::after {
+            content: '';
+            position: absolute;
+            bottom: -120px;
+            right: -120px;
+            width: 440px;
+            height: 440px;
+            background: radial-gradient(circle, rgba(60, 186, 153, .09) 0%, transparent 62%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .ai-in {
+            max-width: 1180px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ══ SPLIT GRID ══ */
+        .ai-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.05fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        /* ══════════════════════════════
+   LEFT — CONTENT
+══════════════════════════════ */
+        /* Pill */
+        .ai-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #fff;
+            border: 1.5px solid var(--green);
+            color: var(--green-dk);
+            font-family: 'Sora', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            padding: 6px 16px;
+            border-radius: 100px;
+            margin-bottom: 22px;
+            box-shadow: 0 0 0 4px rgba(60, 186, 153, .07);
+        }
+
+        .ai-dot {
+            width: 7px;
+            height: 7px;
+            background: var(--green);
+            border-radius: 50%;
+            flex-shrink: 0;
+            animation: dotPulse 2.2s ease-in-out infinite;
+        }
+
+        @keyframes dotPulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 1
+            }
+
+            50% {
+                transform: scale(1.5);
+                opacity: .5
+            }
+        }
+
+        /* H2 */
+        .ai-h2 {
+            font-family: 'Sora', sans-serif;
+            font-size: 34px;
+            font-weight: 800;
+            color: var(--green-dp);
+            line-height: 1.2;
+            letter-spacing: -.030em;
+            margin-bottom: 16px;
+        }
+
+        .ai-h2 em {
+            font-style: normal;
+            color: var(--green);
+        }
+
+        /* Intro */
+        .ai-intro {
+            font-size: 15px;
+            color: var(--body);
+            line-height: 1.82;
+            margin-bottom: 32px;
+        }
+
+        /* Divider */
+        .ai-div {
+            width: 44px;
+            height: 2.5px;
+            background: linear-gradient(90deg, var(--green), transparent);
+            border-radius: 2px;
+            margin-bottom: 32px;
+        }
+
+        /* ── Bullets ── */
+        .ai-bullets {
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+            margin-bottom: 36px;
+        }
+
+        .ai-bullet {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+        }
+
+        .ai-chk {
+            width: 26px;
+            height: 26px;
+            min-width: 26px;
+            background: var(--green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 1px;
+            box-shadow: 0 4px 14px rgba(60, 186, 153, .32);
+            transition: transform .22s, box-shadow .22s;
+        }
+
+        .ai-bullet:hover .ai-chk {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(60, 186, 153, .45);
+        }
+
+        .ai-chk svg {
+            width: 11px;
+            height: 9px;
+        }
+
+        .ai-bullet-title {
+            font-family: 'Sora', sans-serif;
+            font-size: 14.5px;
+            font-weight: 700;
+            color: var(--green-dp);
+            margin-bottom: 4px;
+            line-height: 1.25;
+        }
+
+        .ai-bullet-desc {
+            font-size: 13.5px;
+            color: var(--body);
+            line-height: 1.65;
+        }
+
+        /* ── Inline CTA ── */
+        .ai-cta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 20px 24px;
+            background: #fff;
+            border: 1.5px solid var(--border);
+            border-radius: 14px;
+            box-shadow: 0 4px 20px rgba(60, 186, 153, .09);
+            position: relative;
+            overflow: hidden;
+            transition: box-shadow .25s, border-color .25s;
+        }
+
+        .ai-cta:hover {
+            border-color: var(--green);
+            box-shadow: 0 8px 32px rgba(60, 186, 153, .15);
+        }
+
+        /* animated left bar */
+        .ai-cta::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, var(--green), #9ae3cc);
+            border-radius: 0 2px 2px 0;
+        }
+
+        .ai-cta-text {
+            flex: 1;
+        }
+
+        .ai-cta-q {
+            font-family: 'Sora', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--green-dp);
+            margin-bottom: 2px;
+        }
+
+        .ai-cta-s {
+            font-size: 12.5px;
+            color: var(--muted);
+        }
+
+        .ai-cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--green);
+            color: #fff;
+            font-family: 'Sora', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            padding: 12px 22px;
+            border-radius: 9px;
+            text-decoration: none;
+            white-space: nowrap;
+            flex-shrink: 0;
+            transition: background .18s, transform .15s, box-shadow .18s;
+        }
+
+        .ai-cta-btn:hover {
+            background: #2ea882;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 22px rgba(60, 186, 153, .30);
+        }
+
+        .ai-cta-arr {
+            display: inline-block;
+            transition: transform .18s;
+        }
+
+        .ai-cta-btn:hover .ai-cta-arr {
+            transform: translateX(5px);
+        }
+
+        /* ══════════════════════════════
+   RIGHT — IMAGE FLOAT FRAME
+══════════════════════════════ */
+        .ai-visual {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Outer decorative rings — pure CSS, no image needed */
+        .ai-ring-outer {
+            position: absolute;
+            width: 108%;
+            height: 108%;
+            border-radius: 28px;
+            border: 1.5px solid rgba(60, 186, 153, .18);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            animation: ringBreath 4s ease-in-out infinite;
+        }
+
+        .ai-ring-inner {
+            position: absolute;
+            width: 104%;
+            height: 104%;
+            border-radius: 24px;
+            border: 1px solid rgba(60, 186, 153, .10);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            animation: ringBreath 4s ease-in-out 0.8s infinite;
+        }
+
+        @keyframes ringBreath {
+
+            0%,
+            100% {
+                opacity: .6;
+                transform: translate(-50%, -50%) scale(1);
+            }
+
+            50% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1.012);
+            }
+        }
+
+        /* Background glow blob behind image */
+        .ai-glow {
+            position: absolute;
+            width: 85%;
+            height: 85%;
+            background: radial-gradient(ellipse, rgba(60, 186, 153, .14) 0%, transparent 68%);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            animation: glowPulse 5s ease-in-out infinite;
+        }
+
+        @keyframes glowPulse {
+
+            0%,
+            100% {
+                opacity: .7;
+                transform: translate(-50%, -50%) scale(1);
+            }
+
+            50% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1.06);
+            }
+        }
+
+        /* The image card — rounded, shadow, float animation */
+        .ai-img-card {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow:
+                0 8px 24px rgba(60, 186, 153, .12),
+                0 32px 64px rgba(10, 34, 24, .12),
+                0 0 0 1.5px rgba(60, 186, 153, .18);
+            animation: imgFloat 5s ease-in-out infinite;
+            will-change: transform;
+            background: #fff;
+            /* fallback while image loads */
+        }
+
+        @keyframes imgFloat {
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            33% {
+                transform: translateY(-10px) rotate(.3deg);
+            }
+
+            66% {
+                transform: translateY(-6px) rotate(-.2deg);
+            }
+        }
+
+        /* The actual image */
+        .ai-img-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+            /* placeholder tint until real image loaded */
+            min-height: 320px;
+            object-fit: cover;
+        }
+
+        /* ── Floating badge chips around the image ── */
+        .ai-badge {
+            position: absolute;
+            background: #fff;
+            border: 1.5px solid var(--border);
+            border-radius: 12px;
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 8px 24px rgba(10, 34, 24, .10);
+            z-index: 3;
+            white-space: nowrap;
+        }
+
+        /* Badge 1 — top left: accuracy */
+        .ai-b1 {
+            top: -18px;
+            left: -18px;
+            animation: badgeFloat1 4.8s ease-in-out 0.4s infinite;
+        }
+
+        @keyframes badgeFloat1 {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(-4px, -8px);
+            }
+        }
+
+        /* Badge 2 — bottom right: ROI */
+        .ai-b2 {
+            bottom: -18px;
+            right: -18px;
+            animation: badgeFloat2 5.2s ease-in-out 1.2s infinite;
+        }
+
+        @keyframes badgeFloat2 {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(4px, -8px);
+            }
+        }
+
+        /* Badge 3 — top right: live */
+        .ai-b3 {
+            top: 22px;
+            right: -22px;
+            animation: badgeFloat3 4.4s ease-in-out 0.8s infinite;
+        }
+
+        @keyframes badgeFloat3 {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(6px, -6px);
+            }
+        }
+
+        /* Badge icon circle */
+        .ai-badge-ico {
+            width: 32px;
+            height: 32px;
+            min-width: 32px;
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .bico-green {
+            background: #edf9f6;
+            border: 1px solid #c8ede4;
+        }
+
+        .bico-blue {
+            background: #e8f4ff;
+            border: 1px solid #b5d4f4;
+        }
+
+        .bico-purple {
+            background: #eeedfe;
+            border: 1px solid #cecbf6;
+        }
+
+        .ai-badge-ico svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .ai-badge-val {
+            font-family: 'Sora', sans-serif;
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--green-dp);
+            line-height: 1.1;
+        }
+
+        .ai-badge-lbl {
+            font-size: 11px;
+            color: var(--muted);
+            font-weight: 500;
+            line-height: 1.2;
+        }
+
+        /* Live dot */
+        .ai-live-dot {
+            width: 8px;
+            height: 8px;
+            background: #3cba99;
+            border-radius: 50%;
+            box-shadow: 0 0 0 0 rgba(60, 186, 153, .5);
+            animation: livePing 1.8s ease-out infinite;
+        }
+
+        @keyframes livePing {
+            0% {
+                box-shadow: 0 0 0 0 rgba(60, 186, 153, .6);
+            }
+
+            70% {
+                box-shadow: 0 0 0 8px rgba(60, 186, 153, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(60, 186, 153, 0);
+            }
+        }
+
+        /* ── SCROLL REVEAL ── */
+        /* Default visible — safe for GitHub Pages / no-JS */
+        .rv-l,
+        .rv-r {
+            opacity: 1;
+            transform: none;
+        }
+
+        .js-on .rv-l {
+            opacity: 0;
+            transform: translate3d(-36px, 0, 0);
+            will-change: opacity, transform;
+            transition: opacity .85s cubic-bezier(.22, .61, .36, 1),
+                transform .85s cubic-bezier(.22, .61, .36, 1);
+        }
+
+        .js-on .rv-r {
+            opacity: 0;
+            transform: translate3d(36px, 0, 0);
+            will-change: opacity, transform;
+            transition: opacity .85s cubic-bezier(.22, .61, .36, 1) .18s,
+                transform .85s cubic-bezier(.22, .61, .36, 1) .18s;
+        }
+
+        .js-on .rv-l.in,
+        .js-on .rv-r.in {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+        }
+
+        /* Bullet stagger */
+        .js-on .ai-bullet {
+            opacity: 0;
+            transform: translate3d(-16px, 0, 0);
+            transition: opacity .55s cubic-bezier(.22, .61, .36, 1), transform .55s cubic-bezier(.34, 1.3, .64, 1);
+        }
+
+        .js-on .ai-bullet.in {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+        }
+
+        .js-on .ai-bullet.in:nth-child(1) {
+            transition-delay: .3s;
+        }
+
+        .js-on .ai-bullet.in:nth-child(2) {
+            transition-delay: .44s;
+        }
+
+        .js-on .ai-bullet.in:nth-child(3) {
+            transition-delay: .58s;
+        }
+
+        /* CTA slide-up */
+        .js-on .ai-cta {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity .6s cubic-bezier(.22, .61, .36, 1) .7s, transform .6s cubic-bezier(.22, .61, .36, 1) .7s;
+        }
+
+        .js-on .ai-cta.in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Copy btn */
+        .cp-btn {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            z-index: 999;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #0a2218;
+            color: #fff;
+            border: none;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            padding: 11px 20px;
+            border-radius: 100px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(10, 34, 24, .22);
+            transition: background .18s, transform .15s;
+        }
+
+        .cp-btn:hover {
+            background: var(--green);
+            transform: translateY(-2px);
+        }
+
+        .cp-toast {
+            position: fixed;
+            bottom: 80px;
+            right: 28px;
+            z-index: 1000;
+            background: var(--green-dk);
+            color: #fff;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            padding: 10px 18px;
+            border-radius: 10px;
+            opacity: 0;
+            transform: translateY(6px);
+            transition: opacity .22s, transform .22s;
+            pointer-events: none;
+        }
+
+        .cp-toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media(max-width:980px) {
+            .ai {
+                padding: 80px 24px 72px;
+            }
+
+            .ai-grid {
+                grid-template-columns: 1fr;
+                gap: 52px;
+            }
+
+            .ai-h2 {
+                font-size: 28px;
+            }
+
+            .ai-cta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .ai-badge {
+                display: none;
+            }
+
+            /* hide chips on mobile, too cramped */
+            .js-on .rv-l,
+            .js-on .rv-r {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+        }
+
+        @media(max-width:560px) {
+            .ai-h2 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <section class="ai" id="ai-sec">
+        <div class="ai-in">
+            <div class="ai-grid">
+
+                <!-- ══ LEFT: CONTENT ══ -->
+                <div class="rv-l" id="ai-cnt">
+
+                    <div class="ai-pill"><span class="ai-dot"></span>AI-Powered Marketing</div>
+
+                    <h2 class="ai-h2">Smarter Marketing with<br><em>Artificial Intelligence</em></h2>
+
+                    <p class="ai-intro">Artificial intelligence is transforming how businesses approach digital
+                        marketing. At Rankraze, we combine human expertise with AI-powered insights to create smarter
+                        strategies that deliver measurable results.</p>
+
+                    <div class="ai-div"></div>
+
+                    <div class="ai-bullets" id="ai-bullets">
+                        <div class="ai-bullet">
+                            <div class="ai-chk">
+                                <svg viewBox="0 0 11 9" fill="none" stroke="#fff" stroke-width="2.2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="1,4.5 4,7.5 10,1" />
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="ai-bullet-title">AI-Driven Data Analysis</div>
+                                <div class="ai-bullet-desc">Identify high-performing keywords, audience behavior, and
+                                    campaign insights using advanced analytics.</div>
+                            </div>
+                        </div>
+                        <div class="ai-bullet">
+                            <div class="ai-chk">
+                                <svg viewBox="0 0 11 9" fill="none" stroke="#fff" stroke-width="2.2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="1,4.5 4,7.5 10,1" />
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="ai-bullet-title">Predictive Campaign Optimization</div>
+                                <div class="ai-bullet-desc">AI predicts marketing performance and optimizes SEO, ads,
+                                    and content strategies faster and more accurately.</div>
+                            </div>
+                        </div>
+                        <div class="ai-bullet">
+                            <div class="ai-chk">
+                                <svg viewBox="0 0 11 9" fill="none" stroke="#fff" stroke-width="2.2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="1,4.5 4,7.5 10,1" />
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="ai-bullet-title">Real-Time Performance Insights</div>
+                                <div class="ai-bullet-desc">Track campaign performance instantly and improve marketing
+                                    decisions using live data and AI-powered reporting.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ai-cta" id="ai-cta">
+                        <div class="ai-cta-text">
+                            <div class="ai-cta-q">See how AI can improve your marketing</div>
+                            <div class="ai-cta-s">Free strategy session &mdash; no obligation</div>
+                        </div>
+                        <a class="ai-cta-btn" href="https://rankraze.com/contact">
+                            Get Your Free Strategy <span class="ai-cta-arr">&#8594;</span>
+                        </a>
+                    </div>
+
+                </div>
+
+                <!-- ══ RIGHT: IMAGE with floating frame ══ -->
+                <div class="rv-r" id="ai-vis">
+                    <div class="ai-visual">
+
+                        <!-- Background glow -->
+                        <div class="ai-glow"></div>
+
+                        <!-- Decorative rings -->
+                        <div class="ai-ring-outer"></div>
+                        <div class="ai-ring-inner"></div>
+
+                        <!-- FLOATING BADGE 1 — top left -->
+                        <div class="ai-badge ai-b1">
+                            <div class="ai-badge-ico bico-green">
+                                <svg viewBox="0 0 16 16" fill="none" stroke="#3cba99" stroke-width="1.6"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M2 14 5 9 8 11 12 5 14 3" />
+                                    <path d="M11 3h3v3" />
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="ai-badge-val">+340%</div>
+                                <div class="ai-badge-lbl">Avg ROI Boost</div>
+                            </div>
+                        </div>
+
+                        <!-- FLOATING BADGE 2 — bottom right -->
+                        <div class="ai-badge ai-b2">
+                            <div class="ai-badge-ico bico-blue">
+                                <svg viewBox="0 0 16 16" fill="none" stroke="#185fa5" stroke-width="1.6"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="8" cy="8" r="6" />
+                                    <polyline points="8,5 8,8 10.5,9.5" />
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="ai-badge-val">Real-time</div>
+                                <div class="ai-badge-lbl">AI Insights</div>
+                            </div>
+                        </div>
+
+                        <!-- FLOATING BADGE 3 — top right: live indicator -->
+                        <div class="ai-badge ai-b3">
+                            <div class="ai-live-dot"></div>
+                            <div>
+                                <div class="ai-badge-val" style="font-size:12px;color:#0f6e56;">Live · AI Active</div>
+                                <div class="ai-badge-lbl">99% Accuracy</div>
+                            </div>
+                        </div>
+
+                        <!-- ══════════════════════════════════════════════
+               THE IMAGE CARD
+               Replace the src below with your actual image.
+               Recommended: AI marketing dashboard illustration
+               e.g. src="images/ai-marketing.png"
+          ══════════════════════════════════════════════ -->
+                        <div class="ai-img-card">
+                            <!--
+            ════════════════════════════════════════════
+            REPLACE THIS ENTIRE BLOCK with your image:
+              <img src="your-image.png" alt="..." width="600" height="480"/>
+            ════════════════════════════════════════════
+            -->
+                            <svg viewBox="0 0 600 440" xmlns="http://www.w3.org/2000/svg" width="100%"
+                                style="display:block;">
+                                <defs>
+                                    <linearGradient id="plBg" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stop-color="#f4fdf9" />
+                                        <stop offset="100%" stop-color="#edf9f6" />
+                                    </linearGradient>
+                                    <linearGradient id="barA" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stop-color="#3cba99" />
+                                        <stop offset="100%" stop-color="#9ae3cc" />
+                                    </linearGradient>
+                                    <linearGradient id="barB" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stop-color="#6dd4b5" />
+                                        <stop offset="100%" stop-color="#c5f0e4" />
+                                    </linearGradient>
+                                </defs>
+
+                                <!-- Background -->
+                                <rect width="600" height="440" fill="url(#plBg)" />
+
+                                <!-- Top bar — browser chrome style -->
+                                <rect width="600" height="44" fill="#fff" opacity=".7" />
+                                <circle cx="20" cy="22" r="5" fill="#f5c2b4" />
+                                <circle cx="36" cy="22" r="5" fill="#f5e0a0" />
+                                <circle cx="52" cy="22" r="5" fill="#a8e8d4" />
+                                <rect x="72" y="14" width="220" height="16" rx="8" fill="#edf9f6" />
+                                <text x="182" y="26" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9"
+                                    fill="#7ab8ac">rankraze.com › ai-marketing</text>
+
+                                <!-- Main card area -->
+                                <rect x="20" y="60" width="560" height="360" rx="14" fill="#fff" stroke="#c8ede4"
+                                    stroke-width="1.5" />
+
+                                <!-- Card header -->
+                                <text x="40" y="92" font-family="Sora,sans-serif" font-size="13" font-weight="700"
+                                    fill="#0a2218">AI Marketing Dashboard</text>
+                                <rect x="460" y="74" width="104" height="22" rx="11" fill="#edf9f6" stroke="#c8ede4"
+                                    stroke-width="1" />
+                                <circle cx="474" cy="85" r="4" fill="#3cba99" />
+                                <text x="484" y="89" font-family="DM Sans,sans-serif" font-size="8.5" fill="#0f6e56"
+                                    font-weight="600">Live · AI Active</text>
+
+                                <line x1="40" y1="104" x2="560" y2="104" stroke="#e8f5f0" stroke-width="1" />
+
+                                <!-- Stat cards row -->
+                                <rect x="40" y="116" width="118" height="64" rx="10" fill="#edf9f6" stroke="#c8ede4"
+                                    stroke-width="1" />
+                                <text x="54" y="138" font-family="DM Sans,sans-serif" font-size="8.5"
+                                    fill="#7ab8ac">Targeting Accuracy</text>
+                                <text x="54" y="162" font-family="Sora,sans-serif" font-size="20" font-weight="800"
+                                    fill="#3cba99">94%</text>
+
+                                <rect x="170" y="116" width="118" height="64" rx="10" fill="#fff" stroke="#c8ede4"
+                                    stroke-width="1" />
+                                <text x="184" y="138" font-family="DM Sans,sans-serif" font-size="8.5"
+                                    fill="#7ab8ac">Avg ROI Boost</text>
+                                <text x="184" y="162" font-family="Sora,sans-serif" font-size="20" font-weight="800"
+                                    fill="#3cba99">+340%</text>
+
+                                <rect x="300" y="116" width="118" height="64" rx="10" fill="#edf9f6" stroke="#c8ede4"
+                                    stroke-width="1" />
+                                <text x="314" y="138" font-family="DM Sans,sans-serif" font-size="8.5"
+                                    fill="#7ab8ac">Data Points</text>
+                                <text x="314" y="162" font-family="Sora,sans-serif" font-size="20" font-weight="800"
+                                    fill="#3cba99">2.4M</text>
+
+                                <rect x="430" y="116" width="130" height="64" rx="10" fill="#fff" stroke="#c8ede4"
+                                    stroke-width="1" />
+                                <text x="444" y="138" font-family="DM Sans,sans-serif" font-size="8.5" fill="#7ab8ac">AI
+                                    Accuracy</text>
+                                <text x="444" y="162" font-family="Sora,sans-serif" font-size="20" font-weight="800"
+                                    fill="#3cba99">99%</text>
+
+                                <!-- Chart area -->
+                                <rect x="40" y="196" width="340" height="180" rx="10" fill="#f9fefb" stroke="#c8ede4"
+                                    stroke-width="1" />
+                                <text x="56" y="218" font-family="Sora,sans-serif" font-size="10" font-weight="700"
+                                    fill="#0a2218">Campaign Performance</text>
+                                <text x="370" y="218" text-anchor="end" font-family="DM Sans,sans-serif" font-size="8.5"
+                                    fill="#3cba99" font-weight="600">↑ 87% ROI</text>
+
+                                <!-- Bar chart baseline -->
+                                <line x1="56" y1="354" x2="364" y2="354" stroke="#e8f5f0" stroke-width="1" />
+
+                                <!-- 6 bars -->
+                                <rect x="64" y="300" width="32" height="54" rx="4" fill="url(#barB)" />
+                                <rect x="106" y="280" width="32" height="74" rx="4" fill="url(#barB)" />
+                                <rect x="148" y="310" width="32" height="44" rx="4" fill="url(#barB)" />
+                                <rect x="190" y="260" width="32" height="94" rx="4" fill="url(#barA)" />
+                                <rect x="232" y="275" width="32" height="79" rx="4" fill="url(#barA)" />
+                                <rect x="274" y="238" width="32" height="116" rx="4" fill="url(#barA)" />
+                                <!-- Trend line -->
+                                <polyline points="80,300 122,280 164,310 206,260 248,275 290,238" stroke="#0f6e56"
+                                    stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+                                <circle cx="290" cy="238" r="5" fill="#0f6e56" />
+
+                                <!-- Month labels -->
+                                <text x="80" y="368" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="8"
+                                    fill="#a0c8c0">Jan</text>
+                                <text x="122" y="368" text-anchor="middle" font-family="DM Sans,sans-serif"
+                                    font-size="8" fill="#a0c8c0">Feb</text>
+                                <text x="164" y="368" text-anchor="middle" font-family="DM Sans,sans-serif"
+                                    font-size="8" fill="#a0c8c0">Mar</text>
+                                <text x="206" y="368" text-anchor="middle" font-family="DM Sans,sans-serif"
+                                    font-size="8" fill="#a0c8c0">Apr</text>
+                                <text x="248" y="368" text-anchor="middle" font-family="DM Sans,sans-serif"
+                                    font-size="8" fill="#a0c8c0">May</text>
+                                <text x="290" y="368" text-anchor="middle" font-family="DM Sans,sans-serif"
+                                    font-size="8" fill="#3cba99" font-weight="700">Jun</text>
+
+                                <!-- Right side: progress bars -->
+                                <rect x="400" y="196" width="160" height="180" rx="10" fill="#fff" stroke="#c8ede4"
+                                    stroke-width="1" />
+                                <text x="416" y="218" font-family="Sora,sans-serif" font-size="10" font-weight="700"
+                                    fill="#0a2218">AI Channels</text>
+
+                                <text x="416" y="242" font-family="DM Sans,sans-serif" font-size="8.5"
+                                    fill="#3a5550">SEO</text>
+                                <text x="548" y="242" text-anchor="end" font-family="Sora,sans-serif" font-size="8.5"
+                                    font-weight="700" fill="#3cba99">94%</text>
+                                <rect x="416" y="247" width="130" height="7" rx="3.5" fill="#ddf0ea" />
+                                <rect x="416" y="247" width="122" height="7" rx="3.5" fill="#3cba99" />
+
+                                <text x="416" y="270" font-family="DM Sans,sans-serif" font-size="8.5"
+                                    fill="#3a5550">Paid Ads</text>
+                                <text x="548" y="270" text-anchor="end" font-family="Sora,sans-serif" font-size="8.5"
+                                    font-weight="700" fill="#3cba99">87%</text>
+                                <rect x="416" y="275" width="130" height="7" rx="3.5" fill="#ddf0ea" />
+                                <rect x="416" y="275" width="113" height="7" rx="3.5" fill="#6dd4b5" />
+
+                                <text x="416" y="298" font-family="DM Sans,sans-serif" font-size="8.5"
+                                    fill="#3a5550">Social</text>
+                                <text x="548" y="298" text-anchor="end" font-family="Sora,sans-serif" font-size="8.5"
+                                    font-weight="700" fill="#3cba99">79%</text>
+                                <rect x="416" y="303" width="130" height="7" rx="3.5" fill="#ddf0ea" />
+                                <rect x="416" y="303" width="103" height="7" rx="3.5" fill="#9ae3cc" />
+
+                                <text x="416" y="326" font-family="DM Sans,sans-serif" font-size="8.5"
+                                    fill="#3a5550">Content</text>
+                                <text x="548" y="326" text-anchor="end" font-family="Sora,sans-serif" font-size="8.5"
+                                    font-weight="700" fill="#3cba99">92%</text>
+                                <rect x="416" y="331" width="130" height="7" rx="3.5" fill="#ddf0ea" />
+                                <rect x="416" y="331" width="120" height="7" rx="3.5" fill="#3cba99" />
+
+                                <!-- AI Score ring bottom right -->
+                                <circle cx="460" cy="368" r="22" stroke="#ddf0ea" stroke-width="5" fill="none" />
+                                <circle cx="460" cy="368" r="22" stroke="#3cba99" stroke-width="5" fill="none"
+                                    stroke-dasharray="138.2" stroke-dashoffset="18" stroke-linecap="round"
+                                    transform="rotate(-90 460 368)" />
+                                <text x="460" y="364" text-anchor="middle" font-family="Sora,sans-serif" font-size="11"
+                                    font-weight="800" fill="#0a2218">92</text>
+                                <text x="460" y="376" text-anchor="middle" font-family="DM Sans,sans-serif"
+                                    font-size="7" fill="#7ab8ac">AI Score</text>
+
+                                <!-- Replace label at bottom -->
+                                <rect x="180" y="416" width="240" height="20" rx="10" fill="#edf9f6" stroke="#c8ede4"
+                                    stroke-width="1" />
+                                <text x="300" y="430" text-anchor="middle" font-family="DM Sans,sans-serif"
+                                    font-size="9" fill="#7ab8ac">Replace with your image · src="your-image.png"</text>
+                            </svg>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <button class="cp-btn" onclick="aiCopy()">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+            <rect x="5" y="5" width="9" height="9" rx="2" stroke="currentColor" stroke-width="1.4" />
+            <path d="M11 5V3a2 2 0 0 0-2-2H3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2" stroke="currentColor" stroke-width="1.4"
+                stroke-linecap="round" />
+        </svg>Copy Block
+    </button>
+    <div class="cp-toast" id="cp-toast">&#x2713; AI section copied!</div>
+
+    <script>
+        document.body.classList.add('js-on');
+
+        (function () {
+            var sec = document.getElementById('ai-sec');
+            var cnt = document.getElementById('ai-cnt');
+            var vis = document.getElementById('ai-vis');
+            var bullets = document.querySelectorAll('.ai-bullet');
+            var cta = document.getElementById('ai-cta');
+            var fired = false;
+
+            function trigger() {
+                if (fired) return; fired = true;
+                if (cnt) cnt.classList.add('in');
+                if (vis) vis.classList.add('in');
+                /* Bullets stagger in */
+                bullets.forEach(function (b) { b.classList.add('in'); });
+                /* CTA slides up */
+                if (cta) cta.classList.add('in');
+            }
+
+            function check() {
+                if (fired) return;
+                var r = sec.getBoundingClientRect();
+                if (r.top < window.innerHeight + 40) { trigger(); }
+            }
+
+            window.addEventListener('scroll', check, { passive: true });
+            window.addEventListener('load', check);
+            if (document.readyState !== 'loading') setTimeout(check, 60);
+            else document.addEventListener('DOMContentLoaded', function () { setTimeout(check, 60); });
+        })();
+
+        function aiCopy() {
+            var fonts = '<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>\n\n';
+            var styles = '<style>\n' + document.querySelector('style').textContent + '\n</style>\n\n';
+            var html = document.getElementById('ai-sec').outerHTML;
+            var js = '\n\n<script>\n' + document.querySelector('script').textContent + '\n<\/script>';
+            var full = '<!-- Rankraze AI Section -->\n ' +font s +style s +htm l +js;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(full).then(showToast);
+            } else {
+                var ta = document.createElement('textarea'); ta.value = full;
+                ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0;pointer-events:none';
+                document.body.appendChild(ta); ta.focus(); ta.select();
+                document.execCommand('copy'); document.body.removeChild(ta); showToast();
+            }
+        }
+        function showToast() {
+            var t = document.getElementById('cp-toast'); t.classList.add('show');
+            setTimeout(function () { t.classList.remove('show'); }, 2600);
+        }
+    </script>
+</body>
+
+</html>
