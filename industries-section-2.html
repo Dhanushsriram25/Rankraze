@@ -530,8 +530,6 @@
             background: linear-gradient(90deg, transparent, #3cba99 30%, #3cba99 70%, transparent);
         }
 
-        .is-cta-text {}
-
         .is-cta-q {
             font-family: 'Sora', sans-serif;
             font-size: 19px;
@@ -1062,7 +1060,7 @@
             var styles = '<style>\n' + document.querySelector('style').textContent + '\n</style>\n\n';
             var html = document.getElementById('is-sec').outerHTML;
             var js = '\n\n<script>\n' + document.querySelector('script').textContent + '\n<\/script>';
-            var full = '<!-- Rankraze — Industries We Serve Section -->\n ' +font s +style s +htm l +js;
+            var full = '<!-- Rankraze — Industries We Serve Section -->\n '  +fonts  +styles  +html  +js;
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(full).then(showToast);
             } else {
