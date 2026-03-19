@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Rankraze — Digital Marketing for Every Industry in Chennai</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;1,400&display=swap"
+        rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: #fff;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* ══════════════════════════════════════════════════
+   SECTION SHELL
+   White bg — a clean neutral break in the page flow.
+   Padding-bottom 0 so the CTA strip bleeds full-width.
+══════════════════════════════════════════════════ */
+        .is {
+            background: #fff;
+            padding: 100px 0 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Very faint diagonal texture — premium touch */
+        .is::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: repeating-linear-gradient(-45deg, transparent, transparent 52px,
+                    rgba(60, 186, 153, .025) 52px, rgba(60, 186, 153, .025) 53px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Top-right glow orb */
+        .is::after {
+            content: '';
+            position: absolute;
+            top: -160px;
+            right: -160px;
+            width: 520px;
+            height: 520px;
+            background: radial-gradient(circle, rgba(60, 186, 153, .07) 0%, transparent 62%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .is-in {
+            max-width: 1160px;
+            margin: 0 auto;
+            padding: 0 48px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ══════════════════════════════════════════════════
+   EDITORIAL HEADER
+   Left: pill + large H2
+   Right: body intro + two trust signals side by side
+   align-items:end so text baselines align at bottom
+══════════════════════════════════════════════════ */
+        .is-top {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 72px;
+            align-items: end;
+            /* baseline alignment fix */
+            margin-bottom: 56px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid #e8f5f1;
+        }
+
+        /* Left column */
+        .is-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #fff;
+            border: 1.5px solid #3cba99;
+            color: #0f6e56;
+            font-family: 'Sora', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            padding: 6px 16px;
+            border-radius: 100px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 0 4px rgba(60, 186, 153, .07);
+        }
+
+        .is-dot {
+            width: 7px;
+            height: 7px;
+            background: #3cba99;
+            border-radius: 50%;
+            flex-shrink: 0;
+            animation: isDot 2.2s ease-in-out infinite;
+        }
+
+        @keyframes isDot {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 1
+            }
+
+            50% {
+                transform: scale(1.5);
+                opacity: .5
+            }
+        }
+
+        .is-h2 {
+            font-family: 'Sora', sans-serif;
+            font-size: 42px;
+            font-weight: 800;
+            color: #0a2218;
+            line-height: 1.12;
+            letter-spacing: -.034em;
+        }
+
+        .is-h2 em {
+            font-style: normal;
+            color: #3cba99;
+        }
+
+        /* Right column */
+        .is-right {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            /* push content to bottom = baseline align */
+            gap: 22px;
+        }
+
+        .is-body {
+            font-size: 15px;
+            color: #3a5550;
+            line-height: 1.80;
+        }
+
+        .is-body strong {
+            color: #0a2218;
+            font-weight: 500;
+        }
+
+        /* Two trust signal chips — side by side, equal width */
+        .is-signals {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .is-sig {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 13px 16px;
+            background: #edf9f6;
+            border: 1px solid #c8ede4;
+            border-radius: 12px;
+        }
+
+        .is-sig-ico {
+            width: 36px;
+            height: 36px;
+            min-width: 36px;
+            background: #fff;
+            border: 1px solid #c8ede4;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .is-sig-ico svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .is-sig-val {
+            font-family: 'Sora', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: #0a2218;
+            line-height: 1.15;
+        }
+
+        .is-sig-lbl {
+            font-size: 11.5px;
+            color: #7ab8ac;
+            font-weight: 500;
+            line-height: 1.2;
+            margin-top: 1px;
+        }
+
+        /* ══════════════════════════════════════════════════
+   4×2 TILE GRID — full-width, borders collapse
+   Each tile shares borders with neighbours so it
+   forms one unified panel rather than 8 separate
+   cards — the key to the magazine feel.
+══════════════════════════════════════════════════ */
+        .is-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            border: 1.5px solid #e8f5f1;
+            border-radius: 20px;
+            overflow: hidden;
+            /* No gap — borders collapse naturally */
+        }
+
+        .is-tile {
+            padding: 32px 28px 30px;
+            background: #fff;
+            position: relative;
+            overflow: hidden;
+            cursor: default;
+            /* Internal shared borders */
+            border-right: 1px solid #e8f5f1;
+            border-bottom: 1px solid #e8f5f1;
+            transition: background .26s, transform .26s, box-shadow .26s;
+        }
+
+        /* Remove right border from 4th column */
+        .is-tile:nth-child(4n) {
+            border-right: none;
+        }
+
+        /* Remove bottom border from last row (tiles 5-8) */
+        .is-tile:nth-child(n+5) {
+            border-bottom: none;
+        }
+
+        /* Hover state — lifts tile, green glow */
+        .is-tile:hover {
+            background: #f7fdf9;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(60, 186, 153, .11);
+            z-index: 2;
+        }
+
+        /* Colour-coded top accent stripe — slides in on hover */
+        .is-tile::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3.5px;
+            transform: scaleX(0);
+            transform-origin: left center;
+            transition: transform .32s cubic-bezier(.22, .61, .36, 1);
+            border-radius: 0;
+        }
+
+        .is-tile:hover::before {
+            transform: scaleX(1);
+        }
+
+        /* Per-industry stripe colours */
+        .c-green::before {
+            background: linear-gradient(90deg, #3cba99, #9ae3cc);
+        }
+
+        .c-blue::before {
+            background: linear-gradient(90deg, #185fa5, #60abe0);
+        }
+
+        .c-amber::before {
+            background: linear-gradient(90deg, #c47a0c, #f0a830);
+        }
+
+        .c-purple::before {
+            background: linear-gradient(90deg, #534ab7, #8f87e0);
+        }
+
+        .c-coral::before {
+            background: linear-gradient(90deg, #b03a1a, #e05d35);
+        }
+
+        .c-teal::before {
+            background: linear-gradient(90deg, #0f6e56, #3cba99);
+        }
+
+        .c-pink::before {
+            background: linear-gradient(90deg, #a02d55, #d95a80);
+        }
+
+        .c-indigo::before {
+            background: linear-gradient(90deg, #3c3489, #6560cc);
+        }
+
+        /* Icon container */
+        .is-tile-ico {
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            background: #f4fcf9;
+            border: 1.5px solid #e8f5f1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 18px;
+            transition: background .26s, border-color .26s, transform .28s cubic-bezier(.34, 1.4, .64, 1);
+        }
+
+        .is-tile:hover .is-tile-ico {
+            background: #edf9f6;
+            border-color: #c8ede4;
+            transform: scale(1.08) rotate(-5deg);
+        }
+
+        /* Colour-matched icon on hover */
+        .is-tile.c-green:hover .is-tile-ico {
+            background: #edf9f6;
+            border-color: #c8ede4;
+        }
+
+        .is-tile.c-blue:hover .is-tile-ico {
+            background: #e5f0fb;
+            border-color: #b0cdf4;
+        }
+
+        .is-tile.c-amber:hover .is-tile-ico {
+            background: #faecd8;
+            border-color: #e8d5ac;
+        }
+
+        .is-tile.c-purple:hover .is-tile-ico {
+            background: #eeecfe;
+            border-color: #cac7f5;
+        }
+
+        .is-tile.c-coral:hover .is-tile-ico {
+            background: #faebe6;
+            border-color: #f2bfad;
+        }
+
+        .is-tile.c-teal:hover .is-tile-ico {
+            background: #edf9f6;
+            border-color: #c8ede4;
+        }
+
+        .is-tile.c-pink:hover .is-tile-ico {
+            background: #fbe9ef;
+            border-color: #f3bdcf;
+        }
+
+        .is-tile.c-indigo:hover .is-tile-ico {
+            background: #eeecfe;
+            border-color: #cac7f5;
+        }
+
+        .is-tile-ico svg {
+            width: 24px;
+            height: 24px;
+            stroke: #3a5550;
+            fill: none;
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: stroke .26s;
+        }
+
+        .is-tile.c-green:hover .is-tile-ico svg {
+            stroke: #3cba99;
+        }
+
+        .is-tile.c-blue:hover .is-tile-ico svg {
+            stroke: #185fa5;
+        }
+
+        .is-tile.c-amber:hover .is-tile-ico svg {
+            stroke: #c47a0c;
+        }
+
+        .is-tile.c-purple:hover .is-tile-ico svg {
+            stroke: #534ab7;
+        }
+
+        .is-tile.c-coral:hover .is-tile-ico svg {
+            stroke: #b03a1a;
+        }
+
+        .is-tile.c-teal:hover .is-tile-ico svg {
+            stroke: #0f6e56;
+        }
+
+        .is-tile.c-pink:hover .is-tile-ico svg {
+            stroke: #a02d55;
+        }
+
+        .is-tile.c-indigo:hover .is-tile-ico svg {
+            stroke: #3c3489;
+        }
+
+        /* Tile name */
+        .is-tile-name {
+            font-family: 'Sora', sans-serif;
+            font-size: 15.5px;
+            font-weight: 700;
+            color: #0a2218;
+            line-height: 1.22;
+            margin-bottom: 8px;
+            transition: color .22s;
+        }
+
+        .is-tile:hover .is-tile-name {
+            color: #0f6e56;
+        }
+
+        /* Tile description */
+        .is-tile-desc {
+            font-size: 13px;
+            color: #5a7a75;
+            line-height: 1.70;
+            margin-bottom: 18px;
+        }
+
+        /* Arrow link at bottom of each tile */
+        .is-tile-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'Sora', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            color: #3cba99;
+            opacity: 0;
+            transform: translateY(4px);
+            transition: opacity .22s, transform .22s, gap .18s;
+        }
+
+        .is-tile:hover .is-tile-link {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .is-tile-link:hover {
+            gap: 10px;
+        }
+
+        .is-tile-link svg {
+            width: 14px;
+            height: 14px;
+            stroke: #3cba99;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: transform .18s;
+        }
+
+        .is-tile-link:hover svg {
+            transform: translateX(3px);
+        }
+
+        /* Reveal animation */
+        .is-tile {
+            opacity: 0;
+            transform: translateY(18px);
+        }
+
+        .is-tile.go {
+            animation: tileIn .52s cubic-bezier(.22, .61, .36, 1) both;
+        }
+
+        @keyframes tileIn {
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ══════════════════════════════════════════════════
+   FULL-WIDTH CTA STRIP
+   Bleeds to section edges via negative margins.
+   Uses padding that matches .is-in padding.
+══════════════════════════════════════════════════ */
+        .is-cta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            background: #edf9f6;
+            border-top: 1.5px solid #c8ede4;
+            padding: 38px 48px;
+            margin-top: 48px;
+            position: relative;
+        }
+
+        /* CTA top accent line */
+        .is-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 15%;
+            right: 15%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #3cba99 30%, #3cba99 70%, transparent);
+        }
+
+        .is-cta-text {}
+
+        .is-cta-q {
+            font-family: 'Sora', sans-serif;
+            font-size: 19px;
+            font-weight: 800;
+            color: #0a2218;
+            line-height: 1.22;
+            letter-spacing: -.018em;
+            margin-bottom: 4px;
+        }
+
+        .is-cta-q em {
+            font-style: normal;
+            color: #3cba99;
+        }
+
+        .is-cta-s {
+            font-size: 13.5px;
+            color: #7ab8ac;
+            font-weight: 500;
+        }
+
+        .is-cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #3cba99;
+            color: #fff;
+            font-family: 'Sora', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            padding: 15px 32px;
+            border-radius: 10px;
+            text-decoration: none;
+            white-space: nowrap;
+            flex-shrink: 0;
+            transition: background .18s, transform .15s, box-shadow .18s;
+        }
+
+        .is-cta-btn:hover {
+            background: #2ea882;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 28px rgba(60, 186, 153, .3);
+        }
+
+        .is-cta-arr {
+            display: inline-block;
+            transition: transform .18s;
+        }
+
+        .is-cta-btn:hover .is-cta-arr {
+            transform: translateX(5px);
+        }
+
+        /* ══ SCROLL REVEAL ══ */
+        .rv {
+            opacity: 0;
+            transform: translateY(22px);
+            will-change: opacity, transform;
+            transition: opacity .80s cubic-bezier(.22, .61, .36, 1), transform .80s cubic-bezier(.22, .61, .36, 1);
+        }
+
+        .rv.in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .rv-l {
+            opacity: 0;
+            transform: translateX(-28px);
+            will-change: opacity, transform;
+            transition: opacity .80s cubic-bezier(.22, .61, .36, 1), transform .80s cubic-bezier(.22, .61, .36, 1);
+        }
+
+        .rv-r {
+            opacity: 0;
+            transform: translateX(28px);
+            will-change: opacity, transform;
+            transition: opacity .80s cubic-bezier(.22, .61, .36, 1) .14s, transform .80s cubic-bezier(.22, .61, .36, 1) .14s;
+        }
+
+        .rv-l.in,
+        .rv-r.in {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Copy btn */
+        .cp-btn {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            z-index: 999;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #0a2218;
+            color: #fff;
+            border: none;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            padding: 11px 20px;
+            border-radius: 100px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(10, 34, 24, .22);
+            transition: background .18s, transform .15s;
+        }
+
+        .cp-btn:hover {
+            background: #3cba99;
+            transform: translateY(-2px);
+        }
+
+        .cp-toast {
+            position: fixed;
+            bottom: 80px;
+            right: 28px;
+            z-index: 1000;
+            background: #0f6e56;
+            color: #fff;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            padding: 10px 18px;
+            border-radius: 10px;
+            opacity: 0;
+            transform: translateY(6px);
+            transition: opacity .22s, transform .22s;
+            pointer-events: none;
+        }
+
+        .cp-toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ══ RESPONSIVE ══ */
+        @media(max-width:1040px) {
+            .is-in {
+                padding: 0 32px;
+            }
+
+            .is-h2 {
+                font-size: 34px;
+            }
+
+            .is-top {
+                gap: 48px;
+            }
+
+            .is-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .is-tile:nth-child(4n) {
+                border-right: 1px solid #e8f5f1;
+            }
+
+            .is-tile:nth-child(2n) {
+                border-right: none;
+            }
+
+            .is-tile:nth-child(n+5) {
+                border-bottom: 1px solid #e8f5f1;
+            }
+
+            .is-tile:nth-child(n+7) {
+                border-bottom: none;
+            }
+
+            .is-cta {
+                padding: 34px 32px;
+            }
+        }
+
+        @media(max-width:768px) {
+            .is {
+                padding: 72px 0 0;
+            }
+
+            .is-in {
+                padding: 0 20px;
+            }
+
+            .is-top {
+                grid-template-columns: 1fr;
+                gap: 28px;
+            }
+
+            .is-h2 {
+                font-size: 28px;
+            }
+
+            .is-signals {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .is-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .is-cta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+                padding: 28px 20px;
+            }
+
+            .is-cta::before {
+                left: 5%;
+                right: 5%;
+            }
+        }
+
+        @media(max-width:480px) {
+            .is-h2 {
+                font-size: 24px;
+            }
+
+            .is-signals {
+                grid-template-columns: 1fr;
+            }
+
+            .is-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .is-tile:nth-child(2n) {
+                border-right: none;
+            }
+
+            .is-tile {
+                border-right: none;
+            }
+
+            .is-tile:not(:last-child) {
+                border-bottom: 1px solid #e8f5f1;
+            }
+
+            .is-tile:last-child {
+                border-bottom: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <section class="is" id="is-sec">
+        <div class="is-in">
+
+            <!-- ══ EDITORIAL HEADER ══ -->
+            <div class="is-top">
+
+                <!-- LEFT: pill + large H2 -->
+                <div class="rv-l" id="is-left">
+                    <div class="is-pill"><span class="is-dot"></span>Industries We Serve</div>
+                    <h2 class="is-h2">Digital Marketing for<br><em>Every Industry</em> in Chennai</h2>
+                </div>
+
+                <!-- RIGHT: intro + two trust chips -->
+                <div class="rv-r" id="is-right">
+                    <p class="is-body">
+                        Every industry has a different audience, buying journey, and competitive landscape.
+                        As a leading <strong>digital marketing agency in Chennai</strong>, we build sector-specific
+                        strategies — not generic templates — so your brand reaches the right customers and
+                        drives consistent, measurable growth.
+                    </p>
+                    <div class="is-signals">
+                        <div class="is-sig">
+                            <div class="is-sig-ico">
+                                <svg viewBox="0 0 18 18" fill="none" stroke="#3cba99" stroke-width="1.7"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M9 2l1.8 3.8L15 6.6l-3 3 .7 4.2L9 11.8l-3.7 2 .7-4.2-3-3 4.2-.8z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="is-sig-val">2,000+ Brands</div>
+                                <div class="is-sig-lbl">Served across industries</div>
+                            </div>
+                        </div>
+                        <div class="is-sig">
+                            <div class="is-sig-ico">
+                                <svg viewBox="0 0 18 18" fill="none" stroke="#3cba99" stroke-width="1.7"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="2" y="4" width="14" height="11" rx="2" />
+                                    <path d="M2 8h14M6 4V2M12 4V2" />
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="is-sig-val">15+ Years</div>
+                                <div class="is-sig-lbl">Industry expertise</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- /is-top -->
+
+            <!-- ══ 4×2 TILE GRID ══ -->
+            <div class="is-grid" id="is-grid">
+
+                <!-- 1 — Real Estate -->
+                <div class="is-tile c-green">
+                    <div class="is-tile-ico">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M3 10.5L12 3l9 7.5V21H3V10.5Z" />
+                            <path d="M9 21V14h6v7" />
+                        </svg>
+                    </div>
+                    <div class="is-tile-name">Real Estate</div>
+                    <div class="is-tile-desc">Lead generation and local SEO for developers, agents, and consultants to
+                        reach active property buyers.</div>
+                    <a class="is-tile-link" href="https://rankraze.com/contact">
+                        Get Strategy
+                        <svg viewBox="0 0 14 14">
+                            <path d="M2 7h10M7 2l5 5-5 5" />
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- 2 — Healthcare -->
+                <div class="is-tile c-blue">
+                    <div class="is-tile-ico">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+                        </svg>
+                    </div>
+                    <div class="is-tile-name">Healthcare</div>
+                    <div class="is-tile-desc">Helping clinics, hospitals, and health brands reach more patients through
+                        search, social, and reputation marketing.</div>
+                    <a class="is-tile-link" href="https://rankraze.com/contact">
+                        Get Strategy
+                        <svg viewBox="0 0 14 14">
+                            <path d="M2 7h10M7 2l5 5-5 5" />
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- 3 — Ecommerce -->
+                <div class="is-tile c-amber">
+                    <div class="is-tile-ico">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
+                            <path d="M3 6h18" />
+                            <path d="M16 10a4 4 0 0 1-8 0" />
+                        </svg>
+                    </div>
+                    <div class="is-tile-name">Ecommerce</div>
+                    <div class="is-tile-desc">Drive traffic, reduce cart abandonment, and scale revenue through SEO,
+                        paid ads, and conversion optimisation.</div>
+                    <a class="is-tile-link" href="https://rankraze.com/contact">
+                        Get Strategy
+                        <svg viewBox="0 0 14 14">
+                            <path d="M2 7h10M7 2l5 5-5 5" />
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- 4 — Education -->
+                <div class="is-tile c-purple">
+                    <div class="is-tile-ico">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M22 10v6M2 10l10-5 10 5-10 5-10-5Z" />
+                            <path d="M6 12v5c0 1.66 2.69 3 6 3s6-1.34 6-3v-5" />
+                        </svg>
+                    </div>
+                    <div class="is-tile-name">Education</div>
+                    <div class="is-tile-desc">Student acquisition strategies for institutions, coaching centres, and
+                        online course providers across India.</div>
+                    <a class="is-tile-link" href="https://rankraze.com/contact">
+                        Get Strategy
+                        <svg viewBox="0 0 14 14">
+                            <path d="M2 7h10M7 2l5 5-5 5" />
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- 5 — Startups -->
+                <div class="is-tile c-coral">
+                    <div class="is-tile-ico">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8Z" />
+                        </svg>
+                    </div>
+                    <div class="is-tile-name">Startups</div>
+                    <div class="is-tile-desc">Early-stage brand visibility and customer acquisition to accelerate your
+                        go-to-market and build initial traction.</div>
+                    <a class="is-tile-link" href="https://rankraze.com/contact">
+                        Get Strategy
+                        <svg viewBox="0 0 14 14">
+                            <path d="M2 7h10M7 2l5 5-5 5" />
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- 6 — Hospitality -->
+                <div class="is-tile c-teal">
+                    <div class="is-tile-ico">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M3 7V17a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7" />
+                            <path d="M21 7H3" />
+                            <path d="M12 7V3" />
+                            <path d="M8 3h8" />
+                        </svg>
+                    </div>
+                    <div class="is-tile-name">Hospitality</div>
+                    <div class="is-tile-desc">Increase direct bookings and brand awareness for hotels, resorts,
+                        restaurants, and travel companies.</div>
+                    <a class="is-tile-link" href="https://rankraze.com/contact">
+                        Get Strategy
+                        <svg viewBox="0 0 14 14">
+                            <path d="M2 7h10M7 2l5 5-5 5" />
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- 7 — B2B & Manufacturing -->
+                <div class="is-tile c-pink">
+                    <div class="is-tile-ico">
+                        <svg viewBox="0 0 24 24">
+                            <rect x="2" y="7" width="20" height="14" rx="2" />
+                            <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
+                            <line x1="12" y1="12" x2="12" y2="16" />
+                            <line x1="10" y1="14" x2="14" y2="14" />
+                        </svg>
+                    </div>
+                    <div class="is-tile-name">B2B &amp; Manufacturing</div>
+                    <div class="is-tile-desc">Brand authority and qualified pipeline generation for industrial brands,
+                        exporters, and enterprise companies.</div>
+                    <a class="is-tile-link" href="https://rankraze.com/contact">
+                        Get Strategy
+                        <svg viewBox="0 0 14 14">
+                            <path d="M2 7h10M7 2l5 5-5 5" />
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- 8 — Finance & BFSI -->
+                <div class="is-tile c-indigo">
+                    <div class="is-tile-ico">
+                        <svg viewBox="0 0 24 24">
+                            <rect x="2" y="5" width="20" height="14" rx="2" />
+                            <line x1="2" y1="10" x2="22" y2="10" />
+                            <path d="M6 15h2M10 15h4" />
+                        </svg>
+                    </div>
+                    <div class="is-tile-name">Finance &amp; BFSI</div>
+                    <div class="is-tile-desc">Compliance-aware digital strategies for fintech, banking, insurance, and
+                        financial services brands.</div>
+                    <a class="is-tile-link" href="https://rankraze.com/contact">
+                        Get Strategy
+                        <svg viewBox="0 0 14 14">
+                            <path d="M2 7h10M7 2l5 5-5 5" />
+                        </svg>
+                    </a>
+                </div>
+
+            </div><!-- /is-grid -->
+
+        </div><!-- /is-in -->
+
+        <!-- ══ FULL-WIDTH CTA STRIP ══ -->
+        <div class="is-cta rv" id="is-cta" style="transition-delay:.24s">
+            <div class="is-cta-text">
+                <p class="is-cta-q">Looking for digital marketing <em>tailored to your industry?</em></p>
+                <p class="is-cta-s">Tell us your sector — we'll build a strategy around your specific goals, audience,
+                    and competitive landscape.</p>
+            </div>
+            <a class="is-cta-btn" href="https://rankraze.com/contact">
+                Get Your Custom Marketing Plan <span class="is-cta-arr">&#8594;</span>
+            </a>
+        </div>
+
+    </section>
+
+    <button class="cp-btn" onclick="isCopy()">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+            <rect x="5" y="5" width="9" height="9" rx="2" stroke="currentColor" stroke-width="1.4" />
+            <path d="M11 5V3a2 2 0 0 0-2-2H3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2" stroke="currentColor" stroke-width="1.4"
+                stroke-linecap="round" />
+        </svg>Copy Block
+    </button>
+    <div class="cp-toast" id="cp-toast">&#x2713; Industries section copied!</div>
+
+    <script>
+        (function () {
+            var sec = document.getElementById('is-sec');
+            var left = document.getElementById('is-left');
+            var right = document.getElementById('is-right');
+            var tiles = document.querySelectorAll('.is-tile');
+            var cta = document.getElementById('is-cta');
+            var fired = false;
+
+            function trigger() {
+                if (fired) return; fired = true;
+                /* Header slides in from sides */
+                if (left) left.classList.add('in');
+                if (right) right.classList.add('in');
+                /* Tiles cascade in — row-by-row feel: 70ms per tile */
+                tiles.forEach(function (t, i) {
+                    setTimeout(function () { t.classList.add('go'); }, 220 + i * 70);
+                });
+                /* CTA strip fades up last */
+                setTimeout(function () { if (cta) cta.classList.add('in'); }, 220 + tiles.length * 70 + 200);
+            }
+
+            function check() {
+                if (fired) return;
+                if (sec.getBoundingClientRect().top < window.innerHeight + 40) trigger();
+            }
+
+            if ('IntersectionObserver' in window) {
+                var io = new IntersectionObserver(function (e) {
+                    if (e[0].isIntersecting) { trigger(); io.disconnect(); }
+                }, { threshold: 0 });
+                io.observe(sec);
+            } else { trigger(); }
+
+            window.addEventListener('scroll', check, { passive: true });
+            window.addEventListener('load', check);
+            if (document.readyState !== 'loading') setTimeout(check, 60);
+            else document.addEventListener('DOMContentLoaded', function () { setTimeout(check, 60); });
+        })();
+
+        function isCopy() {
+            var fonts = '<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>\n\n';
+            var styles = '<style>\n' + document.querySelector('style').textContent + '\n</style>\n\n';
+            var html = document.getElementById('is-sec').outerHTML;
+            var js = '\n\n<script>\n' + document.querySelector('script').textContent + '\n<\/script>';
+            var full = '<!-- Rankraze — Industries We Serve Section -->\n ' +font s +style s +htm l +js;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(full).then(showToast);
+            } else {
+                var ta = document.createElement('textarea'); ta.value = full;
+                ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0;pointer-events:none';
+                document.body.appendChild(ta); ta.focus(); ta.select();
+                document.execCommand('copy'); document.body.removeChild(ta); showToast();
+            }
+        }
+        function showToast() {
+            var t = document.getElementById('cp-toast'); t.classList.add('show');
+            setTimeout(function () { t.classList.remove('show'); }, 2600);
+        }
+    </script>
+</body>
+
+</html>
