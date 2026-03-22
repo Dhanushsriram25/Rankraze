@@ -500,7 +500,7 @@
             }
 
             100% {
-                box-shadow: 0 0 0 0 rgba(60, 186, 153, 0))
+                box-shadow: 0 0 0 0 rgba(60, 186, 153, 0)
             }
         }
 
@@ -815,7 +815,7 @@
             var styles = '<style>\n' + document.querySelector('style').textContent + '\n</style>\n\n';
             var html = document.getElementById('ab-sec').outerHTML;
             var js = '\n\n<script>\n' + document.querySelector('script').textContent + '\n<\/script>';
-            var full = '<!-- Rankraze About Section -->\n ' +font s +style s +htm l +js;
+            var full = '<!-- Rankraze About Section -->\n '  +fonts  +styles  +html  +js;
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(full).then(showToast);
             } else {

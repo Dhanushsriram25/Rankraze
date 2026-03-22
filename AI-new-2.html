@@ -1073,7 +1073,7 @@
             var styles = '<style>\n' + document.querySelector('style').textContent + '\n</style>\n\n';
             var html = document.getElementById('ai-sec').outerHTML;
             var js = '\n\n<script>\n' + document.querySelector('script').textContent + '\n<\/script>';
-            var full = '<!-- Rankraze AI Section -->\n ' +font s +style s +htm l +js;
+            var full = '<!-- Rankraze AI Section -->\n '  +fonts  +styles  +html  +js;
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(full).then(showToast);
             } else {
