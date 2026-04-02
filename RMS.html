@@ -1,0 +1,2495 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RestroSuite — Restaurant & Hotel Management Software</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --ink: #111827;
+            --ink-2: #374151;
+            --ink-3: #6B7280;
+            --ink-4: #9CA3AF;
+            --surface: #FFFFFF;
+            --surface-2: #F9FAFB;
+            --surface-3: #F3F4F6;
+            --border: #E5E7EB;
+            --accent: #E85D27;
+            --accent-light: #FEF0EB;
+            --accent-dark: #C44A1A;
+            --green: #059669;
+            --green-light: #ECFDF5;
+            --blue: #2563EB;
+            --blue-light: #EFF6FF;
+            --purple: #7C3AED;
+            --purple-light: #F5F3FF;
+            --amber: #D97706;
+            --amber-light: #FFFBEB;
+            --radius: 12px;
+            --radius-lg: 20px;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
+            --shadow: 0 4px 16px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
+            --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.10), 0 8px 16px rgba(0, 0, 0, 0.06);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            color: var(--ink);
+            background: var(--surface);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ─── NAV ─── */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0 5%;
+        }
+
+        .nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 68px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo-mark {
+            width: 36px;
+            height: 36px;
+            background: var(--accent);
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-mark svg {
+            width: 20px;
+            height: 20px;
+            fill: white;
+        }
+
+        .logo-name {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.25rem;
+            color: var(--ink);
+        }
+
+        .logo-name span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--ink-2);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color .2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .nav-cta {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 22px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            border: none;
+            transition: all .2s;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--ink-2);
+            border: 1.5px solid var(--border);
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--ink-3);
+            color: var(--ink);
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(232, 93, 39, 0.3);
+        }
+
+        .btn-primary-lg {
+            padding: 14px 32px;
+            font-size: 1rem;
+            border-radius: 10px;
+        }
+
+        .btn-outline-lg {
+            padding: 13px 32px;
+            font-size: 1rem;
+            border-radius: 10px;
+            border: 1.5px solid var(--border);
+            background: white;
+            color: var(--ink-2);
+        }
+
+        .btn-outline-lg:hover {
+            border-color: var(--ink-3);
+        }
+
+        /* ─── HERO ─── */
+        .hero {
+            padding: 100px 5% 80px;
+            background: linear-gradient(180deg, #FAFAFA 0%, #FFFFFF 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 60% 50% at 60% 40%, rgba(232, 93, 39, 0.06) 0%, transparent 70%);
+        }
+
+        .hero-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--accent-light);
+            color: var(--accent);
+            padding: 6px 14px;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+            border: 1px solid rgba(232, 93, 39, 0.2);
+        }
+
+        .hero-badge::before {
+            content: '';
+            width: 7px;
+            height: 7px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1
+            }
+
+            50% {
+                opacity: .4
+            }
+        }
+
+        h1 {
+            font-family: 'DM Serif Display', serif;
+            font-size: clamp(2.4rem, 4vw, 3.4rem);
+            line-height: 1.15;
+            color: var(--ink);
+            margin-bottom: 20px;
+        }
+
+        h1 em {
+            color: var(--accent);
+            font-style: italic;
+        }
+
+        .hero-sub {
+            font-size: 1.1rem;
+            color: var(--ink-3);
+            line-height: 1.7;
+            margin-bottom: 36px;
+            max-width: 480px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-bottom: 48px;
+        }
+
+        .hero-trust {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .trust-avatars {
+            display: flex;
+        }
+
+        .trust-avatars span {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: white;
+            margin-left: -8px;
+        }
+
+        .trust-avatars span:first-child {
+            margin-left: 0;
+        }
+
+        .ta1 {
+            background: #E85D27;
+        }
+
+        .ta2 {
+            background: #2563EB;
+        }
+
+        .ta3 {
+            background: #059669;
+        }
+
+        .ta4 {
+            background: #7C3AED;
+        }
+
+        .trust-text {
+            font-size: 0.85rem;
+            color: var(--ink-3);
+        }
+
+        .trust-text strong {
+            color: var(--ink);
+        }
+
+        /* ─── HERO VISUAL ─── */
+        .hero-visual {
+            position: relative;
+        }
+
+        .dashboard-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .db-header {
+            background: var(--ink);
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .db-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .db-dot:nth-child(1) {
+            background: #FF5F57;
+        }
+
+        .db-dot:nth-child(2) {
+            background: #FEBC2E;
+        }
+
+        .db-dot:nth-child(3) {
+            background: #28C840;
+        }
+
+        .db-title {
+            font-size: 0.78rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-left: 8px;
+            font-weight: 500;
+        }
+
+        .db-body {
+            padding: 20px;
+            background: var(--surface-2);
+        }
+
+        .db-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .db-stat {
+            background: white;
+            border-radius: 10px;
+            padding: 14px;
+            border: 1px solid var(--border);
+        }
+
+        .db-stat-label {
+            font-size: 0.72rem;
+            color: var(--ink-3);
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .db-stat-val {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--ink);
+            font-family: 'DM Serif Display', serif;
+        }
+
+        .db-stat-change {
+            font-size: 0.7rem;
+            color: var(--green);
+            font-weight: 600;
+        }
+
+        .db-orders {
+            background: white;
+            border-radius: 10px;
+            padding: 16px;
+            border: 1px solid var(--border);
+            margin-bottom: 12px;
+        }
+
+        .db-orders-title {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--ink);
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .db-orders-title span {
+            color: var(--ink-4);
+            font-weight: 400;
+        }
+
+        .order-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--surface-3);
+            font-size: 0.78rem;
+        }
+
+        .order-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .order-num {
+            font-weight: 600;
+            color: var(--ink);
+            width: 52px;
+        }
+
+        .order-table {
+            color: var(--ink-3);
+            flex: 1;
+        }
+
+        .order-items {
+            color: var(--ink-3);
+        }
+
+        .order-amt {
+            font-weight: 600;
+            color: var(--ink);
+            width: 56px;
+            text-align: right;
+        }
+
+        .order-status {
+            padding: 2px 8px;
+            border-radius: 100px;
+            font-size: 0.68rem;
+            font-weight: 600;
+        }
+
+        .s-new {
+            background: var(--blue-light);
+            color: var(--blue);
+        }
+
+        .s-prep {
+            background: var(--amber-light);
+            color: var(--amber);
+        }
+
+        .s-done {
+            background: var(--green-light);
+            color: var(--green);
+        }
+
+        .db-bottom {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .db-mini {
+            background: white;
+            border-radius: 10px;
+            padding: 14px;
+            border: 1px solid var(--border);
+        }
+
+        .db-mini-title {
+            font-size: 0.72rem;
+            color: var(--ink-3);
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .bar-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+            font-size: 0.7rem;
+        }
+
+        .bar-label {
+            color: var(--ink-3);
+            width: 40px;
+        }
+
+        .bar-track {
+            flex: 1;
+            height: 6px;
+            background: var(--surface-3);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            border-radius: 3px;
+        }
+
+        .bar-val {
+            color: var(--ink);
+            font-weight: 600;
+            width: 28px;
+            text-align: right;
+        }
+
+        .kot-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-size: 0.72rem;
+        }
+
+        .kot-badge {
+            width: 22px;
+            height: 22px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.6rem;
+            font-weight: 700;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        /* ─── BRANDS / LOGOS ─── */
+        .brands {
+            padding: 48px 5%;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brands-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .brands-label {
+            text-align: center;
+            font-size: 0.82rem;
+            color: var(--ink-4);
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 28px;
+        }
+
+        .brands-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 48px;
+            flex-wrap: wrap;
+        }
+
+        .brand-item {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1rem;
+            color: var(--ink-4);
+            letter-spacing: -0.01em;
+        }
+
+        /* ─── SECTIONS COMMON ─── */
+        section {
+            padding: 96px 5%;
+        }
+
+        .section-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-tag {
+            display: inline-block;
+            background: var(--accent-light);
+            color: var(--accent);
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 5px 14px;
+            border-radius: 100px;
+            margin-bottom: 16px;
+        }
+
+        .section-tag-blue {
+            background: var(--blue-light);
+            color: var(--blue);
+        }
+
+        .section-tag-green {
+            background: var(--green-light);
+            color: var(--green);
+        }
+
+        .section-tag-purple {
+            background: var(--purple-light);
+            color: var(--purple);
+        }
+
+        h2 {
+            font-family: 'DM Serif Display', serif;
+            font-size: clamp(1.9rem, 3vw, 2.7rem);
+            line-height: 1.2;
+            color: var(--ink);
+            margin-bottom: 16px;
+        }
+
+        h2 em {
+            color: var(--accent);
+            font-style: italic;
+        }
+
+        .section-sub {
+            font-size: 1.05rem;
+            color: var(--ink-3);
+            max-width: 560px;
+            line-height: 1.7;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .section-header .section-sub {
+            margin: 0 auto;
+        }
+
+        /* ─── FOR WHO ─── */
+        .for-who {
+            background: var(--surface-2);
+        }
+
+        .who-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        .who-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 28px 24px;
+            border: 1px solid var(--border);
+            transition: all .25s;
+            cursor: default;
+        }
+
+        .who-card:hover {
+            border-color: var(--accent);
+            box-shadow: var(--shadow);
+            transform: translateY(-4px);
+        }
+
+        .who-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            margin-bottom: 16px;
+        }
+
+        .who-card h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--ink);
+            margin-bottom: 8px;
+        }
+
+        .who-card p {
+            font-size: 0.88rem;
+            color: var(--ink-3);
+            line-height: 1.6;
+        }
+
+        /* ─── HOW IT WORKS ─── */
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+            position: relative;
+        }
+
+        .steps-grid::before {
+            content: '';
+            position: absolute;
+            top: 28px;
+            left: 10%;
+            right: 10%;
+            height: 1px;
+            background: var(--border);
+            z-index: 0;
+        }
+
+        .step {
+            text-align: center;
+            padding: 0 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step-num {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin: 0 auto 20px;
+            border: 2px solid var(--border);
+            background: white;
+            color: var(--accent);
+        }
+
+        .step h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--ink);
+            margin-bottom: 8px;
+        }
+
+        .step p {
+            font-size: 0.85rem;
+            color: var(--ink-3);
+            line-height: 1.6;
+        }
+
+        /* ─── FEATURES ─── */
+        .features-tabs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 48px;
+        }
+
+        .feat-tab {
+            padding: 8px 20px;
+            border-radius: 100px;
+            border: 1.5px solid var(--border);
+            font-size: 0.88rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all .2s;
+            background: white;
+            color: var(--ink-3);
+        }
+
+        .feat-tab.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .feat-content {
+            display: none;
+        }
+
+        .feat-content.active {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: center;
+        }
+
+        .feat-list {
+            display: grid;
+            gap: 20px;
+        }
+
+        .feat-item {
+            display: flex;
+            gap: 16px;
+        }
+
+        .feat-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+            background: var(--surface-2);
+        }
+
+        .feat-item h4 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--ink);
+            margin-bottom: 4px;
+        }
+
+        .feat-item p {
+            font-size: 0.85rem;
+            color: var(--ink-3);
+            line-height: 1.6;
+        }
+
+        .feat-visual {
+            background: var(--surface-2);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            border: 1px solid var(--border);
+            min-height: 320px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .fv-header {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--ink);
+            margin-bottom: 4px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .fv-header span {
+            color: var(--green);
+            font-size: 0.75rem;
+        }
+
+        .fv-table-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: white;
+            border-radius: 8px;
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            font-size: 0.82rem;
+        }
+
+        .fv-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .fv-name {
+            font-weight: 600;
+            color: var(--ink);
+            flex: 1;
+        }
+
+        .fv-qty {
+            color: var(--ink-3);
+            width: 40px;
+            text-align: center;
+        }
+
+        .fv-price {
+            color: var(--ink);
+            font-weight: 600;
+            width: 60px;
+            text-align: right;
+        }
+
+        .fv-tag {
+            padding: 2px 8px;
+            border-radius: 100px;
+            font-size: 0.68rem;
+            font-weight: 600;
+        }
+
+        /* ─── PRICING ─── */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+            align-items: start;
+        }
+
+        .price-card {
+            border-radius: var(--radius-lg);
+            padding: 36px 32px;
+            border: 1px solid var(--border);
+            background: white;
+            position: relative;
+        }
+
+        .price-card.popular {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 1px var(--accent), var(--shadow-lg);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -13px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: white;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 4px 16px;
+            border-radius: 100px;
+            white-space: nowrap;
+        }
+
+        .price-plan {
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--ink-3);
+            margin-bottom: 12px;
+        }
+
+        .price-name {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.5rem;
+            color: var(--ink);
+            margin-bottom: 8px;
+        }
+
+        .price-desc {
+            font-size: 0.85rem;
+            color: var(--ink-3);
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+
+        .price-amount {
+            display: flex;
+            align-items: baseline;
+            gap: 4px;
+            margin-bottom: 8px;
+        }
+
+        .price-currency {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--ink);
+        }
+
+        .price-num {
+            font-family: 'DM Serif Display', serif;
+            font-size: 3rem;
+            color: var(--ink);
+            line-height: 1;
+        }
+
+        .price-period {
+            font-size: 0.85rem;
+            color: var(--ink-3);
+        }
+
+        .price-note {
+            font-size: 0.78rem;
+            color: var(--ink-3);
+            margin-bottom: 28px;
+        }
+
+        .price-divider {
+            height: 1px;
+            background: var(--border);
+            margin-bottom: 24px;
+        }
+
+        .price-features {
+            list-style: none;
+            display: grid;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .price-features li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 0.88rem;
+            color: var(--ink-2);
+        }
+
+        .pf-check {
+            color: var(--green);
+            font-weight: 700;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        .pf-x {
+            color: var(--ink-4);
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        .btn-plan {
+            width: 100%;
+            justify-content: center;
+            padding: 13px;
+        }
+
+        /* ─── TESTIMONIALS ─── */
+        .testimonials {
+            background: var(--surface-2);
+        }
+
+        .testi-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .testi-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 28px;
+            border: 1px solid var(--border);
+        }
+
+        .testi-stars {
+            color: #FBBF24;
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+            letter-spacing: 2px;
+        }
+
+        .testi-quote {
+            font-size: 0.95rem;
+            color: var(--ink-2);
+            line-height: 1.7;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .testi-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .testi-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: white;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+
+        .testi-name {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--ink);
+        }
+
+        .testi-role {
+            font-size: 0.78rem;
+            color: var(--ink-3);
+        }
+
+        /* ─── FAQ ─── */
+        .faq-grid {
+            max-width: 780px;
+            margin: 0 auto;
+            display: grid;
+            gap: 16px;
+        }
+
+        .faq-item {
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+
+        .faq-q {
+            padding: 20px 24px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--ink);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            background: white;
+            user-select: none;
+        }
+
+        .faq-q:hover {
+            background: var(--surface-2);
+        }
+
+        .faq-arrow {
+            color: var(--ink-3);
+            transition: transform .25s;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .faq-item.open .faq-arrow {
+            transform: rotate(45deg);
+            color: var(--accent);
+        }
+
+        .faq-a {
+            display: none;
+            padding: 0 24px 20px;
+            font-size: 0.9rem;
+            color: var(--ink-3);
+            line-height: 1.7;
+            background: white;
+            border-top: 1px solid var(--surface-3);
+            padding-top: 16px;
+        }
+
+        .faq-item.open .faq-a {
+            display: block;
+        }
+
+        /* ─── DEMO FORM ─── */
+        .demo {
+            background: var(--ink);
+        }
+
+        .demo-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: start;
+        }
+
+        .demo h2 {
+            color: white;
+        }
+
+        .demo h2 em {
+            color: var(--accent);
+        }
+
+        .demo .section-sub {
+            color: rgba(255, 255, 255, 0.55);
+        }
+
+        .demo-perks {
+            display: grid;
+            gap: 16px;
+            margin-top: 36px;
+        }
+
+        .demo-perk {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .demo-perk-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .demo-form {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 40px;
+        }
+
+        .demo-form h3 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.4rem;
+            color: var(--ink);
+            margin-bottom: 6px;
+        }
+
+        .demo-form p {
+            font-size: 0.85rem;
+            color: var(--ink-3);
+            margin-bottom: 28px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--ink-2);
+            margin-bottom: 6px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 11px 14px;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-family: 'DM Sans', sans-serif;
+            color: var(--ink);
+            background: white;
+            transition: border-color .2s;
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--accent);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 90px;
+        }
+
+        .form-submit {
+            width: 100%;
+            justify-content: center;
+            padding: 14px;
+            font-size: 0.95rem;
+            border-radius: 10px;
+            margin-top: 4px;
+        }
+
+        .form-privacy {
+            font-size: 0.75rem;
+            color: var(--ink-4);
+            text-align: center;
+            margin-top: 12px;
+        }
+
+        /* ─── FOOTER ─── */
+        footer {
+            background: #0D1117;
+            padding: 64px 5% 32px;
+        }
+
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-top {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr;
+            gap: 48px;
+            margin-bottom: 48px;
+        }
+
+        .footer-brand p {
+            font-size: 0.88rem;
+            color: rgba(255, 255, 255, 0.4);
+            line-height: 1.7;
+            margin-top: 14px;
+            max-width: 260px;
+        }
+
+        .footer-logo-name {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.2rem;
+            color: white;
+        }
+
+        .footer-logo-name span {
+            color: var(--accent);
+        }
+
+        .footer-col h4 {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .footer-col a {
+            display: block;
+            font-size: 0.88rem;
+            color: rgba(255, 255, 255, 0.45);
+            text-decoration: none;
+            margin-bottom: 10px;
+            transition: color .2s;
+        }
+
+        .footer-col a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-bottom p {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.3);
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* ─── STATS STRIP ─── */
+        .stats-strip {
+            background: var(--accent);
+            padding: 48px 5%;
+        }
+
+        .stats-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-num {
+            font-family: 'DM Serif Display', serif;
+            font-size: 2.5rem;
+            color: white;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.88rem;
+            color: rgba(255, 255, 255, 0.75);
+            margin-top: 4px;
+        }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 1024px) {
+            .hero-inner {
+                grid-template-columns: 1fr;
+                gap: 48px;
+            }
+
+            .hero-visual {
+                order: -1;
+            }
+
+            .who-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .steps-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 32px;
+            }
+
+            .steps-grid::before {
+                display: none;
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                max-width: 440px;
+                margin: 0 auto;
+            }
+
+            .testi-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .demo-inner {
+                grid-template-columns: 1fr;
+                gap: 48px;
+            }
+
+            .footer-top {
+                grid-template-columns: 1fr 1fr;
+                gap: 32px;
+            }
+
+            .stats-inner {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .feat-content.active {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding: 64px 5% 48px;
+            }
+
+            .who-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .steps-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-top {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 12px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAV -->
+    <nav>
+        <div class="nav-inner">
+            <a href="#" class="logo">
+                <div class="logo-mark">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M12 2C8 2 4 5 4 9c0 2.5 1.5 4.7 3.8 5.8L7 20h10l-.8-5.2C18.5 13.7 20 11.5 20 9c0-4-4-7-8-7z" />
+                    </svg>
+                </div>
+                <span class="logo-name">Restro<span>Suite</span></span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#how-it-works">How it works</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#faq">FAQ</a></li>
+            </ul>
+            <div class="nav-cta">
+                <a href="#demo" class="btn btn-ghost">Book Demo</a>
+                <a href="https://hotel.rankraze.com/onboarding/" class="btn btn-primary">Start Free Trial</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="hero-text">
+                <div class="hero-badge">Trusted by 500+ F&B Businesses across India</div>
+                <h1>Run your restaurant<br>like a <em>pro.</em><br>Grow it faster.</h1>
+                <p class="hero-sub">All-in-one restaurant & hotel management software — POS billing, table management,
+                    KOT, inventory, staff & real-time reports. No complexity, just results.</p>
+                <div class="hero-actions">
+                    <a href="https://hotel.rankraze.com/onboarding/" class="btn btn-primary btn-primary-lg">Start Free
+                        14-Day Trial →</a>
+                    <a href="#demo" class="btn btn-outline-lg">Book a Live Demo</a>
+                </div>
+                <div class="hero-trust">
+                    <div class="trust-avatars">
+                        <span class="ta1">RS</span>
+                        <span class="ta2">MK</span>
+                        <span class="ta3">AP</span>
+                        <span class="ta4">VR</span>
+                    </div>
+                    <p class="trust-text"><strong>500+ restaurants</strong> switched from manual billing this year</p>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="dashboard-card">
+                    <div class="db-header">
+                        <div class="db-dot"></div>
+                        <div class="db-dot"></div>
+                        <div class="db-dot"></div>
+                        <span class="db-title">RestroSuite Dashboard — Live View</span>
+                    </div>
+                    <div class="db-body">
+                        <div class="db-stats">
+                            <div class="db-stat">
+                                <div class="db-stat-label">Today's Revenue</div>
+                                <div class="db-stat-val">₹28,450</div>
+                                <div class="db-stat-change">↑ 14% vs yesterday</div>
+                            </div>
+                            <div class="db-stat">
+                                <div class="db-stat-label">Orders Today</div>
+                                <div class="db-stat-val">142</div>
+                                <div class="db-stat-change">↑ 22 from last week</div>
+                            </div>
+                            <div class="db-stat">
+                                <div class="db-stat-label">Active Tables</div>
+                                <div class="db-stat-val">8/14</div>
+                                <div class="db-stat-change" style="color:var(--amber)">57% occupied</div>
+                            </div>
+                        </div>
+                        <div class="db-orders">
+                            <div class="db-orders-title">Live Orders <span>Updated just now</span></div>
+                            <div class="order-row">
+                                <span class="order-num">#1042</span>
+                                <span class="order-table">Table 4</span>
+                                <span class="order-items">Biryani, Lassi ×2</span>
+                                <span class="order-amt">₹680</span>
+                                <span class="order-status s-new">New</span>
+                            </div>
+                            <div class="order-row">
+                                <span class="order-num">#1041</span>
+                                <span class="order-table">Table 7</span>
+                                <span class="order-items">Thali ×3, Dessert</span>
+                                <span class="order-amt">₹1,240</span>
+                                <span class="order-status s-prep">Preparing</span>
+                            </div>
+                            <div class="order-row">
+                                <span class="order-num">#1040</span>
+                                <span class="order-table">Takeaway</span>
+                                <span class="order-items">Wrap ×2, Cold coffee</span>
+                                <span class="order-amt">₹480</span>
+                                <span class="order-status s-done">Done</span>
+                            </div>
+                        </div>
+                        <div class="db-bottom">
+                            <div class="db-mini">
+                                <div class="db-mini-title">Top Selling Items</div>
+                                <div class="bar-row">
+                                    <span class="bar-label">Biryani</span>
+                                    <div class="bar-track">
+                                        <div class="bar-fill" style="width:85%;background:var(--accent)"></div>
+                                    </div>
+                                    <span class="bar-val">42</span>
+                                </div>
+                                <div class="bar-row">
+                                    <span class="bar-label">Thali</span>
+                                    <div class="bar-track">
+                                        <div class="bar-fill" style="width:62%;background:var(--blue)"></div>
+                                    </div>
+                                    <span class="bar-val">31</span>
+                                </div>
+                                <div class="bar-row">
+                                    <span class="bar-label">Wrap</span>
+                                    <div class="bar-track">
+                                        <div class="bar-fill" style="width:44%;background:var(--green)"></div>
+                                    </div>
+                                    <span class="bar-val">22</span>
+                                </div>
+                            </div>
+                            <div class="db-mini">
+                                <div class="db-mini-title">Kitchen Queue (KOT)</div>
+                                <div class="kot-item">
+                                    <div class="kot-badge" style="background:var(--accent)">T4</div>
+                                    <span style="font-size:0.75rem;color:var(--ink)">Biryani × 1, Lassi × 2</span>
+                                </div>
+                                <div class="kot-item">
+                                    <div class="kot-badge" style="background:var(--blue)">T7</div>
+                                    <span style="font-size:0.75rem;color:var(--ink)">Veg Thali × 3</span>
+                                </div>
+                                <div class="kot-item">
+                                    <div class="kot-badge" style="background:var(--green)">TO</div>
+                                    <span style="font-size:0.75rem;color:var(--ink)">Wrap × 2, Coffee × 1</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BRANDS -->
+    <div class="brands">
+        <div class="brands-inner">
+            <div class="brands-label">Trusted by restaurants, cafes, hotels & cloud kitchens across India</div>
+            <div class="brands-row">
+                <span class="brand-item">Spice Garden</span>
+                <span class="brand-item">The Grand Buffet</span>
+                <span class="brand-item">Cloud Bites Kitchen</span>
+                <span class="brand-item">Hotel Majestic</span>
+                <span class="brand-item">Brew & Bites</span>
+                <span class="brand-item">QuickBite QSR</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOR WHO -->
+    <section class="for-who">
+        <div class="section-inner">
+            <div class="section-header">
+                <span class="section-tag">Built for everyone in F&B</span>
+                <h2>One platform. Every type of <em>food business.</em></h2>
+                <p class="section-sub">Whether you run a single cafe or a multi-branch hotel chain, RestroSuite adapts
+                    to your operations.</p>
+            </div>
+            <div class="who-grid">
+                <div class="who-card">
+                    <div class="who-icon" style="background:#FEF0EB">🍽️</div>
+                    <h3>Restaurants & Cafes</h3>
+                    <p>Full dine-in management — tables, orders, KOT, billing and staff performance in one screen.</p>
+                </div>
+                <div class="who-card">
+                    <div class="who-icon" style="background:#EFF6FF">🏨</div>
+                    <h3>Hotels with F&B</h3>
+                    <p>Manage your restaurant, room service, bar and banquet from a single integrated dashboard.</p>
+                </div>
+                <div class="who-card">
+                    <div class="who-icon" style="background:#ECFDF5">☁️</div>
+                    <h3>Cloud Kitchens</h3>
+                    <p>Handle multiple brands, Swiggy/Zomato order sync, packaging tracking and delivery billing.</p>
+                </div>
+                <div class="who-card">
+                    <div class="who-icon" style="background:#F5F3FF">⚡</div>
+                    <h3>QSRs & Food Chains</h3>
+                    <p>High-volume, fast-turn billing with multi-branch control, centralized menu and real-time MIS.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section id="how-it-works">
+        <div class="section-inner">
+            <div class="section-header">
+                <span class="section-tag section-tag-blue">Simple setup</span>
+                <h2>Up and running in <em>under a day.</em></h2>
+                <p class="section-sub">No technical team needed. Our onboarding team handles setup, training, and
+                    go-live support.</p>
+            </div>
+            <div class="steps-grid">
+                <div class="step">
+                    <div class="step-num">1</div>
+                    <h3>Sign up & configure</h3>
+                    <p>Create your account, add your menu, set up tables and branches in under 30 minutes.</p>
+                </div>
+                <div class="step">
+                    <div class="step-num">2</div>
+                    <h3>Train your team</h3>
+                    <p>Our team conducts a live onboarding session — staff gets comfortable in one sitting.</p>
+                </div>
+                <div class="step">
+                    <div class="step-num">3</div>
+                    <h3>Go live & take orders</h3>
+                    <p>Start billing, sending KOTs, and tracking inventory from day one — no downtime.</p>
+                </div>
+                <div class="step">
+                    <div class="step-num">4</div>
+                    <h3>Grow with insights</h3>
+                    <p>Use daily reports, best-seller data, and staff performance to make smarter decisions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STATS -->
+    <div class="stats-strip">
+        <div class="stats-inner">
+            <div class="stat-item">
+                <span class="stat-num">500+</span>
+                <div class="stat-label">Active Businesses</div>
+            </div>
+            <div class="stat-item">
+                <span class="stat-num">2.3L+</span>
+                <div class="stat-label">Orders Processed Monthly</div>
+            </div>
+            <div class="stat-item">
+                <span class="stat-num">99.9%</span>
+                <div class="stat-label">Platform Uptime</div>
+            </div>
+            <div class="stat-item">
+                <span class="stat-num">4.8★</span>
+                <div class="stat-label">Average Customer Rating</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FEATURES -->
+    <section id="features">
+        <div class="section-inner">
+            <div class="section-header">
+                <span class="section-tag section-tag-green">Full feature suite</span>
+                <h2>Everything your restaurant needs — <em>nothing it doesn't.</em></h2>
+                <p class="section-sub">Explore the modules built to handle every corner of your food business
+                    operations.</p>
+            </div>
+            <div class="features-tabs">
+                <button class="feat-tab active" onclick="switchTab(this,'pos')">POS & Billing</button>
+                <button class="feat-tab" onclick="switchTab(this,'menu')">Menu Management</button>
+                <button class="feat-tab" onclick="switchTab(this,'inventory')">Inventory</button>
+                <button class="feat-tab" onclick="switchTab(this,'staff')">Staff & Shifts</button>
+                <button class="feat-tab" onclick="switchTab(this,'reports')">Reports & Analytics</button>
+                <button class="feat-tab" onclick="switchTab(this,'multi')">Multi-Branch</button>
+            </div>
+
+            <!-- POS -->
+            <div class="feat-content active" id="tab-pos">
+                <div class="feat-list">
+                    <div class="feat-item">
+                        <div class="feat-icon">🧾</div>
+                        <div>
+                            <h4>Fast billing & GST invoicing</h4>
+                            <p>Generate GST-compliant bills in seconds. Supports cash, card, UPI, and split payments.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="feat-item">
+                        <div class="feat-icon">🪑</div>
+                        <div>
+                            <h4>Table & floor management</h4>
+                            <p>Visual table map, seat tracking, merge/split bills and table transfer — all on one
+                                screen.</p>
+                        </div>
+                    </div>
+                    <div class="feat-item">
+                        <div class="feat-icon">📋</div>
+                        <div>
+                            <h4>KOT to kitchen instantly</h4>
+                            <p>Orders sent directly to kitchen display or printer the moment the waiter confirms.</p>
+                        </div>
+                    </div>
+                    <div class="feat-item">
+                        <div class="feat-icon">📦</div>
+                        <div>
+                            <h4>Takeaway & delivery billing</h4>
+                            <p>Handle dine-in, takeaway, and delivery orders with separate workflows and labels.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="feat-visual">
+                    <div class="fv-header">Live Billing Screen <span>● Active</span></div>
+                    <div class="fv-table-row">
+                        <div class="fv-dot" style="background:var(--accent)"></div><span class="fv-name">Chicken
+                            Biryani</span><span class="fv-qty">×2</span><span class="fv-price">₹460</span><span
+                            class="fv-tag" style="background:var(--green-light);color:var(--green)">Added</span>
+                    </div>
+                    <div class="fv-table-row">
+                        <div class="fv-dot" style="background:var(--blue)"></div><span class="fv-name">Mango
+                            Lassi</span><span class="fv-qty">×1</span><span class="fv-price">₹80</span><span
+                            class="fv-tag" style="background:var(--green-light);color:var(--green)">Added</span>
+                    </div>
+                    <div class="fv-table-row">
+                        <div class="fv-dot" style="background:var(--green)"></div><span class="fv-name">Gulab
+                            Jamun</span><span class="fv-qty">×2</span><span class="fv-price">₹120</span><span
+                            class="fv-tag" style="background:var(--amber-light);color:var(--amber)">Pending</span>
+                    </div>
+                    <div style="border-top:1px solid var(--border);padding-top:12px;margin-top:4px;">
+                        <div
+                            style="display:flex;justify-content:space-between;font-size:0.82rem;color:var(--ink-3);margin-bottom:6px;">
+                            <span>Subtotal</span><span>₹660</span></div>
+                        <div
+                            style="display:flex;justify-content:space-between;font-size:0.82rem;color:var(--ink-3);margin-bottom:8px;">
+                            <span>GST (5%)</span><span>₹33</span></div>
+                        <div
+                            style="display:flex;justify-content:space-between;font-size:1rem;font-weight:700;color:var(--ink);">
+                            <span>Total</span><span>₹693</span></div>
+                    </div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px;">
+                        <div
+                            style="background:var(--surface-3);border-radius:8px;padding:10px;text-align:center;font-size:0.8rem;font-weight:600;color:var(--ink-3)">
+                            Send KOT</div>
+                        <div
+                            style="background:var(--accent);border-radius:8px;padding:10px;text-align:center;font-size:0.8rem;font-weight:600;color:white">
+                            Print Bill</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MENU -->
+            <div class="feat-content" id="tab-menu">
+                <div class="feat-list">
+                    <div class="feat-item">
+                        <div class="feat-icon">📝</div>
+                        <div>
+                            <h4>Digital menu builder</h4>
+                            <p>Create categories, add items with photos, prices, variants and modifiers — no coding
+                                needed.</p>
+                        </div>
+                    </div>
+                    <div class="feat-item">
+                        <div class="feat-icon">⏰</div>
+                        <div>
+                            <h4>Time-based menus</h4>
+                            <p>Auto-switch breakfast, lunch and dinner menus. Set happy hour pricing automatically.</p>
+                        </div>
+                    </div>
+                    <div class="feat-item">
+                        <div class="feat-icon">🔁</div>
+                        <div>
+                            <h4>QR code digital menu</h4>
+                            <p>Customers scan and browse your menu on their phone — live updates reflect instantly.</p>
+                        </div>
+                    </div>
+                    <div class="feat-item">
+                        <div class="feat-icon">🌐</div>
+                        <div>
+                            <h4>Multi-language support</h4>
+                            <p>Display menus in Tamil, Hindi, English and more — great for local and tourist customers.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="feat-visual">
+                    <div class="fv-header">Menu Manager</div>
+                    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
+                        <span
+                            style="padding:5px 12px;background:var(--accent);color:white;border-radius:100px;font-size:0.75rem;font-weight:600">Starters</span>
+                        <span
+                            style="padding:5px 12px;background:var(--surface-3);color:var(--ink-3);border-radius:100px;font-size:0.75rem;font-weight:600">Main
+                            Course</span>
+                        <span
+                            style="padding:5px 12px;background:var(--surface-3);color:var(--ink-3);border-radius:100px;font-size:0.75rem;font-weight:600">Desserts</span>
+                        <span
+                            style="padding:5px 12px;background:var(--surface-3);color:var(--ink-3);border-radius:100px;font-size:0.75rem;font-weight:600">Beverages</span>
+                    </div>
+                    <div class="fv-table-row">
+                        <div class="fv-dot" style="background:var(--accent)"></div><span class="fv-name">Paneer
+                            Tikka</span><span class="fv-qty">Veg</span><span class="fv-price">₹220</span><span
+                            class="fv-tag" style="background:var(--green-light);color:var(--green)">Active</span>
+                    </div>
+                    <div class="fv-table-row">
+                        <div class="fv-dot" style="background:var(--amber)"></div><span class="fv-name">Chicken
+                            Wings</span><span class="fv-qty">Non-veg</span><span class="fv-price">₹320</span><span
+                            class="fv-tag" style="background:var(--green-light);color:var(--green)">Active</span>
+                    </div>
+                    <div class="fv-table-row">
+                        <div class="fv-dot" style="background:var(--blue)"></div><span class="fv-name">Veg Spring
+                            Roll</span><span class="fv-qty">Veg</span><span class="fv-price">₹180</span><span
+                            class="fv-tag" style="background:var(--amber-light);color:var(--amber)">Hidden</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- INVENTORY -->
+            <div class="feat-content" id="tab-inventory">
+                <div class="feat-list">
+                    <div class="feat-item">
+                        <div class="feat-icon">📊</div>
+                        <div>
+                            <h4>Real-time stock tracking</h4>
+                            <p>Track raw materials, semi-processed and finished items. Auto-deduct on each order.</p>
+                        </div>
+                    </div>
+                    <div class="feat-item">
+                        <div class="feat-icon">🔔</div>
+                        <div>
+                            <h4>Low stock alerts</h4>
+                            <p>Set reorder levels. Get alerts before you run out of key ingredients.</p>
+                        </div>
+                    </div>
+                    <div class="feat-item">
+                        <div class="feat-icon">🧮</div>
+                        <div>
+                            <h4>Recipe-level costing</h4>
+                            <p>Map ingredients to each dish. Know your exact food cost and margin per item.</p>
+                        </div>
+                    </div>
+                    <div class="feat-item">
+                        <div class="feat-icon">📥</div>
+                        <div>
+                            <h4>Purchase order management</h4>
+                            <p>Raise POs, record deliveries and manage vendor bills — all within the software.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="feat-visual">
+                    <div class="fv-header">Inventory Status <span style="color:var(--amber)">⚠ 3 low stock alerts</span>
+                    </div>
+                    <div class="fv-table-row">
+                        <div class="fv-dot" style="background:var(--green)"></div><span class="fv-name">Basmati
+                            Rice</span><span class="fv-qty">42 kg</span><span class="fv-price">In stock</span><span
+                            class="fv-tag" style="background:var(--green-light);color:var(--green)">OK</span>
+                    </div>
+                    <div class="fv-table-row">
+                        <div class="fv-dot" style="background:var(--amber)"></div><span class="fv-name">Chicken
+                            (Whole)</span><span class="fv-qty">8 kg</span><span class="fv-price">Low</span><span
+                            class="fv-tag" style="background:var(--amber-light);color:var(--amber)">Reorder</span>
+                    </div>
+                    <div class="fv-table-row">
+                        <div class="fv-dot" style="background:var(--accent)"></div><span
+                            class="fv-name">Tomatoes</span><span class="fv-qty">2 kg</span><span
+                            class="fv-price">Critical</span><span class="fv-tag"
+                            style="background:#FEF0EB;color:var(--accent)">Urgent</span>
+                    </div>
+                    <div class="fv-table-row">
+                        <div class="fv-dot" style="background:var(--green)"></div><span class="fv-name">Cooking
+                            Oil</span><span class="fv-qty">18 L</span><span class="fv-price">In stock</span><span
+                            class="fv-tag" style="background:var(--green-light);color:var(--green)">OK</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STAFF -->
+            <div class="feat-content" id="tab-staff">
+                <div class="feat-list">
+                    <div class="feat-item">
+                        <div class="feat-icon">👥</div>
+                        <div>
+                            <h4>Staff profiles & roles</h4>
+                            <p>Add waiters, cashiers, kitchen staff with individual logins and access permissions.</p>
+                        </div>
+                    </div>
+                    <div class="feat-item">
+                        <div class="feat-icon">🕐</div>
+                        <div>
+                            <h4>Attendance & shift tracking</h4>
+                            <p>Clock-in/clock-out tracking. Generate daily and monthly attendance reports easily.</p>
+                        </div>
+                    </div>
+                    <div class="feat-item">
+                        <div class="feat-icon">📈</div>
+                        <div>
+                            <h4>Performance insights</h4>
+                            <p>See which staff member handled most orders, collected most payments and got best ratings.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="feat-item">
+                        <div class="feat-icon">🔐</div>
+                        <div>
+                            <h4>Role-based permissions</h4>
+                            <p>Control who can apply discounts, cancel orders or view financial reports.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="feat-visual">
+                    <div class="fv-header">Staff On Shift Today</div>
+                    <div class="fv-table-row">
+                        <div class="fv-dot" style="background:var(--green)"></div><span class="fv-name">Ravi
+                            Kumar</span><span style="font-size:0.75rem;color:var(--ink-3);flex:1">Cashier</span><span
+                            class="fv-tag" style="background:var(--green-light);color:var(--green)">On duty</span>
+                    </div>
+                    <div class="fv-table-row">
+                        <div class="fv-dot" style="background:var(--green)"></div><span class="fv-name">Priya
+                            S.</span><span style="font-size:0.75rem;color:var(--ink-3);flex:1">Waiter</span><span
+                            class="fv-tag" style="background:var(--green-light);color:var(--green)">On duty</span>
+                    </div>
+                    <div class="fv-table-row">
+                        <div class="fv-dot" style="background:var(--amber)"></div><span class="fv-name">Arun
+                            M.</span><span style="font-size:0.75rem;color:var(--ink-3);flex:1">Chef</span><span
+                            class="fv-tag" style="background:var(--amber-light);color:var(--amber)">Break</span>
+                    </div>
+                    <div class="fv-table-row">
+                        <div class="fv-dot" style="background:var(--ink-4)"></div><span class="fv-name">Deepa
+                            R.</span><span style="font-size:0.75rem;color:var(--ink-3);flex:1">Manager</span><span
+                            class="fv-tag" style="background:var(--surface-3);color:var(--ink-3)">Off today</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- REPORTS -->
+            <div class="feat-content" id="tab-reports">
+                <div class="feat-list">
+                    <div class="feat-item">
+                        <div class="feat-icon">📊</div>
+                        <div>
+                            <h4>Daily sales summary</h4>
+                            <p>One-click end-of-day report — revenue, orders, voids, discounts and collection mode
+                                breakdown.</p>
+                        </div>
+                    </div>
+                    <div class="feat-item">
+                        <div class="feat-icon">🥇</div>
+                        <div>
+                            <h4>Best-seller analysis</h4>
+                            <p>Know your top 10 items by quantity and revenue. Spot slow-movers and trim the menu.</p>
+                        </div>
+                    </div>
+                    <div class="feat-item">
+                        <div class="feat-icon">📅</div>
+                        <div>
+                            <h4>Weekly & monthly MIS</h4>
+                            <p>Full business intelligence reports with trend graphs — shareable as PDF or Excel.</p>
+                        </div>
+                    </div>
+                    <div class="feat-item">
+                        <div class="feat-icon">💰</div>
+                        <div>
+                            <h4>GST & tax reports</h4>
+                            <p>Auto-generated GSTR-1 compatible reports. No more manual spreadsheets at month-end.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="feat-visual">
+                    <div class="fv-header">This Week's Performance <span style="color:var(--green)">↑ 18% vs last
+                            week</span></div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+                        <div style="background:var(--surface-3);border-radius:8px;padding:12px;">
+                            <div style="font-size:0.72rem;color:var(--ink-3);margin-bottom:4px">Total Revenue</div>
+                            <div style="font-size:1.2rem;font-weight:700;color:var(--ink)">₹1,84,220</div>
+                        </div>
+                        <div style="background:var(--surface-3);border-radius:8px;padding:12px;">
+                            <div style="font-size:0.72rem;color:var(--ink-3);margin-bottom:4px">Total Orders</div>
+                            <div style="font-size:1.2rem;font-weight:700;color:var(--ink)">892</div>
+                        </div>
+                    </div>
+                    <div class="fv-header" style="margin-top:4px">Top Items This Week</div>
+                    <div class="bar-row"><span class="bar-label">Biryani</span>
+                        <div class="bar-track">
+                            <div class="bar-fill" style="width:90%;background:var(--accent)"></div>
+                        </div><span class="bar-val">₹42k</span>
+                    </div>
+                    <div class="bar-row"><span class="bar-label">Thali</span>
+                        <div class="bar-track">
+                            <div class="bar-fill" style="width:68%;background:var(--blue)"></div>
+                        </div><span class="bar-val">₹31k</span>
+                    </div>
+                    <div class="bar-row"><span class="bar-label">Lassi</span>
+                        <div class="bar-track">
+                            <div class="bar-fill" style="width:45%;background:var(--green)"></div>
+                        </div><span class="bar-val">₹18k</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MULTI -->
+            <div class="feat-content" id="tab-multi">
+                <div class="feat-list">
+                    <div class="feat-item">
+                        <div class="feat-icon">🏢</div>
+                        <div>
+                            <h4>Centralized multi-branch control</h4>
+                            <p>Manage all your outlets from one login. Compare revenue, orders and staff across
+                                branches.</p>
+                        </div>
+                    </div>
+                    <div class="feat-item">
+                        <div class="feat-icon">📋</div>
+                        <div>
+                            <h4>Shared or independent menus</h4>
+                            <p>Push the same menu to all branches, or customize per location — your choice.</p>
+                        </div>
+                    </div>
+                    <div class="feat-item">
+                        <div class="feat-icon">👤</div>
+                        <div>
+                            <h4>Organization-level roles</h4>
+                            <p>Set owner, manager, branch manager and staff roles with appropriate access at each level.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="feat-item">
+                        <div class="feat-icon">📡</div>
+                        <div>
+                            <h4>Real-time consolidated reports</h4>
+                            <p>See combined and per-branch P&L, best-sellers and staff performance in one dashboard.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="feat-visual">
+                    <div class="fv-header">All Branches — Live Revenue</div>
+                    <div class="fv-table-row">
+                        <div class="fv-dot" style="background:var(--accent)"></div><span class="fv-name">Anna Nagar
+                            (HQ)</span><span style="flex:1;font-size:0.75rem;color:var(--ink-3)">14 tables</span><span
+                            style="font-weight:700;color:var(--ink)">₹12,840</span>
+                    </div>
+                    <div class="fv-table-row">
+                        <div class="fv-dot" style="background:var(--blue)"></div><span class="fv-name">T.
+                            Nagar</span><span style="flex:1;font-size:0.75rem;color:var(--ink-3)">10 tables</span><span
+                            style="font-weight:700;color:var(--ink)">₹9,220</span>
+                    </div>
+                    <div class="fv-table-row">
+                        <div class="fv-dot" style="background:var(--green)"></div><span class="fv-name">OMR
+                            Branch</span><span style="flex:1;font-size:0.75rem;color:var(--ink-3)">8 tables</span><span
+                            style="font-weight:700;color:var(--ink)">₹6,390</span>
+                    </div>
+                    <div
+                        style="border-top:1px solid var(--border);padding-top:10px;margin-top:4px;display:flex;justify-content:space-between;font-size:0.85rem;font-weight:700;color:var(--ink);">
+                        <span>Total Revenue Today</span><span>₹28,450</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRICING -->
+    <section id="pricing" style="background:var(--surface-2)">
+        <div class="section-inner">
+            <div class="section-header">
+                <span class="section-tag section-tag-purple">Simple pricing</span>
+                <h2>Plans that grow <em>with your business.</em></h2>
+                <p class="section-sub">No hidden fees, no per-transaction charges. Pay for what you need. Cancel
+                    anytime.</p>
+            </div>
+            <div class="pricing-grid">
+
+                <div class="price-card">
+                    <div class="price-plan">Starter</div>
+                    <div class="price-name">Starter</div>
+                    <div class="price-desc">Perfect for single-outlet cafes and small restaurants getting started.</div>
+                    <div class="price-amount"><span class="price-currency">₹</span><span
+                            class="price-num">1,499</span><span class="price-period">/month</span></div>
+                    <div class="price-note">Billed annually · ₹1,799/mo monthly</div>
+                    <div class="price-divider"></div>
+                    <ul class="price-features">
+                        <li><span class="pf-check">✓</span> 1 outlet, up to 20 tables</li>
+                        <li><span class="pf-check">✓</span> POS billing & GST invoicing</li>
+                        <li><span class="pf-check">✓</span> KOT & kitchen management</li>
+                        <li><span class="pf-check">✓</span> Menu management (digital + QR)</li>
+                        <li><span class="pf-check">✓</span> Basic inventory tracking</li>
+                        <li><span class="pf-check">✓</span> Daily & weekly reports</li>
+                        <li><span class="pf-check">✓</span> 5 staff logins</li>
+                        <li><span class="pf-x">✕</span> Multi-branch management</li>
+                        <li><span class="pf-x">✕</span> Advanced analytics</li>
+                    </ul>
+                    <a href="https://hotel.rankraze.com/onboarding/" class="btn btn-ghost btn-plan">Get Started Free
+                        →</a>
+                </div>
+
+                <div class="price-card popular">
+                    <div class="popular-badge">Most Popular</div>
+                    <div class="price-plan">Growth</div>
+                    <div class="price-name">Growth</div>
+                    <div class="price-desc">For growing restaurants and hotels that need more power and insights.</div>
+                    <div class="price-amount"><span class="price-currency">₹</span><span
+                            class="price-num">3,299</span><span class="price-period">/month</span></div>
+                    <div class="price-note">Billed annually · ₹3,999/mo monthly</div>
+                    <div class="price-divider"></div>
+                    <ul class="price-features">
+                        <li><span class="pf-check">✓</span> Up to 3 outlets, unlimited tables</li>
+                        <li><span class="pf-check">✓</span> Everything in Starter</li>
+                        <li><span class="pf-check">✓</span> Advanced inventory & recipes</li>
+                        <li><span class="pf-check">✓</span> Staff attendance & payroll</li>
+                        <li><span class="pf-check">✓</span> Customer loyalty program</li>
+                        <li><span class="pf-check">✓</span> Online ordering integration</li>
+                        <li><span class="pf-check">✓</span> 15 staff logins</li>
+                        <li><span class="pf-check">✓</span> Priority support (12-hr)</li>
+                        <li><span class="pf-check">✓</span> GST & MIS reports</li>
+                    </ul>
+                    <a href="https://hotel.rankraze.com/onboarding/" class="btn btn-primary btn-plan">Start Free Trial
+                        →</a>
+                </div>
+
+                <div class="price-card">
+                    <div class="price-plan">Enterprise</div>
+                    <div class="price-name">Enterprise</div>
+                    <div class="price-desc">For hotel chains, large restaurant groups, and multi-city operations.</div>
+                    <div class="price-amount" style="align-items:center"><span
+                            style="font-family:'DM Serif Display',serif;font-size:2rem;color:var(--ink)">Custom</span>
+                    </div>
+                    <div class="price-note">Tailored pricing based on branches & volume</div>
+                    <div class="price-divider"></div>
+                    <ul class="price-features">
+                        <li><span class="pf-check">✓</span> Unlimited outlets & tables</li>
+                        <li><span class="pf-check">✓</span> Everything in Growth</li>
+                        <li><span class="pf-check">✓</span> Dedicated account manager</li>
+                        <li><span class="pf-check">✓</span> Custom integrations & API</li>
+                        <li><span class="pf-check">✓</span> White-label option</li>
+                        <li><span class="pf-check">✓</span> Unlimited staff logins</li>
+                        <li><span class="pf-check">✓</span> 24/7 SLA support</li>
+                        <li><span class="pf-check">✓</span> On-site training & setup</li>
+                        <li><span class="pf-check">✓</span> Advanced BI & data exports</li>
+                    </ul>
+                    <a href="#demo" class="btn btn-ghost btn-plan">Talk to Sales →</a>
+                </div>
+
+            </div>
+            <p style="text-align:center;margin-top:32px;font-size:0.88rem;color:var(--ink-3)">All plans include a
+                <strong>14-day free trial</strong>. No credit card required. Cancel anytime.</p>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="testimonials" id="testimonials">
+        <div class="section-inner">
+            <div class="section-header">
+                <span class="section-tag">Real results</span>
+                <h2>Loved by restaurants <em>across India.</em></h2>
+                <p class="section-sub">From small cafes in Chennai to hotel chains in Bangalore — here's what our
+                    customers say.</p>
+            </div>
+            <div class="testi-grid">
+                <div class="testi-card">
+                    <div class="testi-stars">★★★★★</div>
+                    <p class="testi-quote">"We used to lose 30 minutes every day reconciling cash manually.
+                        RestroSuite's daily report takes 2 minutes. The KOT system alone saved us so much kitchen
+                        chaos."</p>
+                    <div class="testi-author">
+                        <div class="testi-avatar" style="background:var(--accent)">RS</div>
+                        <div>
+                            <div class="testi-name">Ramesh Subramanian</div>
+                            <div class="testi-role">Owner, Spice Garden Restaurant — Chennai</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testi-card">
+                    <div class="testi-stars">★★★★★</div>
+                    <p class="testi-quote">"Managing 3 branches was a nightmare before this. Now I check everything from
+                        my phone — revenue, orders, staff attendance — all live. Game changer for our hotel's F&B."</p>
+                    <div class="testi-author">
+                        <div class="testi-avatar" style="background:var(--blue)">MK</div>
+                        <div>
+                            <div class="testi-name">Meera Krishnan</div>
+                            <div class="testi-role">F&B Manager, Hotel Majestic — Coimbatore</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testi-card">
+                    <div class="testi-stars">★★★★★</div>
+                    <p class="testi-quote">"Best decision for our cloud kitchen. The Swiggy/Zomato order sync is
+                        brilliant. Our packaging errors dropped to zero after the first week. Support team is super
+                        responsive."</p>
+                    <div class="testi-author">
+                        <div class="testi-avatar" style="background:var(--green)">AP</div>
+                        <div>
+                            <div class="testi-name">Arjun Pillai</div>
+                            <div class="testi-role">Founder, Cloud Bites Kitchen — Bangalore</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq">
+        <div class="section-inner">
+            <div class="section-header">
+                <span class="section-tag section-tag-blue">Common questions</span>
+                <h2>Everything you need to <em>know.</em></h2>
+            </div>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggleFaq(this)">Do I need any hardware to get started? <span
+                            class="faq-arrow">+</span></div>
+                    <div class="faq-a">No special hardware is required. RestroSuite runs on any Android tablet, iPad,
+                        laptop, or desktop browser. If you want a receipt printer or cash drawer, we support all
+                        standard thermal printers — but it's optional to start.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggleFaq(this)">Can I use RestroSuite offline if the internet goes
+                        down? <span class="faq-arrow">+</span></div>
+                    <div class="faq-a">Yes. RestroSuite has an offline mode that keeps your POS running even without
+                        internet. Orders, KOTs and bills work normally — everything syncs automatically once you're back
+                        online.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggleFaq(this)">How long does setup and training take? <span
+                            class="faq-arrow">+</span></div>
+                    <div class="faq-a">Most restaurants are fully set up within 4–6 hours. Our onboarding team handles
+                        the initial configuration, menu setup, and staff training — typically done in a single session
+                        either in-person or via video call.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggleFaq(this)">Is it GST-compliant? Can I file returns from the
+                        software? <span class="faq-arrow">+</span></div>
+                    <div class="faq-a">Yes, all bills are GST-compliant with CGST/SGST/IGST breakdowns. You can export
+                        GSTR-1 compatible reports directly from the software. We don't file returns for you, but the
+                        export is formatted exactly as needed.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggleFaq(this)">Can I integrate with Swiggy, Zomato or other delivery
+                        platforms? <span class="faq-arrow">+</span></div>
+                    <div class="faq-a">Yes — Swiggy and Zomato integration is available on the Growth and Enterprise
+                        plans. Orders from these platforms appear directly in your dashboard alongside dine-in orders,
+                        making operations seamless.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggleFaq(this)">What happens after the 14-day free trial? <span
+                            class="faq-arrow">+</span></div>
+                    <div class="faq-a">After your trial you choose a plan and continue. Your data is preserved
+                        completely. If you don't upgrade, your account is paused — not deleted. We'll reach out to
+                        understand your needs before anything changes.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q" onclick="toggleFaq(this)">Do you offer support in Tamil and other regional
+                        languages? <span class="faq-arrow">+</span></div>
+                    <div class="faq-a">Yes. Our support team communicates in Tamil, Hindi, and English. The software
+                        interface is available in English, and regional language menus (for customer-facing QR menus)
+                        are supported for Tamil, Telugu, and Hindi.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DEMO FORM -->
+    <section class="demo" id="demo">
+        <div class="demo-inner">
+            <div>
+                <span class="section-tag" style="background:rgba(232,93,39,0.2);color:#F87444">Book a Demo</span>
+                <h2>See it live in <em>30 minutes.</em></h2>
+                <p class="section-sub">Our team will walk you through the software with your own menu and setup — so you
+                    see exactly what it looks like for your business.</p>
+                <div class="demo-perks">
+                    <div class="demo-perk">
+                        <div class="demo-perk-icon">🎯</div>Personalised demo with your menu & table layout
+                    </div>
+                    <div class="demo-perk">
+                        <div class="demo-perk-icon">⚡</div>Live Q&A — ask anything, no sales pressure
+                    </div>
+                    <div class="demo-perk">
+                        <div class="demo-perk-icon">🆓</div>Free 14-day trial immediately after the call
+                    </div>
+                    <div class="demo-perk">
+                        <div class="demo-perk-icon">📞</div>Onboarding support included — we set it up for you
+                    </div>
+                </div>
+            </div>
+            <div class="demo-form">
+                <h3>Book your free demo</h3>
+                <p>Fill in your details and we'll confirm a slot within 4 business hours.</p>
+                <div class="form-row">
+                    <div class="form-group"><label>Your name *</label><input type="text" placeholder="Ramesh Kumar">
+                    </div>
+                    <div class="form-group"><label>Phone number *</label><input type="tel"
+                            placeholder="+91 98765 43210"></div>
+                </div>
+                <div class="form-group"><label>Business email</label><input type="email"
+                        placeholder="ramesh@spicegarden.com"></div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Type of business *</label>
+                        <select>
+                            <option value="">Select type</option>
+                            <option>Standalone Restaurant</option>
+                            <option>Cafe / Bakery</option>
+                            <option>Hotel with Restaurant</option>
+                            <option>Cloud Kitchen</option>
+                            <option>QSR / Food Chain</option>
+                            <option>Bar / Lounge</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Number of outlets</label>
+                        <select>
+                            <option value="">Select</option>
+                            <option>1 outlet</option>
+                            <option>2–3 outlets</option>
+                            <option>4–10 outlets</option>
+                            <option>10+ outlets</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group"><label>Anything specific you want to see?</label><textarea
+                        placeholder="e.g. I want to see how the KOT works, or how GST reports are generated..."></textarea>
+                </div>
+                <button class="btn btn-primary form-submit" onclick="handleSubmit(event)">Book My Free Demo →</button>
+                <p class="form-privacy">No spam, ever. Your details are only used to schedule the demo.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <div class="footer-logo-name">Restro<span>Suite</span></div>
+                    <p>Restaurant & hotel management software built for Indian food businesses. Simple, powerful, and
+                        backed by Rankraze.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Product</h4>
+                    <a href="#features">POS & Billing</a>
+                    <a href="#features">Menu Management</a>
+                    <a href="#features">Inventory</a>
+                    <a href="#features">Staff Management</a>
+                    <a href="#features">Reports</a>
+                    <a href="#features">Multi-Branch</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <a href="https://rankraze.com">Rankraze</a>
+                    <a href="https://rankraze.com/about-us">About Us</a>
+                    <a href="https://rankraze.com/blogs">Blog</a>
+                    <a href="https://rankraze.com/careers">Careers</a>
+                    <a href="https://rankraze.com/contact-us">Contact</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Support</h4>
+                    <a href="#demo">Book a Demo</a>
+                    <a href="https://hotel.rankraze.com/onboarding/">Free Trial</a>
+                    <a href="https://hotel.rankraze.com">Login</a>
+                    <a href="mailto:info@rankraze.com">Email Support</a>
+                    <a href="tel:+919962262210">+91 99622 62210</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 RestroSuite by Rankraze. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Refund Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function switchTab(btn, tabId) {
+            document.querySelectorAll('.feat-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.feat-content').forEach(c => c.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById('tab-' + tabId).classList.add('active');
+        }
+        function toggleFaq(el) {
+            const item = el.parentElement;
+            const wasOpen = item.classList.contains('open');
+            document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+            if (!wasOpen) item.classList.add('open');
+        }
+        function handleSubmit(e) {
+            e.preventDefault();
+            const btn = e.target;
+            btn.textContent = '✓ Demo Booked! We\'ll confirm within 4 hours.';
+            btn.style.background = 'var(--green)';
+            btn.disabled = true;
+        }
+    </script>
+</body>
+
+</html>
