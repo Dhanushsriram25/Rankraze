@@ -1,0 +1,1011 @@
+<style>
+  :root {
+    --nav-w: 220px;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: var(--font-sans);
+  }
+
+  .shell {
+    display: flex;
+    min-height: 100vh;
+    background: var(--color-background-tertiary);
+  }
+
+  .sidebar {
+    width: var(--nav-w);
+    flex-shrink: 0;
+    background: var(--color-background-primary);
+    border-right: 0.5px solid var(--color-border-tertiary);
+    padding: 1.25rem 0;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+  }
+
+  .sidebar-title {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--color-text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0 1rem 0.75rem;
+    border-bottom: 0.5px solid var(--color-border-tertiary);
+    margin-bottom: 0.5rem;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0.45rem 1rem;
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    border-left: 2px solid transparent;
+    transition: all 0.15s;
+  }
+
+  .nav-item:hover {
+    background: var(--color-background-secondary);
+    color: var(--color-text-primary);
+  }
+
+  .nav-item.active {
+    color: #185FA5;
+    background: #E6F1FB;
+    border-left-color: #185FA5;
+    font-weight: 500;
+  }
+
+  .nav-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.5;
+    flex-shrink: 0;
+  }
+
+  .nav-item.active .nav-dot {
+    opacity: 1;
+  }
+
+  .main {
+    flex: 1;
+    padding: 2rem 2.5rem;
+    max-width: 860px;
+    min-width: 0;
+  }
+
+  .section {
+    display: none;
+  }
+
+  .section.active {
+    display: block;
+  }
+
+  .section-header {
+    margin-bottom: 1.75rem;
+    padding-bottom: 1rem;
+    border-bottom: 0.5px solid var(--color-border-tertiary);
+  }
+
+  .section-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 0.5rem;
+    background: #E6F1FB;
+    color: #185FA5;
+  }
+
+  .section-title {
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    line-height: 1.3;
+  }
+
+  .section-sub {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    margin-top: 0.35rem;
+  }
+
+  .card {
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-lg);
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+  }
+
+  .card-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    margin-bottom: 0.75rem;
+  }
+
+  .grid2 {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .grid3 {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .metric-card {
+    background: var(--color-background-secondary);
+    border-radius: var(--border-radius-md);
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .metric-label {
+    font-size: 12px;
+    color: var(--color-text-tertiary);
+    margin-bottom: 4px;
+  }
+
+  .metric-val {
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+  }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin: 3px;
+  }
+
+  .pill-blue {
+    background: #E6F1FB;
+    color: #0C447C;
+  }
+
+  .pill-teal {
+    background: #E1F5EE;
+    color: #085041;
+  }
+
+  .pill-amber {
+    background: #FAEEDA;
+    color: #633806;
+  }
+
+  .pill-coral {
+    background: #FAECE7;
+    color: #4A1B0C;
+  }
+
+  .pill-green {
+    background: #EAF3DE;
+    color: #27500A;
+  }
+
+  .pill-gray {
+    background: #F1EFE8;
+    color: #2C2C2A;
+  }
+
+  .step {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .step-num {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #E6F1FB;
+    color: #185FA5;
+    font-size: 13px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .step-body {
+    flex: 1;
+  }
+
+  .step-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    margin-bottom: 4px;
+  }
+
+  .step-desc {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+  }
+
+  .tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+  }
+
+  table.seo-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  table.seo-table th {
+    text-align: left;
+    padding: 8px 10px;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--color-text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    border-bottom: 0.5px solid var(--color-border-tertiary);
+  }
+
+  table.seo-table td {
+    padding: 8px 10px;
+    vertical-align: top;
+    border-bottom: 0.5px solid var(--color-border-tertiary);
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+  }
+
+  table.seo-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  table.seo-table td:first-child {
+    color: var(--color-text-primary);
+    font-weight: 500;
+  }
+
+  .warn-box {
+    border-left: 3px solid #EF9F27;
+    background: #FAEEDA;
+    border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .warn-box p {
+    font-size: 13px;
+    color: #633806;
+    line-height: 1.6;
+  }
+
+  .warn-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: #854F0B;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 4px;
+  }
+
+  .info-box {
+    border-left: 3px solid #378ADD;
+    background: #E6F1FB;
+    border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .info-box p {
+    font-size: 13px;
+    color: #0C447C;
+    line-height: 1.6;
+  }
+
+  .success-box {
+    border-left: 3px solid #1D9E75;
+    background: #E1F5EE;
+    border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .success-box p {
+    font-size: 13px;
+    color: #085041;
+    line-height: 1.6;
+  }
+
+  .checklist-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 0.5px solid var(--color-border-tertiary);
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+  }
+
+  .checklist-item:last-child {
+    border-bottom: none;
+  }
+
+  .check-box {
+    width: 16px;
+    height: 16px;
+    border: 0.5px solid var(--color-border-secondary);
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: #1D9E75;
+    background: var(--color-background-primary);
+  }
+
+  .check-box.checked {
+    background: #E1F5EE;
+    border-color: #1D9E75;
+  }
+
+  .plan-day {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+    align-items: flex-start;
+  }
+
+  .plan-day-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: #185FA5;
+    background: #E6F1FB;
+    border-radius: var(--border-radius-md);
+    padding: 4px 10px;
+    white-space: nowrap;
+    min-width: 60px;
+    text-align: center;
+  }
+
+  .plan-day-content {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+    flex: 1;
+  }
+
+  .plan-day-content strong {
+    color: var(--color-text-primary);
+  }
+
+  .h2 {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    margin: 1.5rem 0 0.75rem;
+  }
+
+  .h3 {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    margin: 1.25rem 0 0.5rem;
+  }
+
+  .body-text {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    margin-bottom: 0.75rem;
+  }
+
+  .divider {
+    height: 0.5px;
+    background: var(--color-border-tertiary);
+    margin: 1.5rem 0;
+  }
+
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .kpi-card {
+    background: var(--color-background-secondary);
+    border-radius: var(--border-radius-md);
+    padding: 0.875rem;
+  }
+
+  .kpi-label {
+    font-size: 11px;
+    color: var(--color-text-tertiary);
+    margin-bottom: 4px;
+  }
+
+  .kpi-val {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+  }
+
+  .kpi-change {
+    font-size: 11px;
+    margin-top: 2px;
+  }
+
+  .up {
+    color: #0F6E56;
+  }
+
+  .dn {
+    color: #993C1D;
+  }
+
+  @media (max-width: 700px) {
+    .sidebar {
+      width: 180px;
+    }
+
+    .main {
+      padding: 1.25rem;
+    }
+
+    .grid2,
+    .grid3,
+    .kpi-row {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<div class="shell">
+  <nav class="sidebar">
+    <div class="sidebar-title">SEO Playbook</div>
+    <div id="nav"></div>
+  </nav>
+  <main class="main" id="main-content"></main>
+</div>
+
+<script>
+  const sections = [
+    {
+      id: "objectives",
+      label: "Objectives & Outcomes",
+      badge: "01 — Strategy",
+      title: "Key Objectives & Target Outcomes",
+      sub: "What you're optimising for — and how to know if it's working",
+      content: `
+      <div class="grid3">
+        <div class="metric-card"><div class="metric-label">Primary Goal</div><div class="metric-val" style="font-size:15px;">Organic Traffic</div></div>
+        <div class="metric-card"><div class="metric-label">Revenue Goal</div><div class="metric-val" style="font-size:15px;">Conversions</div></div>
+        <div class="metric-card"><div class="metric-label">Quality Signal</div><div class="metric-val" style="font-size:15px;">Dwell Time</div></div>
+      </div>
+
+      <div class="h2">The four SEO content objectives</div>
+
+      <div class="card">
+        <table class="seo-table">
+          <thead><tr><th>Objective</th><th>What it means</th><th>Target benchmark (B2B)</th></tr></thead>
+          <tbody>
+            <tr><td>Organic Traffic</td><td>Visitors arriving via unpaid search results</td><td>+15–25% MoM (growth phase)</td></tr>
+            <tr><td>Conversion Rate</td><td>Demos, form fills, downloads from organic visitors</td><td>2–5% for service pages</td></tr>
+            <tr><td>Dwell Time / Engagement Rate</td><td>Time spent on page before returning to SERP</td><td>&gt;2 min for blog; &gt;3 min for service pages</td></tr>
+            <tr><td>Keyword Rankings</td><td>Position in Google for target queries</td><td>Top 10 for commercial; Top 5 for branded</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="info-box"><p>For B2B service companies, conversion is often a pipeline metric, not a purchase. Define "conversion" before you write a single word — demo request, contact form, whitepaper download, or phone call.</p></div>
+
+      <div class="h2">Page type → primary objective mapping</div>
+      <div class="grid2">
+        <div class="card">
+          <div class="card-title">Service Pages</div>
+          <div class="body-text">Drive conversions from commercial-intent searches. Visitors know the problem — they're evaluating solutions.</div>
+          <div class="tag-row">
+            <span class="pill pill-blue">Conversions</span>
+            <span class="pill pill-teal">Rankings (bottom funnel)</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Blog / Resource Pages</div>
+          <div class="body-text">Capture informational traffic, build authority, and funnel readers toward service pages with internal links.</div>
+          <div class="tag-row">
+            <span class="pill pill-amber">Organic Traffic</span>
+            <span class="pill pill-green">Dwell Time</span>
+            <span class="pill pill-teal">E-E-A-T Signals</span>
+          </div>
+        </div>
+      </div>
+    `
+    },
+    {
+      id: "research",
+      label: "Research Workflow",
+      badge: "02 — Research",
+      title: "Research Workflow",
+      sub: "Keyword discovery → intent alignment → competitor analysis → gap identification",
+      content: `
+      <div class="h2">Step-by-step research process</div>
+
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Seed keyword discovery</div>
+          <div class="step-desc">Start with 5–10 seed terms that describe your core service. Use Google Search Console (existing data), customer interviews, and sales call transcripts. Tools: Ahrefs, Semrush, or free Google Keyword Planner.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Expand with modifiers</div>
+          <div class="step-desc">Layer on intent modifiers — "best," "how to," "for [industry]," "cost of," "vs," "near me." This reveals the full query landscape around your topic cluster.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Intent alignment — classify every keyword</div>
+          <div class="step-desc">Assign each keyword to an intent tier before mapping it to a page type. Mismatched intent kills rankings.</div>
+          <div class="card" style="margin-top:0.75rem;">
+            <table class="seo-table">
+              <thead><tr><th>Intent</th><th>Query example</th><th>Best page type</th></tr></thead>
+              <tbody>
+                <tr><td>Informational</td><td>"what is accounts payable automation"</td><td>Blog post / guide</td></tr>
+                <tr><td>Commercial</td><td>"best AP automation software for mid-market"</td><td>Service page / comparison</td></tr>
+                <tr><td>Transactional</td><td>"AP automation software pricing"</td><td>Service page + CTA</td></tr>
+                <tr><td>Navigational</td><td>"[brand] login"</td><td>Homepage / app</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <div class="step-title">Competitor SERP analysis</div>
+          <div class="step-desc">For each target keyword, manually review the top 5 results. Note: content length, H2 structure, SERP features (featured snippets, PAA), and domain authority of ranking pages. This sets your quality bar.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <div class="step-title">Content gap identification</div>
+          <div class="step-desc">Use Ahrefs Content Gap or Semrush Keyword Gap to find terms competitors rank for that you don't. Also check "People Also Ask" boxes and "Related searches" at the bottom of Google results for hidden intent clusters.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">6</div>
+        <div class="step-body">
+          <div class="step-title">Keyword prioritisation matrix</div>
+          <div class="step-desc">Score each keyword on three axes, then rank your list.</div>
+          <div class="card" style="margin-top:0.75rem;">
+            <table class="seo-table">
+              <thead><tr><th>Factor</th><th>High priority</th><th>Low priority</th></tr></thead>
+              <tbody>
+                <tr><td>Business value</td><td>Directly maps to revenue</td><td>Tangentially related</td></tr>
+                <tr><td>Search volume</td><td>500+ monthly searches</td><td>&lt;50 monthly searches</td></tr>
+                <tr><td>Keyword difficulty</td><td>Low-medium (&lt;50 KD)</td><td>Very high (&gt;70 KD)</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="warn-box">
+        <div class="warn-label">Common pitfall</div>
+        <p>Targeting only high-volume vanity keywords. A 200-search/month keyword with low difficulty and high commercial intent will deliver more pipeline than a 10,000-search keyword dominated by enterprise SaaS brands with DR 85+.</p>
+      </div>
+    `
+    },
+    {
+      id: "onpage",
+      label: "On-Page Optimisation",
+      badge: "03 — Technical",
+      title: "On-Page Optimisation Playbook",
+      sub: "Every element, every rule — ready to execute",
+      content: `
+      <div class="card">
+        <table class="seo-table">
+          <thead><tr><th>Element</th><th>Rule / Specification</th><th>Example</th></tr></thead>
+          <tbody>
+            <tr><td>Title Tag</td><td>50–60 chars. Primary keyword near the front. Brand at the end with a pipe.</td><td>AP Automation Software for Mid-Market | Acme</td></tr>
+            <tr><td>Meta Description</td><td>140–160 chars. Summarise value prop + include a soft CTA. Not a ranking factor but drives CTR.</td><td>Automate invoice processing in 30 days. Trusted by 200+ finance teams. See how it works →</td></tr>
+            <tr><td>H1</td><td>One per page. Include primary keyword. Matches or closely mirrors title tag intent.</td><td>Accounts Payable Automation for Growing Businesses</td></tr>
+            <tr><td>H2 / H3</td><td>Use secondary keywords naturally. Mirror "People Also Ask" questions for PAA capture.</td><td>H2: How Does AP Automation Work? H3: What Integrations Are Supported?</td></tr>
+            <tr><td>URL Structure</td><td>Lowercase, hyphens only, keyword-rich, no dates for evergreen pages. Keep short.</td><td>/services/accounts-payable-automation/</td></tr>
+            <tr><td>Image Alt Text</td><td>Describe the image + keyword where natural. 8–15 words max. No "image of..."</td><td>alt="AP automation workflow dashboard screenshot"</td></tr>
+            <tr><td>Internal Linking</td><td>3–5 contextual internal links per page. Vary anchor text. Link to related service pages and blog posts.</td><td>"Learn about our invoice processing workflow →"</td></tr>
+            <tr><td>Schema Markup</td><td>Service pages: Service + FAQ schema. Blog: Article schema. Include ratings where applicable.</td><td>JSON-LD in &lt;head&gt; or via Google Tag Manager</td></tr>
+            <tr><td>Content Length</td><td>Service pages: 800–1,500 words. Long-form blog: 1,500–3,000 words. Match top-ranking pages ±20%.</td><td>Check competitor word count before drafting</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="h2">Content length guidelines by page type</div>
+      <div class="grid3">
+        <div class="card">
+          <div class="card-title">Service Page</div>
+          <div class="body-text" style="font-size:22px;font-weight:500;color:var(--color-text-primary);margin-bottom:4px;">800–1,500</div>
+          <div class="body-text">words. Dense, scannable. Every paragraph earns its place. No filler.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">Blog Post (Pillar)</div>
+          <div class="body-text" style="font-size:22px;font-weight:500;color:var(--color-text-primary);margin-bottom:4px;">2,000–3,500</div>
+          <div class="body-text">words. Comprehensive coverage of the topic. Include original data or perspective.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">Supporting Blog</div>
+          <div class="body-text" style="font-size:22px;font-weight:500;color:var(--color-text-primary);margin-bottom:4px;">1,000–1,800</div>
+          <div class="body-text">words. Answers one specific question well. Links up to pillar content.</div>
+        </div>
+      </div>
+
+      <div class="h2">Schema markup quick-reference</div>
+      <div class="grid2">
+        <div class="card">
+          <div class="card-title">Service Page Schema</div>
+          <div class="tag-row">
+            <span class="pill pill-blue">Service</span>
+            <span class="pill pill-blue">FAQPage</span>
+            <span class="pill pill-blue">BreadcrumbList</span>
+            <span class="pill pill-teal">Organization</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Blog Post Schema</div>
+          <div class="tag-row">
+            <span class="pill pill-amber">Article</span>
+            <span class="pill pill-amber">FAQPage</span>
+            <span class="pill pill-amber">BreadcrumbList</span>
+            <span class="pill pill-teal">Person (author)</span>
+          </div>
+        </div>
+      </div>
+    `
+    },
+    {
+      id: "framework",
+      label: "Content Framework",
+      badge: "04 — Framework",
+      title: "Content Frameworks",
+      sub: "Proven structure for service pages and blog posts — fill in the blanks",
+      content: `
+      <div class="h2">Service page framework</div>
+
+      <div class="card" style="border-left: 3px solid #378ADD; border-radius: 0 var(--border-radius-lg) var(--border-radius-lg) 0;">
+        <div class="card-title" style="margin-bottom:1rem;">The 7-section service page</div>
+
+        <div class="step"><div class="step-num">H1</div><div class="step-body"><div class="step-title">Hero — Audience + Pain + Promise</div><div class="step-desc">Headline names the audience, acknowledges the problem, and states the outcome. Sub-headline adds proof ("used by 500+ B2B companies"). Primary CTA above the fold.</div></div></div>
+        <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Problem framing</div><div class="step-desc">2–3 short paragraphs naming the specific pain points your buyer experiences. Use language from sales calls and reviews — not marketing copy.</div></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Solution overview</div><div class="step-desc">Explain your service in plain English. How does it work? What's the process or delivery model? Include a simple 3–5 step process graphic or list.</div></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Benefits (not features)</div><div class="step-desc">3–6 benefit-led statements. Use the format: [Action verb] + [Outcome] + [Time frame or qualifier]. Example: "Reduce invoice processing time by 70% in your first month."</div></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Proof elements</div><div class="step-desc">Case study snippet, client logos, a testimonial with a name and role, or a specific stat. At least one proof element per page — no proof = no trust.</div></div></div>
+        <div class="step"><div class="step-num">5</div><div class="step-body"><div class="step-title">FAQ section (schema target)</div><div class="step-desc">5–8 questions pulled from PAA boxes and sales call objections. Answers should be 2–4 sentences — enough to satisfy without burying the CTA.</div></div></div>
+        <div class="step"><div class="step-num">6</div><div class="step-body"><div class="step-title">CTA close</div><div class="step-desc">Repeat the primary CTA with a fresh angle — risk reversal, free trial, or a specific next step. "Book a 20-minute demo — no pressure, no sales deck."</div></div></div>
+      </div>
+
+      <div class="h2">Blog post framework</div>
+      <div class="card" style="border-left: 3px solid #EF9F27; border-radius: 0 var(--border-radius-lg) var(--border-radius-lg) 0;">
+        <div class="card-title" style="margin-bottom:1rem;">The AIDA-SEO blog structure</div>
+
+        <div class="step"><div class="step-num">A</div><div class="step-body"><div class="step-title">Intro — hook + promise (100–150 words)</div><div class="step-desc">Open with the problem or a surprising stat. State exactly what the reader will learn. No "In this article, we will discuss..." fluff.</div></div></div>
+        <div class="step"><div class="step-num">I</div><div class="step-body"><div class="step-title">Background / context (optional for complex topics)</div><div class="step-desc">Brief definition or history only if the audience needs it. Advanced readers? Skip it. Intermediate? Keep it to one paragraph.</div></div></div>
+        <div class="step"><div class="step-num">D</div><div class="step-body"><div class="step-title">Core body — H2 sections answering sub-questions</div><div class="step-desc">Each H2 targets a secondary keyword or a PAA question. Each section: 200–400 words with a specific takeaway. Use numbered lists, bullet points, or tables where scannable beats prose.</div></div></div>
+        <div class="step"><div class="step-num">A</div><div class="step-body"><div class="step-title">Action — CTA embedded mid-page + conclusion</div><div class="step-desc">Place a soft CTA (relevant content upgrade, guide, or product mention) naturally within the body. Conclude with a summary and a link to a related service page.</div></div></div>
+
+        <div class="divider"></div>
+        <div class="card-title">Proof elements for blog posts</div>
+        <div class="tag-row">
+          <span class="pill pill-teal">Original data / survey</span>
+          <span class="pill pill-teal">Expert quote (with name + title)</span>
+          <span class="pill pill-teal">Cited third-party study</span>
+          <span class="pill pill-teal">Screenshots / real examples</span>
+          <span class="pill pill-teal">Author bio at the bottom</span>
+        </div>
+      </div>
+    `
+    },
+    {
+      id: "writing",
+      label: "Writing Best Practices",
+      badge: "05 — Craft",
+      title: "Writing Best Practices",
+      sub: "Tone, readability, E-E-A-T, CTAs, and what to avoid",
+      content: `
+      <div class="grid2">
+        <div class="card">
+          <div class="card-title">Tone & Voice</div>
+          <div class="body-text">B2B ≠ boring. Write like a knowledgeable colleague, not a brochure. Active voice. Short sentences (&lt;20 words average). Direct address ("you").</div>
+          <div class="success-box" style="margin-top:0.75rem;"><p>Good: "You can cut processing time in half." Bad: "Processing times may potentially be reduced for customers."</p></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Readability targets</div>
+          <div class="body-text">Service pages: Flesch-Kincaid Grade 9–11. Blog posts: Grade 7–9. Avoid jargon unless your audience uses it. Test with Hemingway App.</div>
+          <div class="tag-row">
+            <span class="pill pill-blue">Short paragraphs (3–4 lines max)</span>
+            <span class="pill pill-blue">Subheadings every 300 words</span>
+            <span class="pill pill-blue">Bullet points for 3+ items</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="h2">E-E-A-T signals — what to include</div>
+      <div class="card">
+        <table class="seo-table">
+          <thead><tr><th>Signal</th><th>How to demonstrate it</th></tr></thead>
+          <tbody>
+            <tr><td>Experience</td><td>Case studies, specific project examples, real screenshots, "we've seen" language</td></tr>
+            <tr><td>Expertise</td><td>Author bios with credentials, accurate industry terminology, original analysis or data</td></tr>
+            <tr><td>Authoritativeness</td><td>Third-party citations, backlinks from industry publications, media mentions, awards</td></tr>
+            <tr><td>Trustworthiness</td><td>Accurate information with sources, transparent pricing or process, real client testimonials with full names, clear contact details</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="h2">CTA strategy</div>
+      <div class="grid2">
+        <div class="card">
+          <div class="card-title">Service pages — primary CTA</div>
+          <div class="body-text">One dominant action per page. Make it specific and low-commitment: "Book a 20-min demo" beats "Contact us."</div>
+          <div class="tag-row">
+            <span class="pill pill-blue">Above the fold</span>
+            <span class="pill pill-blue">After proof section</span>
+            <span class="pill pill-blue">Page footer</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Blog — soft CTAs</div>
+          <div class="body-text">Inline text links ("see how [service] works →"), content upgrades (downloadable checklist), or a related article recommendation at the bottom.</div>
+          <div class="tag-row">
+            <span class="pill pill-amber">Mid-content (contextual)</span>
+            <span class="pill pill-amber">End of article</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="h2">Keyword stuffing — what to avoid</div>
+      <div class="warn-box">
+        <div class="warn-label">Pitfall</div>
+        <p>Using the exact-match keyword more than once per 100–150 words is a signal of over-optimisation. Use synonyms, related terms, and natural language. Google's NLP understands semantic relevance — you don't need to repeat "AP automation software" 15 times.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">Keyword density guidance</div>
+        <table class="seo-table">
+          <thead><tr><th>Keyword type</th><th>Frequency target</th></tr></thead>
+          <tbody>
+            <tr><td>Primary keyword</td><td>Title, H1, first 100 words, 1× per 300 words in body, URL</td></tr>
+            <tr><td>Secondary keywords</td><td>1–2 H2s, naturally throughout body copy</td></tr>
+            <tr><td>LSI / semantic terms</td><td>Weave throughout — no forced count</td></tr>
+          </tbody>
+        </table>
+      </div>
+    `
+    },
+    {
+      id: "workflow",
+      label: "Team Workflow",
+      badge: "06 — Process",
+      title: "Team & Process Workflow",
+      sub: "From brief to published — and what goes wrong along the way",
+      content: `
+      <div class="h2">Content production workflow</div>
+
+      <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Content brief (SEO lead, 1–2 hrs)</div><div class="step-desc">Document target keyword, secondary keywords, search intent, target persona, word count, competitor URLs to beat, H2 outline, internal links to include, and the desired CTA. Templatise this brief — it saves 40% of revision cycles.</div></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Writer draft (copywriter, 2–4 hrs)</div><div class="step-desc">Writer follows the brief strictly. First draft is submitted with a self-audit note: keyword placement, CTA location, word count, and any gaps flagged by the writer.</div></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">SEO review (SEO lead, 45 min)</div><div class="step-desc">Check: keyword placement, meta fields, internal link targets, header structure, E-E-A-T elements, CTA copy and placement. Use the on-page checklist in Section 8.</div></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Subject matter expert review (SME, 30 min)</div><div class="step-desc">Verify accuracy, check for outdated data, and confirm claims are defensible. This is the E and A in E-E-A-T. Non-negotiable for YMYL-adjacent B2B content.</div></div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-body"><div class="step-title">Final edit + publish</div><div class="step-desc">Copy-edit pass, image alt text, schema markup, canonical tag, and internal link implementation. Publish → submit URL to Google Search Console for indexing.</div></div></div>
+      <div class="step"><div class="step-num">6</div><div class="step-body"><div class="step-title">30-day ranking check + optimisation</div><div class="step-desc">After 30 days, check position. Pages ranking 5–15 get an optimisation pass: refresh intro, add internal links, update stats, expand the FAQs section.</div></div></div>
+
+      <div class="h2">Common pitfalls & mitigations</div>
+      <div class="card">
+        <table class="seo-table">
+          <thead><tr><th>Pitfall</th><th>Symptom</th><th>Mitigation</th></tr></thead>
+          <tbody>
+            <tr><td>No brief</td><td>Writer misses keywords, wrong intent, too long/short</td><td>Mandatory brief template before any writing starts</td></tr>
+            <tr><td>Publishing and forgetting</td><td>Pages drop after initial boost</td><td>Quarterly content audit + refresh cycle</td></tr>
+            <tr><td>Keyword cannibalisation</td><td>Two pages fight for same keyword</td><td>Keyword-to-URL mapping spreadsheet maintained by SEO lead</td></tr>
+            <tr><td>Ignoring search intent</td><td>High impressions, low CTR, high bounce</td><td>SERP analysis before any page is briefed</td></tr>
+            <tr><td>Over-optimisation</td><td>Keyword stuffing, unnatural H2s</td><td>Read the page aloud — if it sounds robotic, it reads robotic</td></tr>
+          </tbody>
+        </table>
+      </div>
+    `
+    },
+    {
+      id: "reporting",
+      label: "Measurement & Reporting",
+      badge: "07 — Analytics",
+      title: "Measurement & Reporting Plan",
+      sub: "KPIs, tools, and a sample monthly report structure",
+      content: `
+      <div class="h2">Core KPIs</div>
+      <div class="kpi-row">
+        <div class="kpi-card"><div class="kpi-label">Organic Sessions</div><div class="kpi-val">12,450</div><div class="kpi-change up">+18% MoM</div></div>
+        <div class="kpi-card"><div class="kpi-label">Ranking Keywords (Top 10)</div><div class="kpi-val">247</div><div class="kpi-change up">+31 new</div></div>
+        <div class="kpi-card"><div class="kpi-label">Organic Conversions</div><div class="kpi-val">84</div><div class="kpi-change up">+12% MoM</div></div>
+        <div class="kpi-card"><div class="kpi-label">Avg. Dwell Time</div><div class="kpi-val">2m 47s</div><div class="kpi-change up">+22s</div></div>
+      </div>
+      <div class="info-box"><p>These sample numbers illustrate what a healthy B2B content programme looks like after 6–9 months. Early months will show slower growth — focus on indexing speed and keyword coverage first.</p></div>
+
+      <div class="h2">Tool stack</div>
+      <div class="card">
+        <table class="seo-table">
+          <thead><tr><th>Tool</th><th>Purpose</th><th>Free tier?</th></tr></thead>
+          <tbody>
+            <tr><td>Google Search Console</td><td>Impressions, clicks, CTR, ranking positions, index status</td><td>Yes (free)</td></tr>
+            <tr><td>Google Analytics 4</td><td>Sessions, engagement rate, conversions, traffic sources</td><td>Yes (free)</td></tr>
+            <tr><td>Ahrefs / Semrush</td><td>Keyword research, rank tracking, backlink analysis, content gap</td><td>Limited free</td></tr>
+            <tr><td>Screaming Frog</td><td>Technical audit — broken links, duplicate content, missing tags</td><td>Up to 500 URLs free</td></tr>
+            <tr><td>Hemingway App</td><td>Readability scoring</td><td>Yes (free web)</td></tr>
+            <tr><td>Schema.org / Rich Results Test</td><td>Schema validation</td><td>Yes (free)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="h2">Sample monthly report structure</div>
+      <div class="card">
+        <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Executive summary (1 paragraph)</div><div class="step-desc">Month-over-month change in organic sessions, conversions, and top keyword movements. Written for a non-technical stakeholder.</div></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Traffic & engagement metrics</div><div class="step-desc">Organic sessions vs prior month and prior year. Engagement rate, dwell time, bounce rate. Top 10 pages by organic traffic.</div></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Keyword ranking movements</div><div class="step-desc">New keywords entering top 10. Keywords improving from 11–30 into top 10. Keywords declining (flagged for refresh).</div></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Conversion performance</div><div class="step-desc">Organic conversion rate vs paid and direct. Top converting pages. Any A/B test results on CTA copy or placement.</div></div></div>
+        <div class="step"><div class="step-num">5</div><div class="step-body"><div class="step-title">Actions for next month</div><div class="step-desc">3–5 specific actions: pages to refresh, new content to publish, technical fixes to implement, internal linking opportunities.</div></div></div>
+      </div>
+    `
+    },
+    {
+      id: "checklist",
+      label: "Checklist & MVP Plan",
+      badge: "08 — Ready to use",
+      title: "Checklist & 2-Week MVP Plan",
+      sub: "Print this. Tick it. Publish great content.",
+      content: `
+      <div class="h2">Pre-publish SEO checklist</div>
+      <div class="card" id="checklist-container">
+        <div class="card-title">On-page checklist — tick each item before publishing</div>
+      </div>
+
+      <div class="h2">2-week MVP content launch plan</div>
+      <div class="info-box"><p>This plan assumes one SEO lead and one copywriter. Adjust pacing to your team's capacity. Goal: have two optimised pages live and indexed by end of week two.</p></div>
+
+      <div class="card">
+        <div class="card-title" style="margin-bottom:1rem;">Week 1 — Research & write</div>
+        <div class="plan-day"><div class="plan-day-label">Day 1</div><div class="plan-day-content"><strong>Keyword audit.</strong> Pull existing GSC data. Identify 10 target keywords. Classify by intent.</div></div>
+        <div class="plan-day"><div class="plan-day-label">Day 2</div><div class="plan-day-content"><strong>Competitor analysis.</strong> Review top 5 SERP results for your two priority keywords. Document gaps.</div></div>
+        <div class="plan-day"><div class="plan-day-label">Day 3</div><div class="plan-day-content"><strong>Brief two pages.</strong> Complete the content brief template for one service page and one blog post.</div></div>
+        <div class="plan-day"><div class="plan-day-label">Day 4</div><div class="plan-day-content"><strong>Write service page draft.</strong> Copywriter submits first draft by EOD.</div></div>
+        <div class="plan-day"><div class="plan-day-label">Day 5</div><div class="plan-day-content"><strong>Write blog post draft.</strong> Copywriter submits first draft. SEO lead begins reviewing service page.</div></div>
+      </div>
+
+      <div class="card" style="margin-top:1rem;">
+        <div class="card-title" style="margin-bottom:1rem;">Week 2 — Review, optimise & publish</div>
+        <div class="plan-day"><div class="plan-day-label">Day 6</div><div class="plan-day-content"><strong>SEO review — service page.</strong> Keyword placement, meta fields, CTA, schema. Revisions to writer.</div></div>
+        <div class="plan-day"><div class="plan-day-label">Day 7</div><div class="plan-day-content"><strong>SME review — service page.</strong> Accuracy check. Final copyedit.</div></div>
+        <div class="plan-day"><div class="plan-day-label">Day 8</div><div class="plan-day-content"><strong>Publish service page.</strong> Submit to Search Console. Add 3 internal links from existing pages.</div></div>
+        <div class="plan-day"><div class="plan-day-label">Day 9</div><div class="plan-day-content"><strong>SEO + SME review — blog post.</strong> Combined review pass, revisions, final edit.</div></div>
+        <div class="plan-day"><div class="plan-day-label">Day 10</div><div class="plan-day-content"><strong>Publish blog post.</strong> Submit to Search Console. Link from service page. Share to LinkedIn.</div></div>
+        <div class="plan-day" style="margin-bottom:0;"><div class="plan-day-label">Day 14</div><div class="plan-day-content"><strong>Initial performance check.</strong> Confirm pages indexed. Note impressions in GSC. Set 30-day reminder for ranking review.</div></div>
+      </div>
+
+      <div class="success-box" style="margin-top:1rem;">
+        <p>After week two, establish a publishing cadence: minimum 2 blog posts per month + 1 service page refresh per quarter. Consistency compounds — SEO rewards programmes, not campaigns.</p>
+      </div>
+    `
+    }
+  ];
+
+  const checklistItems = [
+    "Primary keyword in title tag (within first 60 chars)",
+    "Meta description written (140–160 chars) with soft CTA",
+    "H1 contains primary keyword — one H1 only",
+    "URL is short, lowercase, hyphenated, and keyword-rich",
+    "At least one H2 targets a 'People Also Ask' question",
+    "Primary keyword appears in first 100 words of body copy",
+    "No keyword stuffing — primary keyword used naturally throughout",
+    "3–5 internal links added with varied, descriptive anchor text",
+    "All images have descriptive alt text (8–15 words)",
+    "FAQ section present with 5+ questions (service pages)",
+    "Schema markup implemented (Service or Article + FAQPage)",
+    "Author bio included (blog posts) with name, role, credentials",
+    "At least one proof element: stat, testimonial, or case study",
+    "Primary CTA appears above the fold AND at the bottom",
+    "Page submitted to Google Search Console after publishing",
+    "Canonical tag set to avoid duplicate content issues",
+    "Content reviewed by SME for accuracy",
+    "Readability checked (Flesch-Kincaid Grade ≤11 for service, ≤9 for blog)"
+  ];
+
+  function buildNav() {
+    const nav = document.getElementById('nav');
+    sections.forEach((s, i) => {
+      const el = document.createElement('div');
+      el.className = 'nav-item' + (i === 0 ? ' active' : '');
+      el.dataset.id = s.id;
+      el.innerHTML = `<span class="nav-dot"></span>${s.label}`;
+      el.onclick = () => activate(s.id);
+      nav.appendChild(el);
+    });
+  }
+
+  function buildSections() {
+    const main = document.getElementById('main-content');
+    sections.forEach((s, i) => {
+      const el = document.createElement('div');
+      el.className = 'section' + (i === 0 ? ' active' : '');
+      el.id = 'sec-' + s.id;
+      el.innerHTML = `
+      <div class="section-header">
+        <div class="section-badge">${s.badge}</div>
+        <div class="section-title">${s.title}</div>
+        <div class="section-sub">${s.sub}</div>
+      </div>
+      ${s.content}
+    `;
+      main.appendChild(el);
+    });
+  }
+
+  function activate(id) {
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.toggle('active', n.dataset.id === id));
+    document.querySelectorAll('.section').forEach(s => s.classList.toggle('active', s.id === 'sec-' + id));
+    if (id === 'checklist') buildChecklist();
+    document.getElementById('main-content').scrollTop = 0;
+  }
+
+  function buildChecklist() {
+    const container = document.getElementById('checklist-container');
+    if (container.querySelector('.checklist-item')) return;
+    checklistItems.forEach((item, i) => {
+      const el = document.createElement('div');
+      el.className = 'checklist-item';
+      const box = document.createElement('div');
+      box.className = 'check-box';
+      box.dataset.idx = i;
+      box.onclick = function () {
+        this.classList.toggle('checked');
+        this.textContent = this.classList.contains('checked') ? '✓' : '';
+      };
+      const text = document.createElement('span');
+      text.textContent = item;
+      el.appendChild(box);
+      el.appendChild(text);
+      container.appendChild(el);
+    });
+  }
+
+  buildNav();
+  buildSections();
+</script>
