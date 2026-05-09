@@ -1,0 +1,341 @@
+
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; }
+  .wrap { padding: 1.5rem 0; font-family: var(--font-sans); }
+  .section-label { font-size: 11px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--color-text-tertiary); margin: 0 0 10px; }
+  .card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1rem 1.25rem; margin-bottom: 12px; }
+  .card-accent { border-left: 3px solid; border-radius: 0 var(--border-radius-lg) var(--border-radius-lg) 0; }
+  .card-accent.teal { border-left-color: #1D9E75; }
+  .card-accent.blue { border-left-color: #378ADD; }
+  .card-accent.amber { border-left-color: #BA7517; }
+  .card-accent.purple { border-left-color: #7F77DD; }
+  .card-accent.coral { border-left-color: #D85A30; }
+  .card h3 { font-size: 14px; font-weight: 500; color: var(--color-text-primary); margin: 0 0 6px; display: flex; align-items: center; gap: 8px; }
+  .card p { font-size: 13px; color: var(--color-text-secondary); margin: 0; line-height: 1.6; }
+  .card ul { font-size: 13px; color: var(--color-text-secondary); margin: 6px 0 0; padding-left: 16px; line-height: 1.8; }
+  .badge { font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: 20px; }
+  .badge.teal { background: #E1F5EE; color: #0F6E56; }
+  .badge.amber { background: #FAEEDA; color: #854F0B; }
+  .badge.blue { background: #E6F1FB; color: #185FA5; }
+  .badge.red { background: #FCEBEB; color: #A32D2D; }
+  .badge.purple { background: #EEEDFE; color: #534AB7; }
+  .section-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-bottom: 12px; }
+  .stat-card { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 14px 16px; }
+  .stat-card .num { font-size: 22px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 2px; }
+  .stat-card .lbl { font-size: 12px; color: var(--color-text-secondary); line-height: 1.4; }
+  .step-row { display: flex; gap: 12px; align-items: flex-start; padding: 10px 0; border-bottom: 0.5px solid var(--color-border-tertiary); }
+  .step-row:last-child { border-bottom: none; }
+  .step-num { min-width: 28px; height: 28px; border-radius: 50%; background: var(--color-background-info); color: var(--color-text-info); font-size: 12px; font-weight: 500; display: flex; align-items: center; justify-content: center; margin-top: 1px; }
+  .step-content h4 { font-size: 14px; font-weight: 500; color: var(--color-text-primary); margin: 0 0 3px; }
+  .step-content p { font-size: 13px; color: var(--color-text-secondary); margin: 0; line-height: 1.5; }
+  .checklist { list-style: none; padding: 0; margin: 8px 0 0; }
+  .checklist li { font-size: 13px; color: var(--color-text-secondary); padding: 4px 0; display: flex; align-items: flex-start; gap: 8px; line-height: 1.5; }
+  .checklist li::before { content: "✓"; color: #1D9E75; font-weight: 500; margin-top: 1px; flex-shrink: 0; }
+  .pill-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .pill { font-size: 12px; padding: 4px 10px; border-radius: 20px; border: 0.5px solid var(--color-border-secondary); color: var(--color-text-secondary); background: var(--color-background-secondary); }
+  .tab-row { display: flex; gap: 4px; margin-bottom: 12px; }
+  .tab { font-size: 13px; padding: 6px 14px; border-radius: var(--border-radius-md); cursor: pointer; border: 0.5px solid transparent; color: var(--color-text-secondary); background: transparent; transition: all .15s; }
+  .tab.active { background: var(--color-background-info); color: var(--color-text-info); border-color: var(--color-border-info); font-weight: 500; }
+  .tab:hover:not(.active) { background: var(--color-background-secondary); }
+  .panel { display: none; }
+  .panel.active { display: block; }
+  .divider { height: 0.5px; background: var(--color-border-tertiary); margin: 20px 0; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 480px) { .two-col { grid-template-columns: 1fr; } .section-grid { grid-template-columns: 1fr 1fr; } }
+  .highlight-box { background: var(--color-background-warning); border: 0.5px solid var(--color-border-warning); border-radius: var(--border-radius-md); padding: 10px 14px; margin-top: 10px; }
+  .highlight-box p { font-size: 13px; color: var(--color-text-warning); margin: 0; line-height: 1.5; }
+  .tag-formula { font-size: 12px; background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 8px 12px; font-family: var(--font-mono); color: var(--color-text-secondary); margin-top: 8px; line-height: 1.7; }
+  .icon-circle { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 14px; }
+</style>
+<div class="wrap">
+  <h2 style="font-size:18px;font-weight:500;margin:0 0 4px">Service page SEO that ranks and converts</h2>
+  <p style="font-size:13px;color:var(--color-text-secondary);margin:0 0 20px">Synthesised from Backlinko, HubSpot, Moz, Search Engine Land, and CRO research — 2025–26 data</p>
+
+  <div class="section-grid">
+    <div class="stat-card">
+      <div class="num">14.6%</div>
+      <div class="lbl">Organic SEO lead-close rate vs 1.7% outbound (HubSpot 2025)</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">260%</div>
+      <div class="lbl">Dwell time increase from adding one video (Wistia study)</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">8 sec</div>
+      <div class="lbl">Time visitors decide stay-or-leave — 80% on the headline (ConversionXL)</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">20–40%</div>
+      <div class="lbl">Better conversion from benefit-focused copy vs feature-focused</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <p class="section-label">Choose your section</p>
+
+  <div class="tab-row">
+    <button class="tab active" onclick="showTab('structure')">Page structure</button>
+    <button class="tab" onclick="showTab('dwell')">Dwell time</button>
+    <button class="tab" onclick="showTab('copy')">Copy formulas</button>
+    <button class="tab" onclick="showTab('cro')">CRO signals</button>
+    <button class="tab" onclick="showTab('checklist')">Final checklist</button>
+  </div>
+
+  <!-- STRUCTURE TAB -->
+  <div id="tab-structure" class="panel active">
+    <p style="font-size:13px;color:var(--color-text-secondary);margin:0 0 14px">The exact section order for a service page that ranks and converts. Every section has a job — don't skip one.</p>
+    <div class="card card-accent blue">
+      <div class="step-row">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h4>Hero — keyword H1 + benefit subheadline + CTA</h4>
+          <p>H1 must include primary keyword + location or niche. E.g. <em>"SEO Services for Real Estate Businesses in Chennai."</em> Subheadline states the outcome, not the feature. CTA above the fold always.</p>
+          <div class="pill-row"><span class="pill">Primary keyword in H1</span><span class="pill">Outcome-led subhead</span><span class="pill">CTA above fold</span></div>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h4>3 key benefits — outcomes, not features</h4>
+          <p>Benefit-focused copy converts 20–40% better. Use a 3-column layout: icon + heading + 1-line outcome. Answer "what do I get?" not "what do you do?"</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h4>Pain point + validation block</h4>
+          <p>Name the exact frustration your client has before finding you. Then show you understand it. This is where most visitors decide to keep reading.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h4>Service details + process breakdown</h4>
+          <p>Explain the what and how — deep enough to answer "what exactly happens when I hire you?" Use H2s for each step so Google can understand topical depth.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <h4>Social proof — testimonials + case studies</h4>
+          <p>Pick testimonials that reference a specific problem solved. Case studies should show a measurable ROI. Place near "why choose us" to support every claim you make.</p>
+          <div class="pill-row"><span class="pill">Google / Clutch verified reviews</span><span class="pill">Before/after result data</span></div>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">6</div>
+        <div class="step-content">
+          <h4>Objection-busting FAQ section</h4>
+          <p>Addresses concerns about cost, results, timeline, and reliability directly. Every FAQ answer is a chance to rank for a long-tail query and extend dwell time. Use FAQ schema markup.</p>
+        </div>
+      </div>
+      <div class="step-row" style="border-bottom:none">
+        <div class="step-num">7</div>
+        <div class="step-content">
+          <h4>Final CTA + contact block</h4>
+          <p>Recap the core benefit using your primary keyword again. Make the next step dead simple. Minimal form fields. Phone number visible. CTA repeated after every major section.</p>
+        </div>
+      </div>
+    </div>
+    <div class="highlight-box"><p>Google ranks pages, not websites. Each service must have its own dedicated page targeting one specific keyword cluster — not a generic "services" catch-all page.</p></div>
+  </div>
+
+  <!-- DWELL TIME TAB -->
+  <div id="tab-dwell" class="panel">
+    <p style="font-size:13px;color:var(--color-text-secondary);margin:0 0 14px">Dwell time = time between SERP click and returning to Google. Longer dwell = content matched intent = ranking signal. A 2024 Google API leak confirmed tracking of "long click" behaviour.</p>
+    <div class="two-col">
+      <div class="card card-accent teal">
+        <h3><span class="badge teal">Do this</span></h3>
+        <ul class="checklist">
+          <li>Embed a short explainer or process video — adds 1+ min per viewer</li>
+          <li>Use interactive elements: ROI calculator, quiz, or comparison tool</li>
+          <li>Add internal links to related blog posts or sub-service pages</li>
+          <li>Use a topic cluster: pillar page → spoke pages → related blogs</li>
+          <li>Break long content with custom visuals, infographics, diagrams</li>
+          <li>Write a strong intro using the PPT formula (see Copy tab)</li>
+          <li>Include a scannable TL;DR / key takeaways box at the top</li>
+          <li>Add a sticky table of contents for long pages</li>
+        </ul>
+      </div>
+      <div class="card card-accent red">
+        <h3><span class="badge red">Avoid these</span></h3>
+        <ul class="checklist" style="list-style:none">
+          <li style="display:flex;gap:8px;align-items:flex-start"><span style="color:#A32D2D">✗</span>Thin content under 800 words on a competitive service page</li>
+          <li style="display:flex;gap:8px;align-items:flex-start"><span style="color:#A32D2D">✗</span>Content that doesn't match the searcher's intent</li>
+          <li style="display:flex;gap:8px;align-items:flex-start"><span style="color:#A32D2D">✗</span>Pop-ups or interstitials that trigger immediately on load</li>
+          <li style="display:flex;gap:8px;align-items:flex-start"><span style="color:#A32D2D">✗</span>Page speed over 3 seconds — biggest dwell time killer</li>
+          <li style="display:flex;gap:8px;align-items:flex-start"><span style="color:#A32D2D">✗</span>Walls of unbroken text with no visual hierarchy</li>
+          <li style="display:flex;gap:8px;align-items:flex-start"><span style="color:#A32D2D">✗</span>Outdated stats, broken links, or stale content</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card" style="margin-top:4px">
+      <h3>Real case result</h3>
+      <p>LearnWell EdTech: Added interactive quizzes, polls, and embedded instructor videos to long-form guides. Dwell time jumped from <strong>42 seconds → 2 min 15 sec</strong>. Bounce rate dropped 38%. Five blog posts moved into Google's top 5 for their keywords.</p>
+    </div>
+    <div class="card" style="margin-top:4px">
+      <h3>Target benchmarks</h3>
+      <p style="margin-bottom:8px">There's no universal "good" dwell time — it depends on the page type and intent. Rough service page targets:</p>
+      <div class="section-grid" style="margin:0">
+        <div class="stat-card"><div class="num" style="font-size:18px">2–4 min</div><div class="lbl">Strong service page dwell</div></div>
+        <div class="stat-card"><div class="num" style="font-size:18px">&lt;30 sec</div><div class="lbl">Warning sign — revisit intent match</div></div>
+        <div class="stat-card"><div class="num" style="font-size:18px">&lt;40%</div><div class="lbl">Healthy bounce rate target for service pages</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COPY FORMULAS TAB -->
+  <div id="tab-copy" class="panel">
+    <p style="font-size:13px;color:var(--color-text-secondary);margin:0 0 14px">Proven writing frameworks that increase both dwell time and conversion — used by top-ranking service pages.</p>
+
+    <div class="card card-accent purple">
+      <h3>PPT formula — for your intro (from Backlinko)</h3>
+      <p>The first 3 lines of any page carry the most weight for dwell time. Use:</p>
+      <div class="tag-formula">
+        <strong>Preview</strong> — Tell them exactly what the page delivers in line 1<br>
+        <strong>Proof</strong> — Show credibility immediately in lines 2–3<br>
+        <strong>Transition</strong> — Walk them gently into the next section
+      </div>
+      <p style="margin-top:8px;font-size:13px;color:var(--color-text-secondary)">Example: "This page explains how we've helped 40+ Chennai businesses rank on page 1 in under 90 days — and exactly how we'd do it for yours."</p>
+    </div>
+
+    <div class="card card-accent amber" style="margin-top:10px">
+      <h3>PAS formula — for pain point sections</h3>
+      <div class="tag-formula">
+        <strong>Problem</strong> — Name the exact frustration ("You're spending on ads but SEO brings nothing")<br>
+        <strong>Agitate</strong> — Show the cost of doing nothing<br>
+        <strong>Solution</strong> — Position your service as the specific answer
+      </div>
+    </div>
+
+    <div class="card card-accent teal" style="margin-top:10px">
+      <h3>EEAT signals to weave throughout</h3>
+      <p style="margin-bottom:8px">Google's quality evaluators look for Experience, Expertise, Authority, Trust. Your copy must demonstrate all four:</p>
+      <ul class="checklist">
+        <li>Mention specific client results with numbers (Experience)</li>
+        <li>Reference your process, tools, and methodology (Expertise)</li>
+        <li>Include certifications, awards, media mentions (Authority)</li>
+        <li>Show verified reviews, clear pricing, team photos (Trust)</li>
+      </ul>
+    </div>
+
+    <div class="card card-accent coral" style="margin-top:10px">
+      <h3>Keyword placement rules — natural, not stuffed</h3>
+      <ul class="checklist">
+        <li>Primary keyword in H1, first 100 words, and final CTA</li>
+        <li>3–5 LSI/secondary keywords in H2s and body copy</li>
+        <li>Location keyword in meta title, H1, and at least one H2</li>
+        <li>Long-tail keywords in FAQ section answers</li>
+        <li>Alt text on every image with a relevant keyword + description</li>
+        <li>Keyword in URL slug — short, clean, hyphen-separated</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- CRO SIGNALS TAB -->
+  <div id="tab-cro" class="panel">
+    <p style="font-size:13px;color:var(--color-text-secondary);margin:0 0 14px">SEO brings traffic — CRO converts it. When aligned, they reduce CPL, improve lead quality, and increase ROI without increasing spend.</p>
+
+    <div class="two-col">
+      <div class="card card-accent blue">
+        <h3>Trust signals that convert</h3>
+        <ul class="checklist">
+          <li>Client logo strip (recognisable brands)</li>
+          <li>Exact review count + star rating from Google/Clutch</li>
+          <li>Named case study with % improvement</li>
+          <li>Team photos with names and roles</li>
+          <li>"Featured in" or certification badges</li>
+          <li>Money-back guarantee or free consultation</li>
+        </ul>
+      </div>
+      <div class="card card-accent teal">
+        <h3>CTA best practices</h3>
+        <ul class="checklist">
+          <li>CTA appears above fold, after benefits, and at page end</li>
+          <li>Use action-specific text: "Get free SEO audit" not "Submit"</li>
+          <li>Reduce form fields to 3 or fewer for max submissions</li>
+          <li>Add micro-copy below CTA to remove risk ("No commitment")</li>
+          <li>Sticky CTA button on mobile</li>
+          <li>A/B test headlines — can yield +20–50% conversion rate</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card card-accent amber" style="margin-top:4px">
+      <h3>Technical performance (non-negotiable)</h3>
+      <p style="margin-bottom:8px">Google uses Core Web Vitals as a ranking signal. Poor speed kills both rankings and conversions.</p>
+      <div class="section-grid" style="margin:0">
+        <div class="stat-card"><div class="num" style="font-size:16px">&lt;3s</div><div class="lbl">Page load time target</div></div>
+        <div class="stat-card"><div class="num" style="font-size:16px">Mobile first</div><div class="lbl">Google indexes mobile version first</div></div>
+        <div class="stat-card"><div class="num" style="font-size:16px">FAQ schema</div><div class="lbl">Adds rich results, takes up SERP space</div></div>
+        <div class="stat-card"><div class="num" style="font-size:16px">LocalBusiness</div><div class="lbl">Schema markup for local service pages</div></div>
+      </div>
+    </div>
+
+    <div class="card card-accent purple" style="margin-top:10px">
+      <h3>Internal linking strategy</h3>
+      <p>Internal links keep users exploring and signal topical depth to Google. Build it like a map:</p>
+      <div class="pill-row">
+        <span class="pill">Service pages → location pages</span>
+        <span class="pill">Location pages → top services</span>
+        <span class="pill">Blog posts → money pages</span>
+        <span class="pill">FAQs → deep-dive blog posts</span>
+      </div>
+      <p style="margin-top:8px;font-size:13px;color:var(--color-text-secondary)">One agency saw session depth increase from 1.6 → 3.4 pages and bounce rate drop from 62% → 41% with topic cluster + internal linking alone.</p>
+    </div>
+  </div>
+
+  <!-- CHECKLIST TAB -->
+  <div id="tab-checklist" class="panel">
+    <p style="font-size:13px;color:var(--color-text-secondary);margin:0 0 14px">Use this before publishing any service page. Every item here has a direct impact on either rankings, dwell time, or conversion.</p>
+    <div class="card card-accent teal">
+      <h3>Content</h3>
+      <ul class="checklist">
+        <li>Dedicated page per service (not one giant "Services" page)</li>
+        <li>Primary keyword in H1, first 100 words, meta title, URL, and final CTA</li>
+        <li>800+ words minimum — preferably 1,200–1,800 for competitive terms</li>
+        <li>Benefit-focused headline above the fold</li>
+        <li>Pain point section validated with specifics</li>
+        <li>Clear process explanation (what happens after they hire you)</li>
+        <li>FAQ section with 5+ questions using long-tail keywords</li>
+        <li>At least one case study or testimonial with a measurable result</li>
+        <li>Video embedded (explainer, testimonial, or process walkthrough)</li>
+      </ul>
+    </div>
+    <div class="card card-accent blue" style="margin-top:4px">
+      <h3>SEO technical</h3>
+      <ul class="checklist">
+        <li>Meta title: primary keyword + brand, under 60 chars</li>
+        <li>Meta description: benefit-led, includes CTA, under 155 chars</li>
+        <li>URL slug: clean, keyword-rich, no dates or stop words</li>
+        <li>All images have keyword-relevant alt text</li>
+        <li>FAQ schema and LocalBusiness schema implemented</li>
+        <li>Page loads under 3 seconds on mobile</li>
+        <li>Internal links to 2+ related pages with descriptive anchor text</li>
+        <li>Canonical tag set correctly (no duplicate content)</li>
+      </ul>
+    </div>
+    <div class="card card-accent amber" style="margin-top:4px">
+      <h3>Conversion</h3>
+      <ul class="checklist">
+        <li>CTA appears above fold, mid-page, and at the end</li>
+        <li>Form has 3 fields or fewer</li>
+        <li>Phone number visible in header and at least once in page body</li>
+        <li>Trust signals present: reviews, logos, certifications</li>
+        <li>Mobile layout tested — sticky CTA button active</li>
+        <li>Page tracked in GA4 with scroll depth + form submission events</li>
+      </ul>
+    </div>
+    <div class="highlight-box" style="margin-top:4px"><p>After publishing: track in GA4 under Organic traffic → filter by this page → monitor Engagement rate, Average engagement time, and Conversions. A page with high impressions but low dwell time needs the content revised — not more backlinks.</p></div>
+  </div>
+</div>
+
+<script>
+function showTab(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
