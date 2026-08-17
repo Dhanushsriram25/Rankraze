@@ -1,0 +1,1246 @@
+const {
+Document, Packer, Paragraph, TextRun, HeadingLevel, Table, TableRow, TableCell,
+WidthType, ShadingType, BorderStyle, AlignmentType, PageBreak, TableOfContents,
+Header, Footer, PageNumber, SimpleField, VerticalAlign, LevelFormat, convertInchesToTwip
+} = require('docx');
+
+// ---------- helpers ----------
+const NAVY = "1F3864";
+const GOLD = "B08D57";
+const GREY = "595959";
+const LIGHTGREY = "F2F2F2";
+const RED = "C0392B";
+const GREEN = "2E7D32";
+const AMBER = "B7791F";
+
+const FONT = "Calibri";
+
+function h1(text) {
+return new Paragraph({
+heading: HeadingLevel.HEADING_1,
+spacing: { before: 480, after: 240 },
+border: { bottom: { color: GOLD, space: 4, style: BorderStyle.SINGLE, size: 6 } },
+children: [new TextRun({ text, bold: true, color: NAVY, size: 30, font: FONT })],
+});
+}
+function h2(text) {
+return new Paragraph({
+heading: HeadingLevel.HEADING_2,
+spacing: { before: 320, after: 160 },
+children: [new TextRun({ text, bold: true, color: NAVY, size: 24, font: FONT })],
+});
+}
+function h3(text) {
+return new Paragraph({
+heading: HeadingLevel.HEADING_3,
+spacing: { before: 200, after: 100 },
+children: [new TextRun({ text, bold: true, color: GOLD, size: 22, font: FONT })],
+});
+}
+function p(text, opts = {}) {
+return new Paragraph({
+spacing: { after: 160, line: 300 },
+children: [new TextRun({ text, size: 21, font: FONT, color: "262626", ...opts })],
+});
+}
+function pRuns(runs) {
+return new Paragraph({ spacing: { after: 160, line: 300 }, children: runs });
+}
+function bullet(text, level = 0) {
+return new Paragraph({
+spacing: { after: 90, line: 280 },
+bullet: { level },
+children: [new TextRun({ text, size: 21, font: FONT, color: "262626" })],
+});
+}
+function labelValue(label, value) {
+return pRuns([
+new TextRun({ text: label + ": ", bold: true, size: 21, font: FONT, color: NAVY }),
+new TextRun({ text: value, size: 21, font: FONT, color: "262626" }),
+]);
+}
+function cellText(text, opts = {}) {
+return new Paragraph({
+spacing: { after: 40 },
+children: [new TextRun({ text, size: 19, font: FONT, bold: !!opts.bold, color: opts.color || "262626" })],
+});
+}
+function headerCell(text, width) {
+return new TableCell({
+width: { size: width, type: WidthType.DXA },
+shading: { type: ShadingType.CLEAR, fill: NAVY },
+verticalAlign: VerticalAlign.CENTER,
+margins: { top: 100, bottom: 100, left: 100, right: 100 },
+children: [cellText(text, { bold: true, color: "FFFFFF" })],
+});
+}
+function bodyCell(text, width, opts = {}) {
+return new TableCell({
+width: { size: width, type: WidthType.DXA },
+shading: { type: ShadingType.CLEAR, fill: opts.fill || "FFFFFF" },
+verticalAlign: VerticalAlign.CENTER,
+margins: { top: 100, bottom: 100, left: 100, right: 100 },
+children: Array.isArray(text) ? text.map(t => cellText(t, opts)) : [cellText(text, opts)],
+});
+}
+function priorityFill(pri) {
+if (pri === "Critical") return "F8D7DA";
+if (pri === "High") return "FDEBD0";
+if (pri === "Medium") return "FCF3CF";
+return "E8F6F3";
+}
+function priorityColor(pri) {
+if (pri === "Critical") return RED;
+if (pri === "High") return AMBER;
+return "1B4F72";
+}
+
+function makeTable(widths, headers, rows) {
+const totalWidth = widths.reduce((a, b) => a + b, 0);
+return new Table({
+width: { size: totalWidth, type: WidthType.DXA },
+columnWidths: widths,
+rows: [
+new TableRow({ tableHeader: true, children: headers.map((hd, i) => headerCell(hd, widths[i])) }),
+...rows.map(r => new TableRow({ children: r.map((c, i) => {
+if (typeof c === "object" && c.priority) {
+return bodyCell(c.text, widths[i], { fill: priorityFill(c.priority), color: priorityColor(c.priority), bold: true });
+}
+return bodyCell(c, widths[i]);
+}) })),
+],
+});
+}
+
+function issueBlock(issue, userImpact, businessImpact, recommendation) {
+return [
+pRuns([new TextRun({ text: "Issue: ", bold: true, size: 21, font: FONT, color: RED }), new TextRun({ text: issue, size:
+21, font: FONT })]),
+pRuns([new TextRun({ text: "User Impact: ", bold: true, size: 21, font: FONT, color: NAVY }), new TextRun({ text:
+userImpact, size: 21, font: FONT })]),
+pRuns([new TextRun({ text: "Business Impact: ", bold: true, size: 21, font: FONT, color: NAVY }), new TextRun({ text:
+businessImpact, size: 21, font: FONT })]),
+pRuns([new TextRun({ text: "Recommendation: ", bold: true, size: 21, font: FONT, color: GREEN }), new TextRun({ text:
+recommendation, size: 21, font: FONT })]),
+new Paragraph({ spacing: { after: 200 }, children: [] }),
+];
+}
+
+function evidenceNote(text) {
+return new Paragraph({
+spacing: { after: 200, before: 60 },
+shading: { type: ShadingType.CLEAR, fill: LIGHTGREY },
+border: { left: { color: GOLD, space: 8, style: BorderStyle.SINGLE, size: 12 } },
+indent: { left: 200 },
+children: [new TextRun({ text: "Evidence / Source: ", italics: true, bold: true, size: 19, font: FONT, color: GREY }),
+new TextRun({ text, italics: true, size: 19, font: FONT, color: GREY })],
+});
+}
+
+function verificationNote(text) {
+return new Paragraph({
+spacing: { after: 200, before: 60 },
+shading: { type: ShadingType.CLEAR, fill: "FDEBD0" },
+border: { left: { color: AMBER, space: 8, style: BorderStyle.SINGLE, size: 12 } },
+indent: { left: 200 },
+children: [new TextRun({ text: "Requires backend / access verification: ", bold: true, size: 19, font: FONT, color:
+AMBER }),
+new TextRun({ text, size: 19, font: FONT, color: "594100" })],
+});
+}
+
+function pageBreak() { return new Paragraph({ children: [new PageBreak()] }); }
+
+// ---------- Cover Page ----------
+const cover = [
+new Paragraph({ spacing: { before: 2000, after: 200 }, alignment: AlignmentType.CENTER,
+children: [new TextRun({ text: "WEBSITE AUDIT REPORT", bold: true, size: 52, font: FONT, color: NAVY })] }),
+new Paragraph({ spacing: { after: 600 }, alignment: AlignmentType.CENTER,
+children: [new TextRun({ text: "Johnson Lifts UAE — www.johnsonliftsme.ae", size: 28, font: FONT, color: GOLD, bold:
+true })] }),
+new Paragraph({ spacing: { after: 100 }, alignment: AlignmentType.CENTER,
+children: [new TextRun({ text: "Independent Digital Consultancy Assessment", size: 22, font: FONT, color: GREY, italics:
+true })] }),
+new Paragraph({ spacing: { after: 100 }, alignment: AlignmentType.CENTER,
+children: [new TextRun({ text: "AMC Continuation vs. Full-Stack Redevelopment — Decision Support Report", size: 22,
+font: FONT, color: GREY, italics: true })] }),
+new Paragraph({ spacing: { before: 1600, after: 60 }, alignment: AlignmentType.CENTER,
+children: [new TextRun({ text: "Prepared by Rankraze Tech", size: 22, font: FONT, color: NAVY, bold: true })] }),
+new Paragraph({ spacing: { after: 60 }, alignment: AlignmentType.CENTER,
+children: [new TextRun({ text: "Prepared for: Johnson Lifts UAE Management", size: 20, font: FONT, color: GREY })] }),
+new Paragraph({ spacing: { after: 60 }, alignment: AlignmentType.CENTER,
+children: [new TextRun({ text: "Report Date: 17 August 2026", size: 20, font: FONT, color: GREY })] }),
+new Paragraph({ spacing: { before: 900 }, alignment: AlignmentType.CENTER,
+children: [new TextRun({ text: "Confidential — prepared for internal decision-making purposes.", size: 18, font: FONT,
+color: GREY, italics: true })] }),
+pageBreak(),
+];
+
+// ---------- Methodology note ----------
+const methodology = [
+h1("How This Audit Was Conducted"),
+p("This audit is based entirely on publicly accessible evidence gathered directly from the live website
+(www.johnsonliftsme.ae) — including page content, on-page HTML structure, navigation behavior, link destinations,
+indexed pages, and publicly visible markup. No backend systems, source code repositories, hosting environment, or CMS
+admin area were accessed."),
+p("Wherever a finding depends on information that is only visible from inside the server, hosting panel, or codebase,
+this report labels it clearly as \"Requires backend/access verification\" rather than assuming an answer. No competitor
+statistics, performance benchmark numbers, or issues have been invented — every finding below is traceable to something
+observed on the live site during this audit."),
+p("Precise Core Web Vitals scores, security header configurations, and server-side technology versions require direct
+tool access (e.g., Google PageSpeed Insights, GTmetrix, server response header inspection) that goes beyond a
+content-and-structure audit. Where relevant, this report recommends those as a fast, low-cost next step regardless of
+which strategic direction (AMC or redevelopment) is chosen."),
+];
+
+// ---------- 1. Executive Summary ----------
+const execSummary = [
+h1("1. Executive Summary"),
+h2("Overall Website Health Score"),
+new Paragraph({ spacing: { after: 120 }, children: [
+new TextRun({ text: "54 / 100", bold: true, size: 44, font: FONT, color: AMBER }),
+new TextRun({ text: " — Functional brand-presentation website, but structurally a static corporate brochure site rather
+than a scalable, self-manageable digital platform.", size: 20, font: FONT, color: GREY }),
+] }),
+makeTable(
+[3600, 1800, 5600],
+["Category", "Score /100", "Basis"],
+[
+["Brand & Visual Presentation", "72", "Strong storytelling copy, consistent logo/colour use, professional photography
+and video"],
+["UI / UX & Navigation", "55", "Clear top-level structure, but in-page (hash) navigation and broken links reduce
+usability"],
+["Content Quality & Depth", "45", "Good narrative pages; thin blog, no project case studies, no product spec sheets"],
+["Technical Foundation", "50", "HTTPS present, clean URLs on most pages; static architecture, broken gallery links"],
+["Performance Indicators", "45", "Multiple autoplay videos and unoptimised assets observed; lab metrics need tool
+verification"],
+["SEO Foundation", "58", "Unique titles and indexed pages are a strength; thin content and inconsistent URL naming hold
+it back"],
+["Lead Generation / Conversion", "48", "Phone, email and WhatsApp are present but not used as a structured, segmented
+lead system"],
+["Content Manageability (CMS/Admin)", "30", "No evidence of an admin panel; content changes appear to require developer
+intervention"],
+["Scalability for Growth", "35", "Current structure suits a fixed set of pages; not built for growing catalogue/project
+volume"],
+]
+),
+h2("Major Strengths"),
+bullet("Strong, professionally written brand narrative (founder story, mission, factories, team) that communicates 60+
+years of heritage credibly."),
+bullet("Clear top-level information architecture on the homepage: Home, Who We Are, Products, Services, Projects, Blogs,
+Careers, Contact."),
+bullet("Each product and about-us page carries a unique, page-specific <title> tag — a genuine SEO positive many small
+    business sites get wrong."),
+    bullet("HTTPS is active across the site; WhatsApp click-to-chat is already integrated as a contact channel."),
+    bullet("Google appears to be indexing multiple individual pages of the site, meaning the site is at least
+    discoverable, not blocked from search."),
+    bullet("Two UAE branch addresses (Dubai, Abu Dhabi) plus regional distributor details (Oman, Bahrain, Saudi Arabia)
+    are clearly presented — useful trust signal for a regional buyer."),
+    h2("Major Weaknesses"),
+    bullet("The \"Our Projects\" portfolio on the homepage — the section most relevant to a B2B/architect buyer
+    evaluating credibility — is entirely non-clickable; every project tile links to \"#\" with no destination page or
+    case study."),
+    bullet("The interiors/finishes image gallery on product pages (e.g., the Creatica & Nextra page) contains roughly
+    two dozen empty, non-functional links — a broken interactive element on a customer-facing page."),
+    bullet("The blog has only two posts, both dated December 2023, and one of the two is a placeholder titled \"Test
+    test\" containing Lorem Ipsum filler text — currently visible to any visitor or search engine."),
+    bullet("The site footer still displays \"Copyright © 2023\", indicating the template has not been touched for
+    routine housekeeping in some time."),
+    bullet("No admin panel or CMS is evident from the public structure; content appears to be hard-coded per page,
+    meaning routine updates (a new project, a new blog post, a branch change) likely require a developer."),
+    h2("Critical Findings"),
+    bullet("Dead/broken links on live, customer-facing pages (projects portfolio, product image gallery) directly
+    undermine credibility for a premium engineering brand."),
+    bullet("Placeholder blog content (Lorem Ipsum, \"Test test\") is publicly visible — this is the kind of finding
+    that, left unaddressed, can affect brand trust if a prospect stumbles on it."),
+    bullet("No structured way to manage or grow content (products, projects, blog, careers) without direct code
+    changes."),
+    h2("Business Risks"),
+    bullet("Every content update — a new project win, a new product variant, a UAE branch change — currently appears to
+    depend on developer availability, slowing down marketing and sales responsiveness."),
+    bullet("The absence of case studies/project pages weakens the site's ability to support high-value B2B sales
+    conversations (consultants, contractors, developers) who typically want to see comparable past work before
+    shortlisting a vendor."),
+    bullet("Thin, stale blog content is a missed opportunity relative to competitors actively publishing UAE-specific
+    elevator/escalator content, and may suppress long-tail organic search visibility over time."),
+    bullet("A single generic enquiry form does not distinguish between a product enquiry, an AMC/service enquiry, a
+    project enquiry, or a careers submission — this likely creates avoidable friction for the sales team when routing
+    leads."),
+    h2("Business Opportunities"),
+    bullet("WhatsApp is already integrated at the icon level — this can be elevated into a primary, prominent CTA across
+    product and service pages to capture the region's WhatsApp-first enquiry behaviour."),
+    bullet("The company's genuine strengths (60-year heritage, own factories, large project portfolio) are strong
+    content assets that are currently under-presented — turning real projects into clickable case studies would
+    materially strengthen the site's credibility with minimal net-new content creation."),
+    bullet("Two physical UAE branches plus distributor coverage across the GCC is a strong basis for a location-specific
+    SEO and local-search strategy that is not currently being leveraged."),
+    h2("Overall Recommendation"),
+    p("The website is not broken from a visitor's point of view — it loads, presents the brand attractively, and
+    provides basic contact routes. However, it is structurally a static, developer-dependent brochure site rather than a
+    platform the marketing team can run day-to-day. The specific defects found (dead project links, broken gallery,
+    placeholder blog post, stale copyright) are inexpensive to fix under the current AMC and should be corrected
+    regardless of the long-term decision. The deeper question — whether AMC on the current platform is a sound long-term
+    strategy — is addressed in full in Section 15 (AMC vs. Redevelopment) and Section 19 (Final Recommendation)."),
+    ];
+
+    // ---------- 2. UI/UX Audit ----------
+    const uxAudit = [
+    h1("2. UI/UX Audit"),
+    p("The homepage uses a single-page, section-based layout (Home, Who We Are, Products, Services, Projects, Blogs,
+    Careers, Contact Us are anchor sections on one page, reached via #page-2, #page-3, etc.), while products, services
+    and \"read more\" content live on separate .html/.php pages. This hybrid pattern is workable but creates some
+    navigation inconsistencies documented below."),
+    h3("Homepage & Navigation"),
+    ...issueBlock(
+    "From an interior page (e.g. a product page), the top navigation links back to Home plus in-page anchors
+    (index.php#page-3, index.php#page-4). This means a visitor reading a product page who clicks \"Projects\" is sent
+    back to the homepage and then scrolled to a section, rather than to a dedicated Projects page.",
+    "Adds an extra mental step and a full page reload before reaching the desired section; can feel disorienting on
+    slower connections.",
+    "Slightly increases bounce risk for users who are deep in a product page and want to compare it against project
+    examples or services.",
+    "Give Products, Services, Projects, Blogs and Careers their own dedicated URLs/pages (or at minimum ensure in-page
+    anchors resolve smoothly without a jarring reload) rather than relying solely on homepage anchor sections."
+    ),
+    h3("Product Pages"),
+    ...issueBlock(
+    "Product pages (e.g., Creatica & Nextra) present strong descriptive copy and an interiors/finishes image set, but
+    the finishes gallery consists of roughly two dozen images that all link to empty anchors (href=\"<>\") instead of
+        opening an enlarged view or lightbox.",
+        "A visitor trying to browse cabin finish options clicks images expecting a closer look and nothing happens — a
+        dead interaction on the exact page meant to help a customer choose a finish.",
+        "For a premium, customisation-led product line, a non-functional visual selector undercuts the \"luxury
+        finishes\" positioning the copy is trying to sell.",
+        "Repair the gallery/lightbox functionality so finish images are viewable at full size, and add captions naming
+        each finish (e.g., teak, rosewood, cedar) to support the buying decision."
+        ),
+        ...issueBlock(
+        "No technical specification data (load capacity, speed, dimensions, machine-room vs machine-room-less footprint,
+        standard/optional features) is presented on product pages in list or table form.",
+        "Facilities managers, contractors and consultants — the core B2B audience for a lift manufacturer — often need
+        this data early in evaluation and may leave the site to find it elsewhere.",
+        "Increases reliance on a phone/email enquiry just to get baseline technical information, adding friction earlier
+        in the sales funnel than necessary.",
+        "Add a structured specification table per product (capacity, speed, travel height, door type, MR/MRL, standard
+        finishes) and a downloadable PDF brochure/spec sheet."
+        ),
+        h3("Project / Portfolio Pages"),
+        ...issueBlock(
+        "The homepage \"Our Projects\" gallery lists prestigious project names (Etihad Railway UAE, Expo UAE, hospital,
+        mall, palace, residential, restaurant, supermarket, temple projects) but every tile links to \"#\" with no
+        destination.",
+        "A prospective client trying to verify Johnson Lifts' track record on a comparable project type cannot click
+        through to see any detail, photos, or scope of work.",
+        "For premium/complex procurement decisions, an absent case-study trail is a meaningful credibility gap versus
+        competitors who can show verifiable, detailed project references.",
+        "Build individual project/case-study pages (location, sector, product/solution used, scope, and photography) and
+        link each portfolio tile to its page."
+        ),
+        h3("Contact & Forms"),
+        ...issueBlock(
+        "There appears to be a single generic enquiry mechanism (\"Inquire Now\" popup and a \"Leave a Comment\" footer
+        form) rather than differentiated forms for product enquiries, AMC/service requests, project enquiries, and
+        careers submissions.",
+        "Visitors with different intents (buying a new lift vs. requesting maintenance vs. applying for a job) are
+        funnelled through one generic form.",
+        "Undifferentiated leads are harder and slower for the sales/BD team to triage and route to the right
+        department.",
+        "Introduce purpose-specific enquiry forms (or a single smart form with an intent dropdown) that route
+        submissions to the correct team automatically."
+        ),
+        h3("CTA Placement, Typography & Brand Presentation"),
+        p("CTA placement is a genuine strength: a persistent header phone number, email, and WhatsApp icon, plus a
+        homepage \"Inquire Now\" call-to-action, keep contact options visible throughout the browsing session.
+        Typography and colour usage are consistent across pages, and the logo, imagery style, and section layouts read
+        as a coherent, professional brand — this consistency should be preserved in any future redevelopment rather than
+        reinvented from scratch."),
+        h3("User Journey"),
+        p("The overall journey (brand story → products → services → projects → blog → careers → contact) is a logical
+        sequence for a first-time visitor. The two points where the journey currently breaks down are the non-functional
+        project links (stops a credibility-building journey short) and the generic-only enquiry path (does not adapt to
+        different buyer intents)."),
+        ];
+
+        // ---------- 3. Mobile Audit ----------
+        const mobileAudit = [
+        h1("3. Mobile Audit"),
+        p("The site includes a `viewport` meta tag (width=device-width, initial-scale=1), indicating a responsive design
+        foundation rather than a fixed-width desktop-only layout."),
+        h3("Notable Mobile-Specific Findings"),
+        bullet("A separate mobile-specific hero video file (mobile-video.mp4) is served in addition to the desktop hero
+        video (johnson.mp4) — this shows deliberate mobile design effort, but also means two video assets must be
+        produced and maintained for every homepage refresh."),
+        bullet("Because navigation to Products/Services/Projects/Blogs/Careers from interior pages routes back through
+        homepage anchors, mobile users face the same extra-tap/reload pattern described in Section 2, which is more
+        noticeable on mobile data connections."),
+        bullet("The broken project links and broken product image gallery (Section 2) affect mobile users identically to
+        desktop users, since these are markup-level issues, not a responsive breakpoint issue."),
+        bullet("Autoplaying background video on a hero section is a known mobile data-usage and load-time concern,
+        particularly on cellular connections common among on-the-go UAE B2B buyers."),
+        h3("Mobile Conversion Journey"),
+        p("Phone (tel:) and WhatsApp (wa.me) links are correctly implemented as tap-to-call/tap-to-chat links, which is
+        the right pattern for mobile — this is a genuine strength worth preserving. The main mobile conversion gap
+        mirrors the desktop finding: enquiry intent is not segmented, so a mobile visitor researching AMC pricing and
+        one requesting a new installation quote both land in the same generic form."),
+        verificationNote("Actual rendered mobile performance (load time on 3G/4G, layout shift on real devices,
+        tap-target sizing against Google's mobile usability guidelines) requires direct device/tool testing (e.g.,
+        Google Mobile-Friendly Test, PageSpeed Insights mobile score) rather than static content review, and is
+        recommended as an immediate low-cost diagnostic step."),
+        ];
+
+        // ---------- 4. Technical Audit ----------
+        const techAudit = [
+        h1("4. Technical Audit"),
+        h3("Frontend Technology"),
+        p("Pages are a mix of static .html files (e.g., creatica.html, factories.html, team.html, story.html) and .php
+        files (e.g., index.php, blog-listing.php, blog-detail.php?id=). This pattern — hand-built HTML pages for
+        \"evergreen\" content plus a small PHP/database layer for the blog only — is typical of a custom-coded site
+        rather than an installation of a mainstream CMS (no WordPress, Shopify, or similar CMS fingerprints such as
+        /wp-content/, /wp-json/, or cart/theme paths were observed in any fetched page)."),
+        verificationNote("Definitive confirmation of the exact backend language, framework, and server stack (e.g., PHP
+        version, database engine, hosting environment) requires direct server/code access and cannot be certified from
+        public browsing alone."),
+        h3("URL Structure"),
+        ...issueBlock(
+        "URL naming is inconsistent: some pages use clean lowercase slugs (factories.html, freight.html), others use
+        mixed case or unusual abbreviations (Villa-elevator.html, car-lft.html), and the site mixes .html and .php
+        extensions with query-string parameters (blog-detail.php?id=12).",
+        "Not directly visible to most users, but inconsistent, cryptic URLs (\"car-lft\") look unpolished when shared or
+        bookmarked.",
+        "Inconsistent, non-descriptive URLs are a minor but real SEO and brand-professionalism weakness, and complicate
+        future migrations or redirects.",
+        "Standardise on clean, descriptive, lowercase-hyphenated URLs (e.g., /products/car-lift/) as part of any content
+        or platform refresh."
+        ),
+        h3("Broken Links"),
+        p("Confirmed via direct review: the homepage project portfolio tiles link to \"#\" (no destination), and the
+        Creatica & Nextra product page's finishes gallery contains roughly two dozen empty anchor links (href=\"<>\").
+            These are functional defects, not stylistic ones, and were verifiable without any backend access."),
+            h3("Redirects & Canonicalisation"),
+            ...issueBlock(
+            "Both the www and non-www versions of the domain (www.johnsonliftsme.ae and johnsonliftsme.ae) were observed
+            serving identical content during this audit, and a canonical tag was only clearly present on the homepage in
+            the content reviewed.",
+            "No direct impact on the visitor experience.",
+            "If a consistent 301 redirect (choosing one canonical domain form) and per-page canonical tags are not
+            enforced server-side, search engines can split ranking signals between two URL variants of the same page,
+            diluting SEO value.",
+            "Verify server-side 301 redirect rules and confirm every page carries a self-referencing canonical tag."
+            ),
+            verificationNote("Whether a www→non-www (or reverse) 301 redirect rule exists at the server/DNS level cannot
+            be fully confirmed through content review alone and should be checked directly (e.g., via an HTTP header
+            trace)."),
+            h3("Sitemap.xml & Robots.txt"),
+            p("These files could not be independently retrieved through the tools available for this audit. Their
+            presence, correctness, and coverage of all live pages should be verified directly by the technical/AMC team
+            as a standard, low-effort housekeeping check."),
+            verificationNote("Confirm the existence, accuracy, and search-console submission status of /robots.txt and
+            /sitemap.xml."),
+            h3("Structured Data (Schema.org)"),
+            p("No JSON-LD or microdata structured markup (e.g., Organization, Product, LocalBusiness, BreadcrumbList
+            schema) was visible in the page content reviewed. This is a missed opportunity rather than a defect:
+            structured data is optional but valuable for rich search results."),
+            h3("HTTPS & Third-Party Scripts"),
+            bullet("HTTPS is active across every page reviewed — this is a baseline requirement and the site meets
+            it."),
+            bullet("Video content is self-hosted as native HTML5 <video> (not embedded via YouTube/Vimeo), meaning
+                bandwidth for video playback is served directly from the site's own hosting rather than offloaded to a
+                video CDN."),
+                bullet("No third-party chat widgets, marketing pixels, or analytics scripts were visible in the
+                extracted page content; their presence cannot be ruled out from content-only review."),
+                verificationNote("Confirm which analytics/marketing tags (Google Analytics/GA4, Meta Pixel, Google Tag
+                Manager) are installed, and review response headers for security headers such as
+                Content-Security-Policy, X-Frame-Options, and Strict-Transport-Security — none of this is visible from
+                page content alone."),
+                h3("Forms & Error Handling"),
+                p("Enquiry, career (CV upload), and newsletter subscription forms are present in the markup. Their
+                server-side validation, spam protection, and success/failure states could not be tested without
+                submitting live data, which was intentionally avoided during this audit."),
+                verificationNote("Confirm spam protection (CAPTCHA/honeypot), server-side validation, and email
+                deliverability of form submissions directly with the AMC/development team."),
+                ];
+
+                // ---------- 5. Performance Audit ----------
+                const perfAudit = [
+                h1("5. Performance Audit"),
+                p("A full lab-grade performance audit (exact Largest Contentful Paint, First Contentful Paint,
+                Cumulative Layout Shift, and Interaction to Next Paint scores) requires a real-browser measurement tool
+                such as Google PageSpeed Insights, Lighthouse, or GTmetrix. This was outside the scope of the
+                content-and-structure review performed here, and no scores are fabricated in this report — this is
+                flagged as an immediate, low-cost recommended next step, independent of the AMC-vs-redevelopment
+                decision."),
+                verificationNote("Run Google PageSpeed Insights and GTmetrix against the homepage and at least one
+                product/blog page to obtain exact Core Web Vitals (LCP, FCP, CLS, INP) figures before finalising a
+                performance remediation plan."),
+                h3("Observable Performance Risk Factors"),
+                bullet("The homepage loads two separate autoplaying background videos (a desktop hero video and a
+                distinct mobile hero video), plus a secondary door-opener animation video near the top of the page —
+                multiple autoplay video assets on a single page are a well-established page-weight and load-time risk,
+                especially on mobile data."),
+                bullet("Video is self-hosted (native HTML5 video) rather than served via a dedicated video CDN, which
+                typically means less adaptive-bitrate optimisation than a purpose-built video platform provides."),
+                bullet("No lazy-loading attributes (e.g., loading=\"lazy\") were observed on the images captured in this
+                review; if absent site-wide, all images — including those below the fold — would load immediately rather
+                than on demand."),
+                bullet("No evidence of a CDN, image compression pipeline, or modern image formats (WebP/AVIF) was
+                visible in the image URLs reviewed (all appear to be standard .jpg/.png served directly from the site's
+                own domain)."),
+                h3("Business Impact"),
+                p("Slow-loading hero sections directly affect first impressions and mobile bounce rate, which matters
+                disproportionately for a premium brand whose homepage leads with heavy video content. Even without lab
+                scores, the presence of multiple uncompressed-looking autoplay videos and the absence of visible
+                lazy-loading or CDN usage are consistent, verifiable risk indicators that a redevelopment or a targeted
+                performance remediation project should address."),
+                ];
+
+                // ---------- 6. SEO Audit ----------
+                const seoAudit = [
+                h1("6. SEO Audit"),
+                h3("Title Tags & Indexability"),
+                p("A genuine strength: each page reviewed (homepage, founder, story, team, factories, product pages,
+                blog listing) carries a unique, page-specific <title> tag rather than one repeated title across the
+                    whole site — this is a foundational SEO practice the site already gets right. A site: search also
+                    returned multiple individual pages of johnsonliftsme.ae, confirming the site is being crawled and
+                    indexed by Google rather than blocked."),
+                    ...issueBlock(
+                    "The homepage title (\"Top rated elevators and escalators company in uae\") uses inconsistent
+                    capitalisation (\"uae\" instead of \"UAE\") and reads as a keyword-stuffed phrase rather than a
+                    natural brand-forward title.",
+                    "Minimal direct impact on the visitor, but the lower-case country code can look unpolished in search
+                    results and browser tabs.",
+                    "A cleaner, brand-forward title (e.g., \"Elevators & Escalators in UAE | Johnson Lifts Middle
+                    East\") typically performs at least as well for ranking while presenting more professionally in
+                    search results.",
+                    "Standardise title-tag casing and format sitewide as part of routine SEO housekeeping."
+                    ),
+                    h3("Meta Descriptions, Schema & Canonicals"),
+                    verificationNote("Meta description content, per-page canonical tags beyond the homepage, and any
+                    schema.org markup could not be reliably extracted through the content-review tools used in this
+                    audit and should be verified directly via page source or a technical SEO crawler (e.g., Screaming
+                    Frog)."),
+                    h3("URL Structure"),
+                    p("As noted in Section 4, inconsistent URL casing and mixed .html/.php extensions (car-lft.html,
+                    Villa-elevator.html, blog-detail.php?id=12) are a minor technical SEO weakness — clean, descriptive,
+                    consistently-cased URLs are a small but compounding ranking and trust factor."),
+                    h3("Internal Linking"),
+                    p("A genuine strength: product pages include a \"Related Products\" block that cross-links to other
+                    product lines, which is good internal-linking practice. This pattern is undermined on the Projects
+                    side, where there is currently nothing to link to (see Section 2)."),
+                    h3("Image ALT Text"),
+                    ...issueBlock(
+                    "Multiple images reviewed across the homepage and interior pages (logos, icons, section imagery)
+                    render with empty or missing alt attributes in the extracted markup.",
+                    "Screen reader users receive no description of these images (see Section 12, Accessibility).",
+                    "Missing alt text is also a missed opportunity for image search visibility and topical relevance
+                    signals.",
+                    "Add descriptive, keyword-relevant alt text to all meaningful images (product photography, project
+                    photography, factory/team imagery); decorative icons can use empty alt intentionally, but content
+                    images should not."
+                    ),
+                    h3("Content Depth: Blog, Local & Product SEO"),
+                    bullet("The blog currently has only two posts (both from December 2023, one being placeholder Lorem
+                    Ipsum content) — this represents a significant missed opportunity for long-tail, UAE-specific search
+                    terms (e.g., \"elevator maintenance Dubai\", \"escalator installation Abu Dhabi\", \"villa elevator
+                    UAE cost\") that a manufacturer with genuine expertise is well positioned to own."),
+                    bullet("No dedicated Local SEO signals (LocalBusiness schema, location-specific landing content for
+                    Dubai vs. Abu Dhabi) were observed, despite the company having two distinct physical UAE offices — a
+                    clear opportunity given both branches are already documented in the footer."),
+                    bullet("Product pages carry strong marketing copy but no structured technical specification content
+                    (Section 2) — spec-rich content is also typically strong for capturing technical, high-intent search
+                    queries from consultants and contractors."),
+                    bullet("No dedicated Projects/case-study pages (Section 2) also means the site has no location- or
+                    sector-specific project content (e.g., \"elevators for hospitals in UAE\", \"mall escalators UAE\")
+                    that could otherwise capture sector-specific search demand."),
+                    h3("Duplicate / Thin Content"),
+                    p("No evidence of duplicate content across pages was found; each page's copy is distinct. The
+                    primary content-quality risk is thinness (short blog, no specs, no case studies) rather than
+                    duplication."),
+                    ];
+
+                    // ---------- 7. Content Audit ----------
+                    const contentAudit = [
+                    h1("7. Content Audit"),
+                    makeTable(
+                    [2200, 3600, 5200],
+                    ["Page/Section", "Observed State", "Finding"],
+                    [
+                    ["Homepage", "Strong narrative copy across Founder/Mission/Team/Factories tiles", "Well written;
+                    good brand storytelling foundation"],
+                    ["About (Founder/Story/Team/Factories)", "Full, well-developed pages with consistent tone", "A
+                    genuine content strength — no changes needed beyond routine refresh"],
+                    ["Products", "Good marketing copy per product; no spec tables, no downloadable brochures", "Content
+                    gap: missing technical depth for B2B buyers"],
+                    ["Services (Project Mgmt, Maintenance, Modernization)", "Brief but clear descriptions on the
+                    homepage services block", "Adequate; could be expanded with process detail and turnaround
+                    expectations"],
+                    ["Projects", "Image gallery only; tiles are not clickable; no case study text", "Content gap: no
+                    verifiable project detail or storytelling"],
+                    ["Blogs", "Only 2 posts (Dec 2023); one is Lorem Ipsum placeholder titled \"Test test\"", "Critical
+                    finding: placeholder content is publicly visible"],
+                    ["Careers", "Generic culture copy plus a CV upload field; no actual job listings", "Content gap: no
+                    visibility into current open roles"],
+                    ["Contact", "Two UAE branch addresses, phone, email clearly listed; regional distributors listed",
+                    "Strength: clear, complete contact information"],
+                    ]
+                    ),
+                    h3("Specific Content Opportunities"),
+                    bullet("Replace the placeholder \"Test test\" blog post immediately — this is the single fastest,
+                    lowest-cost fix identified in this audit and should not wait for any broader decision."),
+                    bullet("Convert existing completed projects (many are already named on the homepage: Etihad Railway,
+                    Expo UAE, hospital, mall, palace, residential, restaurant, supermarket, temple projects) into short
+                    case-study pages using content the company likely already has on file (photos, project scope,
+                    product type used)."),
+                    bullet("Add downloadable product brochures/spec sheets (PDF) per product line — a standard
+                    expectation for B2B lift/escalator buyers doing technical evaluation."),
+                    bullet("Publish current open roles on the Careers page, even if sourced from an existing internal
+                    job list, rather than a CV-upload-only page."),
+                    bullet("Update the footer copyright year from 2023 to the current year as part of routine site
+                    hygiene."),
+                    ];
+
+                    // ---------- 8. Lead Generation / Conversion Audit ----------
+                    const leadAudit = [
+                    h1("8. Lead Generation / Conversion Audit"),
+                    h3("What's Working"),
+                    bullet("Phone number, email, and WhatsApp are all present persistently in the header and footer
+                    across every page reviewed — multi-channel contact access is a genuine strength."),
+                    bullet("An \"Inquire Now\" call-to-action is presented prominently on the homepage hero section."),
+                    bullet("Tap-to-call and WhatsApp deep-links are correctly implemented for mobile users."),
+                    h3("Gaps"),
+                    ...issueBlock(
+                    "There is no visible differentiation between enquiry types — a visitor interested in a new elevator
+                    purchase, one requesting AMC/maintenance service, and one exploring a project partnership all appear
+                    to use the same generic enquiry/comment form.",
+                    "Visitors get a one-size-fits-all form regardless of their actual need, which can feel impersonal or
+                    unclear about what happens next.",
+                    "Undifferentiated leads are harder for the BD/sales team to triage, prioritise, and route — exactly
+                    the kind of friction that slows down response time on high-value enquiries.",
+                    "Introduce segmented enquiry paths (Product Enquiry, AMC/Service Request, Project Partnership,
+                    Careers) either as distinct forms or a single form with a required intent field, and route each to
+                    the correct internal owner."
+                    ),
+                    bullet("WhatsApp, while present as a small icon, is not used as a prominent in-page CTA button on
+                    product or service pages, despite WhatsApp being a dominant first-contact channel for B2B and B2C
+                    buyers in the UAE."),
+                    bullet("No visible lead confirmation/thank-you messaging or next-step expectation setting could be
+                    confirmed from the pages reviewed (e.g., \"Our team will respond within 24 hours\")."),
+                    verificationNote("Whether form submissions are logged into a CRM, whether conversion events are
+                    tracked in Google Analytics/GA4 or Meta Ads, and what the actual email deliverability/response-time
+                    process looks like cannot be confirmed without backend or account access."),
+                    h3("How the Site Could Become a Stronger Lead-Generation Platform"),
+                    bullet("Elevate WhatsApp to a persistent, prominent CTA button (not just a header icon) across
+                    product and service pages."),
+                    bullet("Add product-specific and service-specific enquiry buttons directly on each product page,
+                    pre-filling the enquiry context so the sales team knows exactly what was asked about."),
+                    bullet("Introduce basic conversion tracking (form submissions, WhatsApp clicks, phone clicks) so
+                    marketing spend and organic traffic can be measured against actual leads generated, not just
+                    visits."),
+                    bullet("Add project-enquiry CTAs directly on future case-study/project pages to capture high-intent
+                    B2B interest at the point of maximum credibility-building."),
+                    ];
+
+                    // ---------- 9. Admin Panel / CMS Audit ----------
+                    const cmsAudit = [
+                    h1("9. Admin Panel / CMS Audit"),
+                    p("No admin login, CMS dashboard, or content-management indicators (such as a /wp-admin/, /cms/, or
+                    /login/ path, or dynamic templating patterns) were observed in the public structure of the site. The
+                    pattern observed — individually coded HTML pages for evergreen content, and a minimal
+                    PHP/query-string system apparently used only for the two-post blog — is consistent with a site where
+                    products, services, and projects are hard-coded into page markup rather than pulled from an editable
+                    database."),
+                    verificationNote("This is an inference from publicly observable structure (duplicated boilerplate on
+                    every page, static per-product HTML files, no visible CMS fingerprints). Only the AMC/development
+                    team can confirm definitively whether any admin interface exists today, and if so, what it currently
+                    allows the marketing team to edit."),
+                    h3("Practical Implication"),
+                    p("If this inference is correct, then adding a new product, publishing a new project, writing a new
+                    blog post, updating a branch address, or refreshing a banner image most likely requires a developer
+                    to edit code directly rather than the marketing/BD team logging in and making the change themselves.
+                    This has a direct, ongoing cost and speed implication for the business, independent of whether the
+                    visual design of the site changes at all."),
+                    h3("Recommended Admin Panel Scope"),
+                    makeTable(
+                    [3200, 7800],
+                    ["Content Area", "What an Admin Panel Should Allow the Team to Do"],
+                    [
+                    ["Products & Categories", "Add/edit/remove products and categories, manage specifications, images,
+                    and downloadable brochures without code changes"],
+                    ["Services", "Edit service descriptions, process steps, and associated imagery"],
+                    ["Projects (Case Studies)", "Add new completed projects with photos, location, sector, and scope —
+                    directly solving the broken-portfolio-links issue in Section 2"],
+                    ["Blogs", "Create, edit, schedule and unpublish blog posts, including featured images and SEO
+                    fields"],
+                    ["Careers", "Post and remove live job openings, manage CV submissions in one place"],
+                    ["Branches", "Update UAE branch addresses, phone numbers, and map locations"],
+                    ["Banners", "Swap homepage/section banner images and hero video without a code deployment"],
+                    ["FAQs", "Add/edit frequently asked questions per product or service category"],
+                    ["Testimonials", "Add and curate client testimonials and reference logos"],
+                    ["SEO Metadata", "Edit title tags, meta descriptions, and canonical/alt text per page"],
+                    ["Images/Media Library", "Central place to upload, organise, and reuse images and documents"],
+                    ["Brochures/Documents", "Upload and version-control downloadable PDF spec sheets and brochures"],
+                    ["Contact Information", "Update phone, email, and distributor contact details across all pages from
+                    one place"],
+                    ]
+                    ),
+                    p("A properly scoped admin panel converts the website from a static asset the company waits on
+                    developers to change, into an operational marketing and sales tool the team can update the same day
+                    a new project is won or a new product variant is launched."),
+                    ];
+
+                    // ---------- 10. Scalability Audit ----------
+                    const scalabilityAudit = [
+                    h1("10. Scalability Audit"),
+                    p("Based on the structure observed, the current website reads as a fixed-scope corporate website —
+                    built to present a defined set of products, services, and pages — rather than a scalable digital
+                    platform designed to grow smoothly as the business adds more products, projects, locations, or
+                    digital capabilities."),
+                    makeTable(
+                    [3400, 3300, 3300],
+                    ["Growth Dimension", "Current Apparent Capability", "Scalability Assessment"],
+                    [
+                    ["More products", "Each product is its own hand-built HTML page", "Every addition likely means a new
+                    page built by a developer, not a content entry"],
+                    ["More services", "Hardcoded into homepage sections", "Same constraint as products"],
+                    ["More projects/case studies", "No project detail pages exist today", "Cannot scale until a
+                    case-study system/template is built"],
+                    ["More UAE locations", "Two branches hardcoded in the footer of every page", "Adding a branch means
+                    editing every page's footer, not one settings entry"],
+                    ["More content/blog volume", "Minimal blog system (2 posts) via query-string IDs", "Basic blog
+                    exists but shows no sign of being actively used at scale"],
+                    ["Multiple administrators", "No visible CMS/admin layer", "Not currently supported based on public
+                    evidence"],
+                    ["CRM / marketing integrations", "No visible integration points", "Would require custom development
+                    to connect forms to a CRM"],
+                    ["Analytics / lead management", "Not confirmable from public content", "Requires direct
+                    verification; no visible tracking-driven personalization"],
+                    ["API integrations / customer portals", "No evidence of any API layer or portal", "Current
+                    architecture shows no foundation for this without a rebuild"],
+                    ]
+                    ),
+                    p("None of this means the current site is unfit for its present, fixed scope — it presents the
+                    existing product and service range adequately. The concern is forward-looking: if Johnson Lifts UAE
+                    plans to expand its product catalogue, publish more projects, add locations, or eventually connect
+                    the website to a CRM or customer portal, the current architecture does not appear to provide a
+                    foundation for that growth without proportionally growing development effort for every addition."),
+                    ];
+
+                    // ---------- 11. Security & Maintainability ----------
+                    const securityAudit = [
+                    h1("11. Security & Maintainability"),
+                    h3("Publicly Observable"),
+                    bullet("HTTPS is active and enforced across every page reviewed during this audit — a baseline
+                    requirement that the site meets."),
+                    bullet("No exposed error messages, stack traces, or directory listings were encountered while
+                    browsing the site during this audit."),
+                    bullet("No visible CAPTCHA, reCAPTCHA badge, or other spam-protection indicator was observed on the
+                    enquiry, comment, or newsletter forms in the content reviewed."),
+                    h3("Cannot Be Assessed Without Backend Access"),
+                    verificationNote("The following require direct server/hosting/codebase access and were intentionally
+                    not tested as part of this content-based audit: HTTP security headers (Content-Security-Policy,
+                    X-Frame-Options, Strict-Transport-Security, X-Content-Type-Options); server software and version
+                    (e.g., PHP version) and whether it is current/patched; whether any third-party libraries or plugins
+                    are outdated; actual spam-protection mechanisms on forms; backup and disaster-recovery practices;
+                    and hosting-level firewall/WAF configuration."),
+                    p("These items should be part of a standard technical due-diligence checklist requested from the
+                    current AMC/hosting provider, independent of the redevelopment decision — they represent baseline
+                    hygiene that any responsible business should confirm periodically."),
+                    h3("Maintainability"),
+                    p("As discussed in Sections 9 and 10, the apparent absence of a CMS/admin layer means
+                    maintainability today depends on developer availability for even small content changes. This is as
+                    much a maintainability concern as it is a scalability one, and is a central input into the
+                    AMC-vs-redevelopment decision in Section 15."),
+                    ];
+
+                    // ---------- 12. Accessibility ----------
+                    const accessibilityAudit = [
+                    h1("12. Accessibility"),
+                    makeTable(
+                    [3000, 4000, 3700],
+                    ["Area", "Observation", "Assessment"],
+                    [
+                    ["ALT Text", "Multiple images (logos, icons, section imagery) render with empty/missing alt
+                    attributes", "Gap — affects screen-reader users and image SEO"],
+                    ["Heading Structure", "Logical H1 on homepage with H2-level section headers throughout", "Reasonable
+                    — no major structural violations observed"],
+                    ["Links / Keyboard Focus", "Roughly two dozen empty anchor links (href=\"<>\") on the product
+                        gallery, plus dead \"#\" project links", "Gap — these create focusable elements that do nothing,
+                        confusing keyboard and screen-reader navigation"],
+                        ["Form Labels", "Forms are present (enquiry, CV upload, newsletter); explicit <label>
+                            association could not be confirmed from extracted content", "Requires manual verification"],
+                            ["Contrast", "Not measurable from extracted text content", "Requires visual/manual contrast
+                            testing (e.g., WebAIM contrast checker)"],
+                            ["Semantic HTML", "Mix of custom markup and standard elements; extent of semantic tag usage
+                            (nav, main, article) not fully confirmable from extraction", "Requires source-level
+                            review"],
+                            ]
+                            ),
+                            verificationNote("A full WCAG 2.1 AA conformance review requires automated tooling (e.g.,
+                            axe, WAVE, Lighthouse Accessibility audit) plus manual keyboard-navigation and screen-reader
+                            testing. The findings above are limited to what is directly verifiable from page content and
+                            link structure."),
+                            ];
+
+                            // ---------- 13. Competitive / Modern Standard ----------
+                            const competitiveAudit = [
+                            h1("13. Competitive / Modern Website Standard"),
+                            p("This section evaluates the website against the general standard expected of a modern,
+                            premium elevator/escalator manufacturer's regional website — without referencing or
+                            inventing specific competitor data or statistics, in line with the audit brief."),
+                            makeTable(
+                            [3200, 3400, 3400],
+                            ["Expectation for a Premium Manufacturer Site", "Current State", "Gap"],
+                            [
+                            ["Strong brand storytelling and heritage presentation", "Present and well executed", "None —
+                            a genuine strength to preserve"],
+                            ["Detailed, spec-rich product discovery", "Marketing copy only, no specs/brochures",
+                            "Present"],
+                            ["Verifiable project/case-study portfolio", "Portfolio exists visually but is entirely
+                            non-clickable", "Significant"],
+                            ["Active, useful content/blog presence", "Two posts, one placeholder, since Dec 2023",
+                            "Significant"],
+                            ["Segmented, frictionless lead generation", "Present but generic/undifferentiated",
+                            "Moderate"],
+                            ["Self-serve content management for the business", "No evidence of an admin/CMS layer",
+                            "Significant"],
+                            ["Strong technical SEO foundation", "Unique titles and indexation are solid; URL/content
+                            depth lag", "Moderate"],
+                            ["Fast, optimised performance", "Multiple autoplay videos, no visible lazy-loading/CDN",
+                            "Moderate (pending tool-based confirmation)"],
+                            ["Consistent, professional mobile experience", "Responsive foundation present; same
+                            content-level gaps as desktop", "Moderate"],
+                            ["Trust signals (locations, distributors, real projects)", "Branches and distributors
+                            clearly listed", "None — a genuine strength"],
+                            ]
+                            ),
+                            p("Overall, the website meets a reasonable baseline for brand presentation but falls short
+                            of what a modern, premium manufacturer's digital presence typically needs on the
+                            content-depth, case-study, and self-management dimensions — the same themes that recur
+                            throughout this audit."),
+                            ];
+
+                            // ---------- 14. Gap Analysis ----------
+                            function gapRow(area, current, gap, impact, priority, rec) {
+                            return [area, current, gap, impact, { text: priority, priority }, rec];
+                            }
+                            const gapAnalysis = [
+                            h1("14. Gap Analysis"),
+                            makeTable(
+                            [1500, 2000, 2000, 1900, 1100, 2500],
+                            ["Area", "Current State", "Gap", "Business Impact", "Priority", "Recommendation"],
+                            [
+                            gapRow("Project Portfolio", "Image tiles only, all link to \"#\"", "No case-study pages or
+                            click-through", "Weakens B2B credibility and sales support", "Critical", "Build
+                            project/case-study pages and link the portfolio"),
+                            gapRow("Blog Content", "2 posts since Dec 2023; 1 is placeholder Lorem Ipsum", "Publicly
+                            visible unfinished content; thin SEO content", "Brand credibility risk; missed organic
+                            search opportunity", "Critical", "Remove/replace placeholder post; establish a content
+                            cadence"),
+                            gapRow("Product Gallery", "~24 finish images link to empty anchors", "Broken interactive
+                            element on a key decision page", "Undermines premium/customisation positioning", "High",
+                            "Fix lightbox/gallery functionality"),
+                            gapRow("Admin/CMS", "No admin layer evident", "Content changes likely require a developer",
+                            "Slower marketing response; ongoing AMC dependency", "High", "Introduce a scoped admin panel
+                            (Section 9)"),
+                            gapRow("Lead Segmentation", "One generic enquiry form", "No routing by enquiry type",
+                            "Slower, less efficient lead triage for sales/BD", "High", "Add segmented enquiry paths
+                            (Section 8)"),
+                            gapRow("Product Specifications", "Marketing copy only, no specs/brochures", "No technical
+                            data for B2B evaluation", "Extra friction for consultants/contractors", "High", "Add spec
+                            tables and downloadable PDF brochures"),
+                            gapRow("Site Footer/Copyright", "Displays \"Copyright © 2023\"", "Stale, easily-fixed
+                            housekeeping item", "Minor credibility/trust signal", "Medium", "Update to current year;
+                            automate via template"),
+                            gapRow("URL Structure", "Mixed .html/.php, inconsistent casing", "Unprofessional, minor SEO
+                            drag", "Small ranking/trust impact", "Medium", "Standardise URL naming conventions"),
+                            gapRow("Image ALT Text", "Multiple images with empty/missing alt", "Accessibility and
+                            image-SEO gap", "Excludes screen-reader users; misses image search", "Medium", "Add
+                            descriptive alt text sitewide"),
+                            gapRow("Local SEO", "No LocalBusiness schema despite 2 UAE branches", "Missed local search
+                            visibility", "Lower visibility for Dubai/Abu Dhabi-specific searches", "Medium", "Add
+                            LocalBusiness schema and location content"),
+                            gapRow("Performance", "Multiple autoplay videos; no visible lazy-loading/CDN", "Page-weight
+                            risk (pending tool verification)", "Potential mobile bounce/engagement impact", "Medium",
+                            "Run PageSpeed/GTmetrix audit; optimise media delivery"),
+                            gapRow("Careers Page", "Generic copy + CV upload only", "No visible current job openings",
+                            "Missed recruitment/employer-branding opportunity", "Low", "List live openings alongside CV
+                            upload"),
+                            gapRow("Security Headers", "Not visible from content review", "Unknown header/patch
+                            posture", "Unquantified risk until verified", "Low", "Request a technical security review
+                            from AMC/hosting provider"),
+                            ]
+                            ),
+                            ];
+
+                            // ---------- 15. AMC vs Redevelopment ----------
+                            const amcVsRedev = [
+                            h1("15. AMC vs. Redevelopment"),
+                            p("This is the central strategic question of the audit. Both options are evaluated on their
+                            merits below; the recommendation in Section 19 follows directly from the findings in this
+                            report rather than from a predetermined position."),
+                            h2("Option A — Continue AMC on the Existing Website"),
+                            h3("What AMC Solves"),
+                            bullet("Fixes the specific, verifiable defects found in this audit at low cost: broken
+                            project links (if converted to simple static pages), the broken product gallery, the
+                            placeholder blog post, the stale copyright year, and general content refreshes."),
+                            bullet("Keeps the site running with routine uptime, security patching, and minor content
+                            edits handled by the existing vendor relationship."),
+                            bullet("No disruption, downtime, or re-learning curve for the marketing team — the site
+                            continues to operate exactly as it does today."),
+                            h3("Benefits"),
+                            bullet("Lowest short-term cost and fastest path to resolving the specific issues flagged as
+                            Critical/High in Section 14."),
+                            bullet("Preserves the existing brand presentation, which this audit found to be a genuine
+                            strength worth keeping."),
+                            h3("Limitations of Continuing AMC on the Current Platform"),
+                            bullet("Does not resolve the underlying structural issue identified throughout this audit:
+                            the apparent absence of a CMS/admin layer. Every future content need (a new project case
+                            study, a new product, a new blog post, a branch update) will likely continue to require a
+                            developer ticket rather than a same-day content-team edit."),
+                            bullet("Scalability constraints identified in Section 10 (more products, more projects, more
+                            locations, CRM integration, customer portals) are not solved by AMC — AMC maintains the
+                            current architecture, it does not change its ceiling."),
+                            bullet("Ongoing AMC costs, over a multi-year horizon, are recurring dependency costs on a
+                            platform that does not become more capable over time — each fix addresses a symptom without
+                            changing the underlying limitation."),
+                            h3("Long-Term Risk of Continuing AMC Only"),
+                            p("If Johnson Lifts UAE's ambitions include a growing project portfolio, an active
+                            content/SEO strategy, more self-serve marketing control, or future integrations (CRM,
+                            customer portal, multi-branch expansion), continuing AMC indefinitely on the current static
+                            architecture means the business will keep paying to patch a platform whose core limitations
+                            (Sections 9 and 10) remain unresolved."),
+
+                            h2("Option B — Redevelop as a Modern Full-Stack Application"),
+                            h3("Proposed Architecture"),
+                            bullet("Frontend: Next.js — fast, SEO-friendly rendering, strong Core Web Vitals potential,
+                            and a modern component-based structure that scales cleanly as new pages/products are
+                            added."),
+                            bullet("Backend: Node.js — a unified JavaScript stack across frontend and backend,
+                            simplifying long-term maintenance and developer onboarding."),
+                            bullet("Database: A managed relational database (e.g., PostgreSQL) is generally the
+                            appropriate choice for structured, relationship-heavy content such as products, categories,
+                            projects, and enquiries; the final choice should be confirmed against the specific data and
+                            integration requirements at build time."),
+                            bullet("Custom Admin Panel: A purpose-built content-management interface scoped as detailed
+                            in Section 9 (products, services, projects, blogs, careers, branches, banners, FAQs,
+                            testimonials, SEO metadata, media library, brochures, contact info)."),
+                            h3("Potential Benefits"),
+                            bullet("Modern architecture: resolves the root cause identified throughout this audit —
+                            content control moves from \"developer-dependent\" to \"marketing-team self-serve.\""),
+                            bullet("Better content management: directly solves the broken-portfolio-links, thin-blog,
+                            and no-specifications findings by giving the team a proper place to add and manage this
+                            content."),
+                            bullet("Scalability: a database-backed, componentised platform is built to grow — new
+                            products, projects, and locations become content entries, not new pages of code."),
+                            bullet("Performance potential: Next.js includes built-in optimisations (image optimisation,
+                            code splitting, server-side rendering) that directly target the performance risk factors
+                            identified in Section 5, though actual results still depend on implementation quality."),
+                            bullet("Stronger SEO foundation: clean, consistent URL structures, built-in metadata/schema
+                            management per page, and faster load times are easier to achieve by design in a modern
+                            framework than to retrofit onto the current static structure."),
+                            bullet("Better UX: enables the dedicated project/case-study pages, product specification
+                            pages, and segmented enquiry flows identified as gaps throughout this audit."),
+                            bullet("Modern security practices: a fresh, actively-maintained codebase and framework
+                            reduce the unknowns flagged in Section 11 around outdated dependencies and header
+                            configuration."),
+                            bullet("Future integrations: a Node.js/API-based backend is significantly easier to connect
+                            to a CRM, marketing automation platform, or customer portal than the current static-page
+                            architecture, directly addressing the Section 10 scalability gaps."),
+                            bullet("Ownership/control: Johnson Lifts UAE (via Rankraze or any future vendor) owns a
+                            modern, well-documented codebase and a real content database, rather than a set of
+                            hand-coded pages whose institutional knowledge sits primarily with whoever last edited
+                            them."),
+                            h3("Trade-offs of Redevelopment"),
+                            bullet("Higher upfront cost and project timeline compared to continuing AMC-only fixes."),
+                            bullet("Requires migration of existing content (products, projects, team/founder pages,
+                            distributor information) into the new structure, and a short cutover/testing period."),
+                            bullet("Introduces a new platform for the team to learn, even though a well-built admin
+                            panel should make this a net reduction in day-to-day complexity, not an increase."),
+
+                            h2("Side-by-Side Comparison"),
+                            makeTable(
+                            [2600, 3700, 3700],
+                            ["Dimension", "Option A — Continue AMC", "Option B — Redevelop (Next.js/Node.js)"],
+                            [
+                            ["Fixes current defects (broken links, gallery, placeholder blog)", "Yes — quickly and
+                            cheaply", "Yes — as part of the rebuild"],
+                            ["Enables self-serve content management", "No — architecture unchanged", "Yes —
+                            purpose-built admin panel"],
+                            ["Solves scalability for more products/projects/locations", "No", "Yes"],
+                            ["Improves performance foundation", "Only incrementally (asset optimisation)", "Yes — by
+                            framework design"],
+                            ["Improves SEO foundation", "Only incrementally", "Yes — cleaner URLs, metadata control,
+                            speed"],
+                            ["Enables future CRM/portal/API integrations", "Difficult, custom work each time", "Designed
+                            for this"],
+                            ["Upfront cost", "Low", "Higher"],
+                            ["Time to resolve immediate defects", "Fast", "Slower (full project timeline)"],
+                            ["Long-term recurring dependency on developers for content", "Continues", "Substantially
+                            reduced"],
+                            ]
+                            ),
+                            ];
+
+                            // ---------- 16. Future Platform Recommendation ----------
+                            const futurePlatform = [
+                            h1("16. Future Platform Recommendation"),
+                            p("If redevelopment is pursued, the recommended architecture is a Next.js frontend, Node.js
+                            backend, a managed relational database, and a custom admin panel — the same components
+                            introduced in Section 15, detailed here by function."),
+                            h3("Component Roles"),
+                            bullet("Next.js (Frontend): Renders all public-facing pages — homepage, products, services,
+                            projects/case studies, blog, careers, contact — with server-side rendering for fast load
+                            times and strong SEO, and reusable components so new products or projects follow a
+                            consistent, on-brand template automatically."),
+                            bullet("Node.js (Backend/API): Handles all data operations — serving product/project/blog
+                            content to the frontend, processing and routing enquiry-form submissions, managing
+                            authentication for the admin panel, and exposing APIs for any future CRM or marketing
+                            integration."),
+                            bullet("Database: Stores all structured content (products, categories, specifications,
+                            projects, blog posts, careers listings, branches, FAQs, testimonials, enquiries) so that
+                            content lives in editable records rather than hard-coded HTML."),
+                            bullet("Custom Admin Panel: The interface the Johnson Lifts UAE marketing/BD team uses
+                            day-to-day to manage everything listed in Section 9's scope table, without needing developer
+                            involvement for routine updates."),
+                            h3("What Should Be Manageable Through the Admin Panel"),
+                            p("As detailed in Section 9: products and categories, services, projects/case studies, blog
+                            posts, careers listings, branch information, homepage banners, FAQs, testimonials, SEO
+                            metadata (titles, descriptions, alt text), the media/image library, downloadable brochures
+                            and documents, and general contact information — all editable by authorised staff without
+                            code changes."),
+                            ];
+
+                            // ---------- 17. Future Website Sitemap ----------
+                            const futureSitemap = [
+                            h1("17. Future Website Sitemap"),
+                            p("Proposed information architecture, building on the existing structure but resolving the
+                            navigation and content gaps identified in Sections 2 and 6:"),
+                            bullet("Home"),
+                            bullet("About Us"),
+                            bullet("— Our Founder", 1),
+                            bullet("— Our Story / Mission", 1),
+                            bullet("— Our Team", 1),
+                            bullet("— Our Factories", 1),
+                            bullet("Products"),
+                            bullet("— Elevators (Creatica & Nextra, Panoramic, Villa, Hospital, Freight, Car Lift)", 1),
+                            bullet("— Escalators & Travelators (Glide)", 1),
+                            bullet("— Each product page includes: overview, technical specifications,
+                            finishes/customisation gallery, downloadable brochure, related products", 1),
+                            bullet("Services"),
+                            bullet("— Project Management", 1),
+                            bullet("— Maintenance / AMC", 1),
+                            bullet("— Modernization", 1),
+                            bullet("Projects (Case Studies)"),
+                            bullet("— Filterable by sector (Residential, Commercial, Hospitality, Healthcare, Retail,
+                            Transport/Infrastructure) and by UAE location", 1),
+                            bullet("— Each project has its own page: photos, scope, product/solution used, location",
+                            1),
+                            bullet("Industries"),
+                            bullet("— Residential, Commercial, Hospitality, Healthcare, Retail, Infrastructure — each
+                            linking to relevant products and projects", 1),
+                            bullet("Resources"),
+                            bullet("— Downloadable brochures and spec sheets", 1),
+                            bullet("— FAQs", 1),
+                            bullet("Blogs"),
+                            bullet("— Actively published, UAE-specific content", 1),
+                            bullet("Careers"),
+                            bullet("— Live job openings plus CV submission", 1),
+                            bullet("UAE Locations"),
+                            bullet("— Dubai office, Abu Dhabi office — each with local contact details and, where
+                            relevant, local project highlights", 1),
+                            bullet("Contact / Enquiry"),
+                            bullet("— Segmented enquiry paths: Product Enquiry, AMC/Service Request, Project
+                            Partnership, General/Careers", 1),
+                            ];
+
+                            // ---------- 18. Priority Roadmap ----------
+                            const roadmap = [
+                            h1("18. Priority Roadmap"),
+                            h2("Immediate Improvements (can be done under current AMC, low cost/effort)"),
+                            bullet("Replace or remove the placeholder \"Test test\" blog post."),
+                            bullet("Update the footer copyright year."),
+                            bullet("Fix the broken product-gallery lightbox links."),
+                            bullet("Add basic alt text to key product, project, and brand images."),
+                            bullet("Verify and, if missing, submit/repair robots.txt and sitemap.xml with search
+                            engines."),
+                            bullet("Verify analytics/conversion tracking is installed and working (form submissions,
+                            WhatsApp/phone clicks)."),
+                            h2("High-Priority Improvements (feasible on current platform, moderate effort)"),
+                            bullet("Convert the existing homepage project list into simple static case-study pages (even
+                            without a full admin panel) so the portfolio is no longer dead-ended."),
+                            bullet("Add technical specification content and downloadable brochures to each product
+                            page."),
+                            bullet("Introduce segmented enquiry forms (Product / AMC-Service / Project / Careers)."),
+                            bullet("Elevate WhatsApp to a visible CTA button on product and service pages."),
+                            bullet("Standardise URL naming conventions where feasible without breaking existing indexed
+                            links (use 301 redirects for any URL changes)."),
+                            h2("Redevelopment Recommendations (if Option B is pursued)"),
+                            bullet("Rebuild on Next.js (frontend) + Node.js (backend) + managed database + custom admin
+                            panel, as detailed in Sections 15–16."),
+                            bullet("Migrate all existing brand-story and product content (a genuine strength of the
+                            current site) into the new templates, preserving tone and visual identity."),
+                            bullet("Build the case-study/project system, product specification system, and segmented
+                            lead-routing as first-class features from day one."),
+                            bullet("Establish an ongoing content cadence for the blog and Resources section using the
+                            new admin panel."),
+                            h2("Future Growth Opportunities"),
+                            bullet("LocalBusiness schema and location-specific landing content for Dubai and Abu
+                            Dhabi."),
+                            bullet("CRM integration for lead management and sales follow-up tracking."),
+                            bullet("Expanded Industries section to support sector-specific SEO and sales
+                            conversations."),
+                            bullet("Customer/partner portal for AMC clients (service history, maintenance scheduling) as
+                            a longer-horizon digital product opportunity, once the core platform is in place."),
+                            ];
+
+                            // ---------- 19. Final Recommendation ----------
+                            const finalRecommendation = [
+                            h1("19. Final Recommendation"),
+                            p("Is AMC on the existing website the better choice, or is redevelopment into a modern
+                            full-stack platform the more sensible long-term investment?"),
+                            p("Based on the evidence gathered in this audit, redevelopment into a modern full-stack
+                            platform (Next.js + Node.js + database + custom admin panel) is the more sensible long-term
+                            investment for Johnson Lifts UAE — while a scoped set of immediate hygiene fixes should be
+                            actioned under the current AMC without waiting for that decision to be finalised.", { bold:
+                            true }),
+                            h3("Why"),
+                            p("The findings in this audit are consistent across every section: the website's core
+                            content and brand assets are genuinely strong, but the underlying architecture is a static,
+                            developer-dependent structure with no evident content-management layer. This is not a single
+                            fixable bug — it is the reason the site currently has dead project links, a two-post blog
+                            with a placeholder post, no product specifications, and no segmented lead capture. AMC can
+                            patch each of these symptoms individually, but it cannot change the fact that every future
+                            content need will continue to route through a developer rather than the marketing team."),
+                            h3("Business Benefits of Redevelopment"),
+                            bullet("Converts the website from a static cost centre into a self-managed marketing and
+                            sales tool the business can update as fast as it wins new projects or launches new
+                            products."),
+                            bullet("Directly resolves the Critical and High-priority items in the Section 14 gap
+                            analysis (portfolio, blog, specifications, lead segmentation) as part of a single coherent
+                            rebuild rather than a series of one-off patches."),
+                            bullet("Provides a technical foundation (Next.js/Node.js) that supports better performance
+                            and SEO by design, rather than requiring performance and SEO to be retrofitted onto static
+                            pages."),
+                            h3("Risks of Doing Nothing (AMC-Only, Indefinitely)"),
+                            bullet("The project-portfolio, blog, and lead-segmentation gaps identified in this audit
+                            will persist — these are structural, not cosmetic, and AMC-level fixes cannot fully resolve
+                            them."),
+                            bullet("Content will likely continue to lag behind what the business actually achieves (new
+                            projects, new products), because publishing anything new requires a developer, not a content
+                            update."),
+                            bullet("The gap between this site and what a modern premium manufacturer's digital presence
+                            typically offers (Section 13) is likely to widen over time rather than close, since AMC
+                            maintains the current ceiling rather than raising it."),
+                            h3("Long-Term Value, Scalability, Ownership & Maintenance"),
+                            p("A redeveloped platform gives Johnson Lifts UAE durable, compounding value: each new
+                            project, product, or blog post becomes a content entry that strengthens SEO and credibility,
+                            rather than a one-off developer task. It also gives the business direct ownership of a
+                            modern, documented codebase and content database, rather than continued dependence on
+                            institutional knowledge held by whichever vendor last touched the static pages. Maintenance
+                            shifts from \"developer edits code for every change\" to \"routine technical maintenance of
+                            a platform the business already controls day-to-day\" — a materially lower long-term
+                            operating risk."),
+                            h3("A Balanced Path Forward"),
+                            p("This recommendation does not mean AMC has no near-term role. The Immediate Improvements
+                            listed in Section 18 (placeholder blog post, broken gallery, stale copyright, alt text,
+                            tracking verification) are inexpensive, fast, and should be completed under the current AMC
+                            arrangement regardless of the redevelopment timeline, since they protect brand credibility
+                            in the interim. The redevelopment decision should be treated as the strategic, long-term
+                            investment; the AMC fixes are the short-term hygiene work that keeps the current site
+                            presentable while that decision is executed."),
+                            new Paragraph({ spacing: { before: 400, after: 100 }, children: [
+                            new TextRun({ text: "This assessment is based on publicly available evidence as of the audit
+                            date and is intended to support, not replace, Johnson Lifts UAE management's own commercial
+                            judgement and any direct technical due diligence with the current AMC/hosting provider.",
+                            italics: true, size: 19, font: FONT, color: GREY }),
+                            ] }),
+                            ];
+
+                            // ---------- Build document ----------
+                            const sections = [
+                            ...cover,
+                            ...methodology,
+                            pageBreak(),
+                            ...execSummary,
+                            pageBreak(),
+                            ...uxAudit,
+                            pageBreak(),
+                            ...mobileAudit,
+                            pageBreak(),
+                            ...techAudit,
+                            pageBreak(),
+                            ...perfAudit,
+                            pageBreak(),
+                            ...seoAudit,
+                            pageBreak(),
+                            ...contentAudit,
+                            pageBreak(),
+                            ...leadAudit,
+                            pageBreak(),
+                            ...cmsAudit,
+                            pageBreak(),
+                            ...scalabilityAudit,
+                            pageBreak(),
+                            ...securityAudit,
+                            pageBreak(),
+                            ...accessibilityAudit,
+                            pageBreak(),
+                            ...competitiveAudit,
+                            pageBreak(),
+                            ...gapAnalysis,
+                            pageBreak(),
+                            ...amcVsRedev,
+                            pageBreak(),
+                            ...futurePlatform,
+                            pageBreak(),
+                            ...futureSitemap,
+                            pageBreak(),
+                            ...roadmap,
+                            pageBreak(),
+                            ...finalRecommendation,
+                            ];
+
+                            const doc = new Document({
+                            styles: {
+                            default: { document: { run: { font: FONT, size: 21 } } },
+                            },
+                            sections: [
+                            {
+                            properties: {
+                            page: {
+                            size: { width: 12240, height: 15840 },
+                            margin: { top: 1080, bottom: 1080, left: 1080, right: 1080 },
+                            },
+                            },
+                            headers: {
+                            default: new Header({
+                            children: [new Paragraph({
+                            alignment: AlignmentType.RIGHT,
+                            border: { bottom: { color: "CCCCCC", space: 4, style: BorderStyle.SINGLE, size: 4 } },
+                            children: [new TextRun({ text: "Johnson Lifts UAE — Website Audit Report | Rankraze Tech",
+                            size: 16, font: FONT, color: GREY })],
+                            })],
+                            }),
+                            },
+                            footers: {
+                            default: new Footer({
+                            children: [new Paragraph({
+                            alignment: AlignmentType.CENTER,
+                            children: [
+                            new TextRun({ text: "Confidential | Page ", size: 16, font: FONT, color: GREY }),
+                            new SimpleField("PAGE"),
+                            new TextRun({ text: " of ", size: 16, font: FONT, color: GREY }),
+                            new SimpleField("NUMPAGES"),
+                            ],
+                            })],
+                            }),
+                            },
+                            children: sections,
+                            },
+                            ],
+                            });
+
+                            Packer.toBuffer(doc).then(buffer => {
+                            require('fs').writeFileSync('/home/claude/audit/Johnson_Lifts_UAE_Website_Audit_Report.docx',
+                            buffer);
+                            console.log('Document created successfully');
+                            });
