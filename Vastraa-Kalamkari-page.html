@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vastraa Global – Wholesale Kalamkari Fabric Supplier in India for Global Fashion Brands</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --dark:#1e2d1e;
+  --dark2:#253425;
+  --gold:#c8872a;
+  --gold2:#d4944e;
+  --cream:#faf8f4;
+  --cream2:#f3ede3;
+  --cream3:#ede5d8;
+  --text:#2c2c2c;
+  --text2:#555;
+  --text3:#888;
+  --border:#e2d8c8;
+  --white:#fff;
+}
+body{font-family:'Inter',sans-serif;color:var(--text);background:#fff;font-size:14px;line-height:1.5}
+a{text-decoration:none;color:inherit}
+img{display:block;width:100%;object-fit:cover}
+
+/* TOP BAR */
+.topbar{background:var(--dark);color:#c8c8c8;font-size:11.5px;padding:6px 0}
+.topbar .wrap{max-width:1200px;margin:auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center}
+.topbar .left{display:flex;gap:22px;align-items:center}
+.topbar .left span,.topbar .right span{display:flex;align-items:center;gap:5px}
+.topbar .right{display:flex;gap:18px;align-items:center}
+.topbar i{font-size:10px;color:var(--gold2)}
+
+/* NAV */
+header{background:#fff;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:999;box-shadow:0 1px 10px rgba(0,0,0,.07)}
+.nav{max-width:1200px;margin:auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:62px}
+.logo-wrap{display:flex;flex-direction:column;line-height:1}
+.logo-wrap .brand{font-family:'Playfair Display',serif;font-size:21px;font-weight:700;letter-spacing:3px;color:var(--dark)}
+.logo-wrap .sub{font-size:8px;letter-spacing:5px;color:var(--gold);font-weight:500;text-transform:uppercase;margin-top:1px}
+.nav-links{display:flex;gap:26px;align-items:center;font-size:13px;font-weight:500;color:var(--dark)}
+.nav-links a:hover{color:var(--gold)}
+.nav-links a i{font-size:9px;margin-left:2px;opacity:.7}
+.btn-dark{background:var(--dark);color:#fff;padding:9px 18px;border-radius:4px;font-size:12.5px;font-weight:600;white-space:nowrap;border:none;cursor:pointer;font-family:'Inter',sans-serif}
+.btn-dark:hover{background:var(--gold)}
+.btn-gold-fill{background:var(--gold);color:#fff;padding:10px 20px;border-radius:4px;font-size:13px;font-weight:600;border:none;cursor:pointer;font-family:'Inter',sans-serif;display:inline-flex;align-items:center;gap:7px}
+.btn-gold-fill:hover{background:#b87520}
+.btn-outline-dark{background:#fff;color:var(--dark);padding:10px 20px;border-radius:4px;font-size:13px;font-weight:600;border:1.5px solid var(--dark);cursor:pointer;font-family:'Inter',sans-serif}
+.btn-outline-dark:hover{background:var(--dark);color:#fff}
+
+/* HERO */
+.hero-section{max-width:1200px;margin:0 auto;padding:56px 24px 50px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.hero-eyebrow{font-size:10.5px;font-weight:700;letter-spacing:2.5px;color:var(--gold);text-transform:uppercase;margin-bottom:12px}
+.hero-h1{font-family:'Playfair Display',serif;font-size:40px;font-weight:700;line-height:1.18;color:var(--dark);margin-bottom:16px}
+.hero-h1 .ital{color:var(--gold);font-style:italic}
+.hero-desc{font-size:14px;color:var(--text2);line-height:1.72;margin-bottom:22px;max-width:480px}
+.hero-badges{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:26px}
+.hero-badge{display:flex;flex-direction:column;align-items:center;gap:5px;text-align:center}
+.hero-badge i{font-size:17px;color:var(--dark);background:var(--cream2);width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.hero-badge .b-title{font-size:11px;font-weight:700;color:var(--dark);line-height:1.3}
+.hero-badge .b-sub{font-size:10px;color:var(--text3);line-height:1.2}
+.hero-ctas{display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap}
+.trust-row{display:flex;align-items:center;gap:9px;font-size:12px;color:var(--text3)}
+.avatars{display:flex}
+.avatars img{width:28px;height:28px;border-radius:50%;border:2px solid #fff;object-fit:cover;margin-left:-7px}
+.avatars img:first-child{margin-left:0}
+.hero-img-wrap{border-radius:12px;overflow:hidden;height:430px;position:relative}
+.hero-img-wrap img{height:100%;object-fit:cover;border-radius:12px}
+
+/* FEATURE STRIP */
+.feat-strip{background:var(--cream2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.feat-strip .wrap{max-width:1200px;margin:auto;padding:24px;display:grid;grid-template-columns:repeat(5,1fr);gap:18px}
+.feat-item{display:flex;align-items:flex-start;gap:11px}
+.feat-item i{font-size:18px;color:var(--dark);margin-top:1px;flex-shrink:0;width:20px;text-align:center}
+.feat-item h4{font-size:12px;font-weight:700;color:var(--dark);margin-bottom:3px}
+.feat-item p{font-size:10.5px;color:var(--text2);line-height:1.5}
+
+/* SECTION HEADINGS */
+.sec{padding:60px 24px}
+.sec-title{text-align:center;margin-bottom:40px}
+.sec-title h2{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--dark);margin-bottom:10px}
+.sec-title .divider{width:46px;height:3px;background:var(--gold);margin:0 auto}
+.sec-eyebrow{font-size:10px;font-weight:700;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-bottom:6px}
+
+/* FABRIC TYPES */
+.fabrics-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(8,1fr);gap:14px}
+.fab-card img{height:110px;border-radius:7px;object-fit:cover;width:100%;margin-bottom:9px}
+.fab-card h4{font-size:12px;font-weight:700;color:var(--dark);margin-bottom:4px;line-height:1.3}
+.fab-card p{font-size:10.5px;color:var(--text2);line-height:1.45;margin-bottom:6px}
+.fab-card a{font-size:10.5px;color:var(--gold);font-weight:600}
+.fab-card a:hover{text-decoration:underline}
+
+/* APPLICATIONS */
+.app-section{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:300px 1fr;gap:44px;align-items:start}
+.app-tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.app-section h2{font-family:'Playfair Display',serif;font-size:32px;line-height:1.2;color:var(--dark);margin-bottom:14px}
+.app-section>div:first-child p{font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:22px}
+.app-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.app-card img{height:95px;border-radius:7px 7px 0 0;object-fit:cover;width:100%}
+.app-card p{font-size:11px;font-weight:600;text-align:center;padding:7px 4px;color:var(--dark);background:#fff;border-radius:0 0 7px 7px;border:1px solid var(--border);border-top:none}
+
+/* WHY US + CAPABILITIES */
+.why-cap-wrap{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;border-radius:10px;overflow:hidden;box-shadow:0 3px 24px rgba(0,0,0,.09)}
+.why-us{background:var(--dark);color:#fff;padding:44px 38px;position:relative;overflow:hidden}
+.why-us::before{content:'';position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1606744824163-985d376605aa?w=600&q=60') center/cover no-repeat;opacity:.12;pointer-events:none}
+.why-us h2{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;margin-bottom:26px;position:relative}
+.why-item{display:flex;gap:13px;margin-bottom:20px;position:relative}
+.why-icon{width:36px;height:36px;border-radius:8px;background:rgba(200,135,42,.22);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.why-icon i{color:var(--gold2);font-size:15px}
+.why-item h4{font-size:12.5px;font-weight:700;margin-bottom:3px;color:#fff}
+.why-item p{font-size:11px;color:#aaa;line-height:1.5}
+.cap-side{background:var(--cream2);padding:44px 38px}
+.cap-side .sec-eyebrow{display:block;margin-bottom:6px}
+.cap-side h3{font-family:'Playfair Display',serif;font-size:18px;color:var(--dark);font-weight:700;margin-bottom:22px}
+.cap-icons-row{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:22px}
+.cap-ic{text-align:center}
+.cap-ic-circle{width:44px;height:44px;border-radius:50%;background:#fff;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 5px}
+.cap-ic-circle i{font-size:16px;color:var(--dark)}
+.cap-ic p{font-size:9.5px;font-weight:600;color:var(--dark);line-height:1.3}
+.cap-checks{list-style:none;margin-bottom:22px}
+.cap-checks li{font-size:12.5px;color:var(--text);padding:4px 0;display:flex;gap:8px}
+.cap-checks li i{color:var(--gold);font-size:11px;margin-top:3px;flex-shrink:0}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.stat-box{background:#fff;border-radius:8px;padding:14px 8px;text-align:center}
+.stat-box .num{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--dark)}
+.stat-box .lbl{font-size:10px;color:var(--text3)}
+
+/* SPECS */
+.specs-wrap{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.6fr 1fr;gap:36px;align-items:start}
+.specs-wrap h3{font-size:15px;font-weight:700;color:var(--dark);margin-bottom:14px}
+table.specs{width:100%;border-collapse:collapse;font-size:11.5px}
+table.specs th{background:var(--dark);color:#fff;padding:9px 10px;text-align:left;font-weight:600;font-size:11px}
+table.specs td{padding:8px 10px;border-bottom:1px solid var(--border);color:var(--text)}
+table.specs tr:nth-child(even) td{background:var(--cream)}
+.custom-box{background:var(--dark);color:#fff;border-radius:10px;padding:28px}
+.custom-box h3{font-family:'Playfair Display',serif;font-size:18px;margin-bottom:16px}
+.custom-box li{display:flex;gap:8px;padding:5px 0;font-size:12.5px;list-style:none}
+.custom-box li i{color:var(--gold2);font-size:11px;margin-top:3px;flex-shrink:0}
+
+/* PROCESS */
+.process-wrap{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(7,1fr);gap:10px}
+.proc-step{text-align:center;padding:0 4px}
+.proc-num{width:42px;height:42px;border-radius:50%;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--dark);margin:0 auto 10px}
+.proc-step i{font-size:22px;color:var(--dark);margin-bottom:9px;display:block}
+.proc-step h4{font-size:12px;font-weight:700;color:var(--dark);margin-bottom:4px}
+.proc-step p{font-size:10px;color:var(--text2);line-height:1.5}
+
+/* TRUST */
+.trust-wrap{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:280px 1fr;gap:40px;align-items:start}
+.trust-wrap h2{font-family:'Playfair Display',serif;font-size:24px;color:var(--dark);margin-bottom:14px}
+.trust-wrap p{font-size:12.5px;color:var(--text2);line-height:1.7;margin-bottom:18px}
+.cert-row{display:flex;gap:10px;flex-wrap:wrap}
+.cert-badge{border:1.5px solid var(--border);background:#fff;border-radius:6px;padding:7px 14px;font-size:11.5px;font-weight:700;color:var(--dark);display:flex;align-items:center;gap:6px}
+.cert-badge i{font-size:14px;color:var(--gold)}
+.gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.gallery-grid img{height:130px;border-radius:8px;object-fit:cover}
+
+/* FAQ + CTA */
+.faq-cta{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+.faq-cta h2.faq-h{font-family:'Playfair Display',serif;font-size:24px;color:var(--dark);margin-bottom:22px}
+.faq-item{border-bottom:1px solid var(--border)}
+.faq-q{padding:14px 0;display:flex;justify-content:space-between;align-items:center;cursor:pointer;gap:10px}
+.faq-q span{font-size:13px;font-weight:500;color:var(--dark)}
+.faq-q i{font-size:14px;color:var(--gold);flex-shrink:0;transition:.2s}
+.faq-a{display:none;padding:2px 0 14px;font-size:12.5px;color:var(--text2);line-height:1.65}
+.cta-box{background:var(--dark);border-radius:12px;padding:40px;position:relative;overflow:hidden}
+.cta-box::after{content:'';position:absolute;right:0;bottom:0;width:200px;height:200px;background:url('https://images.unsplash.com/photo-1606744824163-985d376605aa?w=300&q=40') center/cover;opacity:.1;pointer-events:none;border-radius:0 0 12px 0}
+.cta-box .eyebrow{font-size:10px;font-weight:700;letter-spacing:2px;color:var(--gold2);text-transform:uppercase;margin-bottom:12px}
+.cta-box h2{font-family:'Playfair Display',serif;font-size:26px;color:#fff;line-height:1.25;margin-bottom:12px}
+.cta-box h2 span{color:var(--gold2)}
+.cta-box>p{font-size:12.5px;color:#bbb;line-height:1.7;margin-bottom:22px}
+.cta-btns{display:flex;gap:11px;flex-wrap:wrap;margin-bottom:22px}
+.btn-gold2{background:var(--gold);color:#fff;padding:10px 18px;border-radius:4px;font-size:12.5px;font-weight:700;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-family:'Inter',sans-serif}
+.btn-outline-white{border:1.5px solid rgba(255,255,255,.35);color:#fff;padding:10px 18px;border-radius:4px;font-size:12.5px;font-weight:600;background:transparent;cursor:pointer;font-family:'Inter',sans-serif}
+.cta-contacts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cta-contact{display:flex;align-items:center;gap:10px;font-size:11px;color:#aaa}
+.cta-contact .ico{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.cta-contact .ico i{font-size:12px;color:var(--gold2)}
+.cta-contact strong{display:block;color:#fff;font-size:11px;margin-top:1px}
+
+/* FOOTER */
+footer{background:var(--dark);color:#aaa}
+.footer-main{max-width:1200px;margin:auto;padding:46px 24px 28px;display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr 1.2fr;gap:28px}
+.footer-brand .brand{font-family:'Playfair Display',serif;font-size:19px;letter-spacing:3px;color:#fff;font-weight:700}
+.footer-brand .sub{font-size:8px;letter-spacing:5px;color:var(--gold);text-transform:uppercase;margin-top:1px}
+.footer-brand>p{font-size:11.5px;color:#888;line-height:1.7;margin:12px 0 14px}
+.socials{display:flex;gap:8px}
+.socials a{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-size:12px;color:#aaa}
+.socials a:hover{background:var(--gold);color:#fff}
+.footer-col h4{font-size:12.5px;font-weight:700;color:#fff;margin-bottom:14px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:7px}
+.footer-col ul li a{font-size:12px;color:#888}
+.footer-col ul li a:hover{color:var(--gold)}
+.newsletter-row{display:flex;margin-top:12px}
+.newsletter-row input{flex:1;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);color:#fff;font-size:12px;padding:9px 12px;border-radius:4px 0 0 4px;outline:none;font-family:'Inter',sans-serif}
+.newsletter-row input::placeholder{color:#666}
+.newsletter-row button{background:var(--gold);color:#fff;border:none;padding:9px 13px;cursor:pointer;border-radius:0 4px 4px 0;font-size:14px}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.07);max-width:1200px;margin:0 auto;padding:14px 24px;display:flex;justify-content:space-between;font-size:11px;color:#666}
+.footer-bottom a{color:#666}
+.footer-bottom a:hover{color:var(--gold)}
+
+.bg-cream{background:var(--cream)}
+.bg-white{background:#fff}
+.mw{max-width:1200px;margin:auto}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="wrap">
+    <div class="left">
+      <span><i class="fa-solid fa-globe"></i> Exporting Worldwide</span>
+      <span><i class="fa-solid fa-boxes-stacked"></i> MOQ Flexibility</span>
+      <span><i class="fa-solid fa-star"></i> Premium Quality</span>
+      <span><i class="fa-solid fa-truck-fast"></i> On-time Delivery</span>
+    </div>
+    <div class="right">
+      <span><i class="fa-solid fa-phone"></i> +91 12345 67890</span>
+      <span><i class="fa-solid fa-envelope"></i> hello@vastraaglobal.com</span>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<header>
+  <nav class="nav">
+    <div class="logo-wrap">
+      <span class="brand">VASTRAA</span>
+      <span class="sub">GLOBAL</span>
+    </div>
+    <div class="nav-links">
+      <a href="#">Home</a>
+      <a href="#">Fabrics <i class="fa-solid fa-chevron-down"></i></a>
+      <a href="#">Services <i class="fa-solid fa-chevron-down"></i></a>
+      <a href="#">About Us</a>
+      <a href="#">Sustainability</a>
+      <a href="#">Resources <i class="fa-solid fa-chevron-down"></i></a>
+      <a href="#">Contact Us</a>
+    </div>
+    <button class="btn-dark">Get Wholesale Quote</button>
+  </nav>
+</header>
+
+<!-- HERO -->
+<div class="hero-section">
+  <div>
+    <p class="hero-eyebrow">Premium Quality. Authentic Kalamkari.</p>
+    <h1 class="hero-h1">Wholesale <span class="ital">Kalamkari</span><br>Fabric Supplier in India<br>for Global Fashion Brands</h1>
+    <p class="hero-desc">Partner with Vastraa Global for authentic Kalamkari fabrics crafted with traditional artistry and modern quality standards. We supply in bulk, customize designs and export worldwide.</p>
+    <div class="hero-badges">
+      <div class="hero-badge">
+        <i class="fa-solid fa-palette" style="font-size:15px;background:var(--cream2);width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--dark)"></i>
+        <span class="b-title">100+ Designs</span>
+        <span class="b-sub">In Stock</span>
+      </div>
+      <div class="hero-badge">
+        <i class="fa-solid fa-layer-group" style="font-size:15px;background:var(--cream2);width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--dark)"></i>
+        <span class="b-title">Low MOQ</span>
+        <span class="b-sub">Flexible Orders</span>
+      </div>
+      <div class="hero-badge">
+        <i class="fa-solid fa-earth-americas" style="font-size:15px;background:var(--cream2);width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--dark)"></i>
+        <span class="b-title">Worldwide</span>
+        <span class="b-sub">Shipping</span>
+      </div>
+      <div class="hero-badge">
+        <i class="fa-solid fa-tag" style="font-size:15px;background:var(--cream2);width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--dark)"></i>
+        <span class="b-title">Custom Prints</span>
+        <span class="b-sub">&amp; Private Label</span>
+      </div>
+    </div>
+    <div class="hero-ctas">
+      <button class="btn-gold-fill">Get Wholesale Quote <i class="fa-solid fa-arrow-right"></i></button>
+      <button class="btn-outline-dark">Request Fabric Sample</button>
+    </div>
+    <div class="trust-row">
+      <div class="avatars">
+        <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=60&h=60&fit=crop&crop=face" alt="">
+        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" alt="">
+        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop&crop=face" alt="">
+        <img src="https://images.unsplash.com/photo-1542206395-9feb3edaa68d?w=60&h=60&fit=crop&crop=face" alt="">
+      </div>
+      Trusted by 300+ Brands Worldwide
+    </div>
+  </div>
+  <div class="hero-img-wrap">
+    <img src="https://images.unsplash.com/photo-1606744824163-985d376605aa?w=800&q=80" alt="Kalamkari Fabric Collection – Vastraa Global">
+  </div>
+</div>
+
+<!-- FEATURE STRIP -->
+<div class="feat-strip">
+  <div class="wrap">
+    <div class="feat-item">
+      <i class="fa-solid fa-hand-sparkles"></i>
+      <div>
+        <h4>Authentic Craftsmanship</h4>
+        <p>Hand-painted &amp; block-printed by skilled artisans</p>
+      </div>
+    </div>
+    <div class="feat-item">
+      <i class="fa-solid fa-certificate"></i>
+      <div>
+        <h4>Premium Quality</h4>
+        <p>Strict quality control at every production stage</p>
+      </div>
+    </div>
+    <div class="feat-item">
+      <i class="fa-solid fa-leaf"></i>
+      <div>
+        <h4>Sustainable Practices</h4>
+        <p>Natural, eco-friendly processes &amp; ethical sourcing</p>
+      </div>
+    </div>
+    <div class="feat-item">
+      <i class="fa-solid fa-ship"></i>
+      <div>
+        <h4>Export Expertise</h4>
+        <p>Serving clients in 25+ countries with seamless logistics</p>
+      </div>
+    </div>
+    <div class="feat-item">
+      <i class="fa-solid fa-headset"></i>
+      <div>
+        <h4>Dedicated Support</h4>
+        <p>Personalized assistance from inquiry to delivery</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FABRIC TYPES -->
+<div class="sec bg-white">
+  <div class="sec-title">
+    <h2>Types of Kalamkari Fabrics We Offer</h2>
+    <div class="divider"></div>
+  </div>
+  <div class="fabrics-grid">
+    <div class="fab-card">
+      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=200&h=130&fit=crop" alt="Hand-Painted Kalamkari">
+      <h4>Hand-Painted Kalamkari</h4>
+      <p>Traditional hand painting with natural dyes on cotton &amp; silk.</p>
+      <a href="#">View Details →</a>
+    </div>
+    <div class="fab-card">
+      <img src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=200&h=130&fit=crop" alt="Block Printed Kalamkari">
+      <h4>Block Printed Kalamkari</h4>
+      <p>Intricate block prints using traditional wooden blocks.</p>
+      <a href="#">View Details →</a>
+    </div>
+    <div class="fab-card">
+      <img src="https://images.unsplash.com/photo-1566753323558-f4e0952af115?w=200&h=130&fit=crop" alt="Cotton Kalamkari">
+      <h4>Cotton Kalamkari</h4>
+      <p>Soft, breathable cotton fabrics ideal for apparel.</p>
+      <a href="#">View Details →</a>
+    </div>
+    <div class="fab-card">
+      <img src="https://images.unsplash.com/photo-1606744824163-985d376605aa?w=200&h=130&fit=crop" alt="Linen Kalamkari">
+      <h4>Linen Kalamkari</h4>
+      <p>Premium linen with elegant Kalamkari prints.</p>
+      <a href="#">View Details →</a>
+    </div>
+    <div class="fab-card">
+      <img src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=200&h=130&fit=crop" alt="Silk Kalamkari">
+      <h4>Silk Kalamkari</h4>
+      <p>Luxurious silk Kalamkari for premium collections.</p>
+      <a href="#">View Details →</a>
+    </div>
+    <div class="fab-card">
+      <img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=200&h=130&fit=crop" alt="Rayon Kalamkari">
+      <h4>Rayon Kalamkari</h4>
+      <p>Smooth, flowy and versatile rayon fabrics.</p>
+      <a href="#">View Details →</a>
+    </div>
+    <div class="fab-card">
+      <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=200&h=130&fit=crop" alt="Canvas Kalamkari">
+      <h4>Canvas Kalamkari</h4>
+      <p>Durable &amp; sturdy fabric for bags, curtains &amp; more.</p>
+      <a href="#">View Details →</a>
+    </div>
+    <div class="fab-card">
+      <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=200&h=130&fit=crop" alt="Organic Cotton Kalamkari">
+      <h4>Organic Cotton Kalamkari</h4>
+      <p>Eco-friendly organic cotton with natural dye prints.</p>
+      <a href="#">View Details →</a>
+    </div>
+  </div>
+</div>
+
+<!-- APPLICATIONS -->
+<div class="sec bg-cream">
+  <div class="app-section">
+    <div>
+      <span class="app-tag">Widely Used In</span>
+      <h2 style="font-family:'Playfair Display',serif;font-size:32px;line-height:1.2;color:var(--dark);margin-bottom:14px">Endless Applications<br>for Every Industry</h2>
+      <p>Our Kalamkari fabrics are versatile and suitable for a wide range of fashion and home décor applications.</p>
+      <a href="#" class="btn-dark" style="display:inline-flex;align-items:center;gap:8px;padding:10px 18px;font-size:13px">Explore All Applications <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+    <div class="app-grid">
+      <div class="app-card">
+        <img src="https://images.unsplash.com/photo-1537832816519-689ad163238b?w=200&h=100&fit=crop" alt="Women's Wear">
+        <p>Women's Wear</p>
+      </div>
+      <div class="app-card">
+        <img src="https://images.unsplash.com/photo-1488161628813-04466f872be2?w=200&h=100&fit=crop" alt="Men's Wear">
+        <p>Men's Wear</p>
+      </div>
+      <div class="app-card">
+        <img src="https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?w=200&h=100&fit=crop" alt="Kids Wear">
+        <p>Kids Wear</p>
+      </div>
+      <div class="app-card">
+        <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=200&h=100&fit=crop" alt="Home Decor">
+        <p>Home Decor</p>
+      </div>
+      <div class="app-card">
+        <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=200&h=100&fit=crop" alt="Accessories">
+        <p>Accessories</p>
+      </div>
+      <div class="app-card">
+        <img src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=200&h=100&fit=crop" alt="Bags & Footwear">
+        <p>Bags &amp; Footwear</p>
+      </div>
+      <div class="app-card">
+        <img src="https://images.unsplash.com/photo-1601924994987-69e26d50dc26?w=200&h=100&fit=crop" alt="Scarves & Dupattas">
+        <p>Scarves &amp; Dupattas</p>
+      </div>
+      <div class="app-card">
+        <img src="https://images.unsplash.com/photo-1530543787849-128d94430c6b?w=200&h=100&fit=crop" alt="Craft & DIY Projects">
+        <p>Craft &amp; DIY Projects</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WHY US + CAPABILITIES -->
+<div class="sec bg-white">
+  <div class="why-cap-wrap">
+    <div class="why-us">
+      <h2>Why Choose Vastraa Global?</h2>
+      <div class="why-item">
+        <div class="why-icon"><i class="fa-solid fa-gem"></i></div>
+        <div>
+          <h4>Authentic Kalamkari</h4>
+          <p>Real Kalamkari fabrics crafted with modern quality standards.</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-icon"><i class="fa-solid fa-sliders"></i></div>
+        <div>
+          <h4>Flexible MOQ</h4>
+          <p>We support startups to large businesses with flexible order quantities.</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-icon"><i class="fa-solid fa-paintbrush"></i></div>
+        <div>
+          <h4>Custom Designs</h4>
+          <p>Create your own prints, colors and collections.</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-icon"><i class="fa-solid fa-shield-halved"></i></div>
+        <div>
+          <h4>Quality Assured</h4>
+          <p>Multi-level quality checks for flawless fabrics.</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-icon"><i class="fa-solid fa-truck"></i></div>
+        <div>
+          <h4>On-time Delivery</h4>
+          <p>Timely production &amp; global shipping for your business.</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-icon"><i class="fa-solid fa-seedling"></i></div>
+        <div>
+          <h4>Sustainable Sourcing</h4>
+          <p>Eco-friendly dyes, ethical practices and artisan support.</p>
+        </div>
+      </div>
+    </div>
+    <div class="cap-side">
+      <span class="sec-eyebrow">Our Manufacturing &amp; Sourcing Capabilities</span>
+      <div class="cap-icons-row">
+        <div class="cap-ic">
+          <div class="cap-ic-circle"><i class="fa-solid fa-lightbulb"></i></div>
+          <p>Design Consultation</p>
+        </div>
+        <div class="cap-ic">
+          <div class="cap-ic-circle"><i class="fa-solid fa-scissors"></i></div>
+          <p>Fabric Selection</p>
+        </div>
+        <div class="cap-ic">
+          <div class="cap-ic-circle"><i class="fa-solid fa-vial"></i></div>
+          <p>Sampling &amp; Approval</p>
+        </div>
+        <div class="cap-ic">
+          <div class="cap-ic-circle"><i class="fa-solid fa-print"></i></div>
+          <p>Printing &amp; Production</p>
+        </div>
+        <div class="cap-ic">
+          <div class="cap-ic-circle"><i class="fa-solid fa-magnifying-glass"></i></div>
+          <p>Quality Inspection</p>
+        </div>
+        <div class="cap-ic">
+          <div class="cap-ic-circle"><i class="fa-solid fa-box"></i></div>
+          <p>Packing &amp; Global Shipping</p>
+        </div>
+      </div>
+      <ul class="cap-checks">
+        <li><i class="fa-solid fa-check"></i> Wide range of base fabrics &amp; GSM options</li>
+        <li><i class="fa-solid fa-check"></i> Hand-painted &amp; block printed using traditional techniques</li>
+        <li><i class="fa-solid fa-check"></i> Custom print development with Pantone color matching</li>
+        <li><i class="fa-solid fa-check"></i> Bulk production with strict quality control</li>
+        <li><i class="fa-solid fa-check"></i> Export packaging as per international standards</li>
+      </ul>
+      <div class="stats-row">
+        <div class="stat-box"><div class="num">25+</div><div class="lbl">Countries Exporting</div></div>
+        <div class="stat-box"><div class="num">500+</div><div class="lbl">Happy Clients</div></div>
+        <div class="stat-box"><div class="num">1000+</div><div class="lbl">Designs Developed</div></div>
+        <div class="stat-box"><div class="num">98%</div><div class="lbl">On-time Delivery Rate</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SPECS + CUSTOMIZATION -->
+<div class="sec bg-cream">
+  <div class="specs-wrap">
+    <div>
+      <h3>Fabric Specifications (Examples)</h3>
+      <table class="specs">
+        <thead>
+          <tr>
+            <th>Base Fabric</th><th>GSM (Approx.)</th><th>Width</th><th>Printing</th><th>MOQ</th><th>Lead Time</th><th>Sampling</th><th>Customization</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Cotton</td><td>80–150 GSM</td><td>44″–60″</td><td>Hand / Block</td><td>50 Meters</td><td>7–10 Days</td><td>Available</td><td>Yes</td></tr>
+          <tr><td>Linen</td><td>120–200 GSM</td><td>44″–58″</td><td>Hand / Block</td><td>50 Meters</td><td>7–10 Days</td><td>Available</td><td>Yes</td></tr>
+          <tr><td>Silk</td><td>80–130 GSM</td><td>44″–54″</td><td>Hand</td><td>25 Meters</td><td>10–15 Days</td><td>Available</td><td>Yes</td></tr>
+          <tr><td>Rayon</td><td>100–140 GSM</td><td>44″–58″</td><td>Block</td><td>50 Meters</td><td>7–10 Days</td><td>Available</td><td>Yes</td></tr>
+          <tr><td>Canvas</td><td>230–300 GSM</td><td>58″–68″</td><td>Block</td><td>50 Meters</td><td>7–10 Days</td><td>Available</td><td>Yes</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <div class="custom-box">
+        <h3>Customization Options</h3>
+        <ul>
+          <li><i class="fa-solid fa-check"></i> Custom Prints &amp; Colorways</li>
+          <li><i class="fa-solid fa-check"></i> Pantone Color Matching</li>
+          <li><i class="fa-solid fa-check"></i> Exclusive Design Development</li>
+          <li><i class="fa-solid fa-check"></i> Private Label &amp; Branding</li>
+          <li><i class="fa-solid fa-check"></i> Custom Packaging &amp; Labeling</li>
+        </ul>
+        <button class="btn-gold-fill" style="margin-top:20px;width:100%;justify-content:center">Discuss Your Requirement <i class="fa-solid fa-arrow-right"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROCESS -->
+<div class="sec bg-white">
+  <div class="sec-title">
+    <h2>How We Work – Simple &amp; Transparent Process</h2>
+    <div class="divider"></div>
+  </div>
+  <div class="process-wrap">
+    <div class="proc-step">
+      <div class="proc-num">01</div>
+      <i class="fa-solid fa-file-lines"></i>
+      <h4>Inquiry</h4>
+      <p>Share your requirements with us.</p>
+    </div>
+    <div class="proc-step">
+      <div class="proc-num">02</div>
+      <i class="fa-solid fa-file-invoice-dollar"></i>
+      <h4>Quote</h4>
+      <p>Receive best wholesale price &amp; details.</p>
+    </div>
+    <div class="proc-step">
+      <div class="proc-num">03</div>
+      <i class="fa-solid fa-flask"></i>
+      <h4>Sample</h4>
+      <p>We send samples for your approval.</p>
+    </div>
+    <div class="proc-step">
+      <div class="proc-num">04</div>
+      <i class="fa-solid fa-circle-check"></i>
+      <h4>Order Confirmation</h4>
+      <p>Confirm the order &amp; payment terms.</p>
+    </div>
+    <div class="proc-step">
+      <div class="proc-num">05</div>
+      <i class="fa-solid fa-industry"></i>
+      <h4>Production</h4>
+      <p>We start bulk production with quality control.</p>
+    </div>
+    <div class="proc-step">
+      <div class="proc-num">06</div>
+      <i class="fa-solid fa-magnifying-glass-chart"></i>
+      <h4>Quality Check</h4>
+      <p>Every fabric goes through strict inspection.</p>
+    </div>
+    <div class="proc-step">
+      <div class="proc-num">07</div>
+      <i class="fa-solid fa-plane-departure"></i>
+      <h4>Shipping</h4>
+      <p>Packed &amp; shipped worldwide.</p>
+    </div>
+  </div>
+</div>
+
+<!-- TRUSTED BRANDS -->
+<div class="sec bg-cream">
+  <div class="trust-wrap">
+    <div>
+      <div class="sec-eyebrow">Our Clients</div>
+      <h2>Trusted by Brands Across the Globe</h2>
+      <p>Joining a growing community of global fashion brands and retailers who trust Vastraa Global for premium Kalamkari fabrics.</p>
+      <div class="cert-row">
+        <div class="cert-badge"><i class="fa-solid fa-award"></i> ISO Certified</div>
+        <div class="cert-badge"><i class="fa-solid fa-box-open"></i> FedEx Partner</div>
+        <div class="cert-badge"><i class="fa-solid fa-leaf"></i> Eco Certified</div>
+      </div>
+    </div>
+    <div class="gallery-grid">
+      <img src="https://images.unsplash.com/photo-1606744824163-985d376605aa?w=300&h=140&fit=crop" alt="Fabric">
+      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&h=140&fit=crop" alt="Artisan">
+      <img src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=300&h=140&fit=crop" alt="Packaging">
+      <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=140&fit=crop" alt="Shipping">
+    </div>
+  </div>
+</div>
+
+<!-- FAQ + CTA -->
+<div class="sec bg-white">
+  <div class="faq-cta">
+    <div>
+      <h2 class="faq-h">Frequently Asked Questions</h2>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span>What is the minimum order quantity (MOQ)?</span>
+          <i class="fa-solid fa-plus"></i>
+        </div>
+        <div class="faq-a">Our MOQ starts from 25 meters for silk and 50 meters for cotton, linen, rayon, and canvas fabrics. We accommodate smaller orders for new clients wanting to test quality.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span>Do you provide fabric samples?</span>
+          <i class="fa-solid fa-plus"></i>
+        </div>
+        <div class="faq-a">Yes, we provide fabric samples before bulk orders. Sample charges may apply and are adjustable against bulk orders.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span>Can you make custom Kalamkari prints?</span>
+          <i class="fa-solid fa-plus"></i>
+        </div>
+        <div class="faq-a">Absolutely! We offer full customization including exclusive design development, Pantone color matching, and private label branding.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span>What is the production lead time?</span>
+          <i class="fa-solid fa-plus"></i>
+        </div>
+        <div class="faq-a">Standard lead time is 7–15 days depending on fabric type and order size. Rush orders can be accommodated with prior discussion.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span>Do you ship internationally?</span>
+          <i class="fa-solid fa-plus"></i>
+        </div>
+        <div class="faq-a">Yes, we export to 25+ countries worldwide including the US, UK, Europe, Middle East, and Southeast Asia via trusted logistics partners.</div>
+      </div>
+    </div>
+    <div class="cta-box">
+      <p class="eyebrow">Start Sourcing Today</p>
+      <h2>Ready to Source <span>Premium Kalamkari</span> Fabrics in Bulk?</h2>
+      <p>Get in touch with our team and receive the best wholesale price for your business today!</p>
+      <div class="cta-btns">
+        <button class="btn-gold2">Get Wholesale Quote <i class="fa-solid fa-arrow-right"></i></button>
+        <button class="btn-outline-white">Request Fabric Sample</button>
+      </div>
+      <div class="cta-contacts">
+        <div class="cta-contact">
+          <div class="ico"><i class="fa-brands fa-whatsapp"></i></div>
+          <div>WhatsApp Us<strong>+91 12345 67890</strong></div>
+        </div>
+        <div class="cta-contact">
+          <div class="ico"><i class="fa-solid fa-envelope"></i></div>
+          <div>Email Us<strong>hello@vastraaglobal.com</strong></div>
+        </div>
+        <div class="cta-contact">
+          <div class="ico"><i class="fa-solid fa-phone"></i></div>
+          <div>Call Us<strong>+91 12345 67890</strong></div>
+        </div>
+        <div class="cta-contact">
+          <div class="ico"><i class="fa-solid fa-comment-dots"></i></div>
+          <div>Chat With Us<strong>We're Online</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-main">
+    <div class="footer-brand">
+      <div>
+        <div class="brand">VASTRAA</div>
+        <div class="sub">GLOBAL</div>
+      </div>
+      <p>Your trusted partner for premium fabrics, custom manufacturing and global export solutions.</p>
+      <div class="socials">
+        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+        <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#"><i class="fa-brands fa-pinterest-p"></i></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Our Services</a></li>
+        <li><a href="#">Fabrics</a></li>
+        <li><a href="#">Resources</a></li>
+        <li><a href="#">Contact Us</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Our Fabrics</h4>
+      <ul>
+        <li><a href="#">Custom Fabric</a></li>
+        <li><a href="#">Linen Fabric</a></li>
+        <li><a href="#">Silk Fabric</a></li>
+        <li><a href="#">Printed Fabric</a></li>
+        <li><a href="#">Kalamkari Fabric</a></li>
+        <li><a href="#">View All Fabrics</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Our Services</h4>
+      <ul>
+        <li><a href="#">Fabric Sourcing</a></li>
+        <li><a href="#">Private Label</a></li>
+        <li><a href="#">Custom Manufacturing</a></li>
+        <li><a href="#">Quality Inspection</a></li>
+        <li><a href="#">Global Shipping</a></li>
+      </ul>
+      <h4 style="margin-top:18px">Resources</h4>
+      <ul>
+        <li><a href="#">Fabric Guide</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">Care Instructions</a></li>
+        <li><a href="#">Sustainability</a></li>
+        <li><a href="#">FAQs</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Newsletter</h4>
+      <p style="font-size:12px;color:#888;line-height:1.6">Subscribe to updates, new arrivals &amp; exclusive offers.</p>
+      <div class="newsletter-row">
+        <input type="email" placeholder="Enter your email">
+        <button><i class="fa-solid fa-arrow-right"></i></button>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2024 Vastraa Global. All Rights Reserved.</span>
+    <div style="display:flex;gap:16px">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms &amp; Conditions</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+function toggleFaq(el) {
+  const ans = el.nextElementSibling;
+  const icon = el.querySelector('i');
+  const isOpen = ans.style.display === 'block';
+  document.querySelectorAll('.faq-a').forEach(a => a.style.display = 'none');
+  document.querySelectorAll('.faq-q i').forEach(i => { i.className = 'fa-solid fa-plus'; });
+  if (!isOpen) {
+    ans.style.display = 'block';
+    icon.className = 'fa-solid fa-minus';
+  }
+}
+</script>
+</body>
+</html>
